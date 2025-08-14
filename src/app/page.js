@@ -177,10 +177,10 @@ export default function Home() {
           slight struggle. We wanted to cultivate a certain style of thinking
           that we could take forward with us and use in any future endeavours to
           think through difficult problems.
-          <sup className="ml-1 text-[10px]">
+          <sup className="ml-1 text-[12px]">
             <a
               href="#fn1"
-              className="no-underline text-purple-400 hover:text-purple-600"
+              className="no-underline text-purple-700 hover:text-purple-900"
             >
               [1]
             </a>
