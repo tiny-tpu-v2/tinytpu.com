@@ -1,103 +1,56 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
+    <main className="min-h-screen flex justify-center items-start p-6 pt-12 md:pt-28">
+      <div className="max-w-3xl text-lg leading-8 text-left">
+        <h1 className="text-4xl md:text-5xl leading-tight mb-3">
+          Tiny-TPU: the why and how
+        </h1>
+        <p className="text-sm text-neutral-600 mb-8">
+          Aug 17th 2025 · Xander Chin, Kenny Guo, Evan Lin, Surya Sure
+        </p>
+        <p>
+          Nobody really understands how TPUs work…and neither do we! So we
+          wanted to make this because we wanted to take a shot and try to guess
+          how it works–from the perspective of complete novices!
+        </p>
+        <br />
+        <p>Why did we start this project?</p>
+        <br />
+        <p>
+          We wanted to do something very challenging (maybe even olympic level)
+          to prove to ourselves that we can do anything we put our mind to. The
+          reasoning for why we chose to build a TPU specifically is fairly
+          simple:
+        </p>
+        <ul className="list-disc list-inside text-left mt-4">
+          <li>Building a chip for ML workloads seemed cool</li>
+          <li>
+            There was no well-documented open source repo for an ML accelerator
+            that performed both inference and training
           </li>
-          <li className="tracking-[-.01em]">
-            adsdasdsadasdas
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </ul>
+        <br />
+        <p>
+          None of us have real professional experience in hardware design,
+          which, in a way, made the TPU even more appealing since we weren’t
+          able to estimate exactly how difficult it would be. As we worked on
+          the initial stages of this project, we established a strict design
+          philosophy: ALWAYS TRY THE HACKY WAY. This meant trying out the “dumb”
+          ideas that came to our mind first BEFORE consulting external sources.
+          This philosophy helped us make sure we weren’t reverse engineering the
+          TPU, but rather re-inventing it, which helped us derive many of the
+          key mechanisms used in the TPU ourselves.
+        </p>
+        <br />
+        <p>
+          We also wanted to treat this project as an exercise to code without
+          relying on AI to write for us, since we felt that our initial instinct
+          recently has been to reach for these AI tools whenever we faced a
+          slight struggle. We wanted to cultivate a certain style of thinking
+          that we could take forward with us and use in any future endeavours to
+          think through difficult problems.
+        </p>
+      </div>
+    </main>
   );
 }
