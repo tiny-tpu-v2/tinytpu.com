@@ -38,13 +38,13 @@ function highlightVerilog(code) {
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex justify-center items-start p-6 pt-12 md:pt-28">
-      <div className="max-w-3xl text-lg leading-8 text-left">
-        <h1 className="text-4xl md:text-5xl leading-tight mb-3">
+    <main className="min-h-screen w-full overflow-x-hidden flex justify-center items-start px-4 sm:px-6 lg:px-8 pt-10 md:pt-28 pb-10 md:pb-14">
+      <div className="w-full max-w-3xl text-base md:text-lg leading-7 md:leading-8 text-left break-words">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl leading-tight mb-3">
           Tiny-TPU: the why and how
         </h1>
         <div className="space-x-4">
-          <p className="text-sm text-neutral-600 mb-8">
+          <p className="text-xs sm:text-sm text-neutral-600 mb-6 sm:mb-8 whitespace-normal break-words">
             Aug 17th 2025 ·
             <a
               href="https://x.com/XanderChin"
@@ -94,7 +94,7 @@ export default function Home() {
           reasoning for why we chose to build a TPU specifically is fairly
           simple:
         </p>
-        <ul className="list-disc list-inside text-left mt-4">
+        <ul className="list-disc list-inside text-left mt-4 break-words">
           <li>Building a chip for ML workloads seemed cool</li>
           <li>
             There was no well-documented open source repo for an ML accelerator
@@ -131,9 +131,9 @@ export default function Home() {
           </sup>
         </p>
 
-        <div className="mt-16 w-full">
+        <div className="mt-10 md:mt-16 w-full">
           <pre
-            className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-sm md:text-base overflow-x-auto`}
+            className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
           >
             <code
               dangerouslySetInnerHTML={{
@@ -143,7 +143,7 @@ export default function Home() {
           </pre>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 md:mt-8">
           <p>
             Throughout this project we tried to learn as much as we could about
             the fundamentals of deep learning, hardware design and creating
@@ -159,20 +159,20 @@ export default function Home() {
             of the TPU — it is our attempt at re-inventing the TPU ourselves.
           </p>
         </div>
-        <hr className="mt-16 mb-4 border-neutral-200" />
+        <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
         <h2 className="text-xs uppercase tracking-wide text-neutral-500">
           Footnotes
         </h2>
-        <p id="fn1" className="text-sm text-neutral-700 mt-2">
+        <p id="fn1" className="text-xs md:text-sm text-neutral-700 mt-2">
           [1] we firmly believe in &quot;how you do anything is how you do
           everything&quot;
         </p>
 
         <footer className="mt-10">
           <ul className="space-y-2">
-            <li className="flex items-center gap-3 text-sm">
+            <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="text-neutral-800">Xander Chin</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
                   href="https://x.com/XanderChin"
                   target="_blank"
@@ -183,7 +183,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.564-2.005.974-3.127 1.195-.897-.959-2.178-1.559-3.594-1.559-2.723 0-4.932 2.21-4.932 4.932 0 .39.045.765.127 1.124-4.094-.205-7.725-2.167-10.159-5.144-.424.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.6 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.402 4.768 2.221 7.557 2.221 9.054 0 14-7.496 14-13.986 0-.209 0-.423-.015-.637.961-.695 1.8-1.562 2.46-2.549z" />
@@ -197,7 +197,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M2 6.75A2.75 2.75 0 0 1 4.75 4h14.5A2.75 2.75 0 0 1 22 6.75v10.5A2.75 2.75 0 0 1 19.25 20H4.75A2.75 2.75 0 0 1 2 17.25V6.75zm1.5 0v.2l8.3 5.18 8.2-5.18v-.2A1.25 1.25 0 0 0 19.25 5.5H4.75A1.25 1.25 0 0 0 3.5 6.75zm17 2.03-7.56 4.77a2.25 2.25 0 0 1-2.38 0L3.5 8.78v8.47c0 .69.56 1.25 1.25 1.25h14.5c.69 0 1.25-.56 1.25-1.25V8.78z" />
@@ -206,9 +206,9 @@ export default function Home() {
               </div>
             </li>
 
-            <li className="flex items-center gap-3 text-sm">
+            <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="text-neutral-800">Surya Sure</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
                   href="https://x.com/suryasure05"
                   target="_blank"
@@ -219,7 +219,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.564-2.005.974-3.127 1.195-.897-.959-2.178-1.559-3.594-1.559-2.723 0-4.932 2.21-4.932 4.932 0 .39.045.765.127 1.124-4.094-.205-7.725-2.167-10.159-5.144-.424.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.6 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.402 4.768 2.221 7.557 2.221 9.054 0 14-7.496 14-13.986 0-.209 0-.423-.015-.637.961-.695 1.8-1.562 2.46-2.549z" />
@@ -233,7 +233,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M2 6.75A2.75 2.75 0 0 1 4.75 4h14.5A2.75 2.75 0 0 1 22 6.75v10.5A2.75 2.75 0 0 1 19.25 20H4.75A2.75 2.75 0 0 1 2 17.25V6.75zm1.5 0v.2l8.3 5.18 8.2-5.18v-.2A1.25 1.25 0 0 0 19.25 5.5H4.75A1.25 1.25 0 0 0 3.5 6.75zm17 2.03-7.56 4.77a2.25 2.25 0 0 1-2.38 0L3.5 8.78v8.47c0 .69.56 1.25 1.25 1.25h14.5c.69 0 1.25-.56 1.25-1.25V8.78z" />
@@ -242,9 +242,9 @@ export default function Home() {
               </div>
             </li>
 
-            <li className="flex items-center gap-3 text-sm">
+            <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="text-neutral-800">Evan Lin</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
                   href="https://x.com/evanliin"
                   target="_blank"
@@ -255,7 +255,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.564-2.005.974-3.127 1.195-.897-.959-2.178-1.559-3.594-1.559-2.723 0-4.932 2.21-4.932 4.932 0 .39.045.765.127 1.124-4.094-.205-7.725-2.167-10.159-5.144-.424.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.6 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.402 4.768 2.221 7.557 2.221 9.054 0 14-7.496 14-13.986 0-.209 0-.423-.015-.637.961-.695 1.8-1.562 2.46-2.549z" />
@@ -269,7 +269,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M2 6.75A2.75 2.75 0 0 1 4.75 4h14.5A2.75 2.75 0 0 1 22 6.75v10.5A2.75 2.75 0 0 1 19.25 20H4.75A2.75 2.75 0 0 1 2 17.25V6.75zm1.5 0v.2l8.3 5.18 8.2-5.18v-.2A1.25 1.25 0 0 0 19.25 5.5H4.75A1.25 1.25 0 0 0 3.5 6.75zm17 2.03-7.56 4.77a2.25 2.25 0 0 1-2.38 0L3.5 8.78v8.47c0 .69.56 1.25 1.25 1.25h14.5c.69 0 1.25-.56 1.25-1.25V8.78z" />
@@ -278,9 +278,9 @@ export default function Home() {
               </div>
             </li>
 
-            <li className="flex items-center gap-3 text-sm">
+            <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="text-neutral-800">Kenny Guo</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
                   href="https://x.com/kennykgguo"
                   target="_blank"
@@ -291,7 +291,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M23.954 4.569c-.885.392-1.83.656-2.825.775 1.014-.611 1.794-1.574 2.163-2.724-.951.564-2.005.974-3.127 1.195-.897-.959-2.178-1.559-3.594-1.559-2.723 0-4.932 2.21-4.932 4.932 0 .39.045.765.127 1.124-4.094-.205-7.725-2.167-10.159-5.144-.424.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.6 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.402 4.768 2.221 7.557 2.221 9.054 0 14-7.496 14-13.986 0-.209 0-.423-.015-.637.961-.695 1.8-1.562 2.46-2.549z" />
@@ -305,7 +305,7 @@ export default function Home() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    className="h-4 w-4"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                     fill="currentColor"
                   >
                     <path d="M2 6.75A2.75 2.75 0 0 1 4.75 4h14.5A2.75 2.75 0 0 1 22 6.75v10.5A2.75 2.75 0 0 1 19.25 20H4.75A2.75 2.75 0 0 1 2 17.25V6.75zm1.5 0v.2l8.3 5.18 8.2-5.18v-.2A1.25 1.25 0 0 0 19.25 5.5H4.75A1.25 1.25 0 0 0 3.5 6.75zm17 2.03-7.56 4.77a2.25 2.25 0 0 1-2.38 0L3.5 8.78v8.47c0 .69.56 1.25 1.25 1.25h14.5c.69 0 1.25-.56 1.25-1.25V8.78z" />

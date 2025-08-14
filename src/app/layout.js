@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lora.variable} antialiased`}>
-        <div className="fixed top-4 left-4 text-sm tracking-wide">
+        <div className="fixed top-4 left-4 text-sm tracking-wide hidden md:block">
           tinytpu.com
         </div>
         {children}
