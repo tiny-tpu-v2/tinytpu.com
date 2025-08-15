@@ -356,14 +356,14 @@ export default function Home() {
           </h3>
           <p>
             The reason we chose this specific network is because we were
-            targeting inference and training for the XOR problem (the "hello
-            world” of neural networks). The XOR problem is one of the simplest
-            problems a neural network can solve. All other gates (AND, OR, etc)
-            can predict the outputs from its inputs using just one linear line
-            (one neuron) to separate which inputs correspond to a 0 and which
-            ones correspond to a 1. But to classify all XOR, an MLP is needed,
-            since it requires curved decision boundaries, which can’t be
-            achieved with ONLY linear equations.
+            targeting inference and training for the XOR problem (the
+            &quot;hello world&quot; of neural networks). The XOR problem is one
+            of the simplest problems a neural network can solve. All other gates
+            (AND, OR, etc) can predict the outputs from its inputs using just
+            one linear line (one neuron) to separate which inputs correspond to
+            a 0 and which ones correspond to a 1. But to classify all XOR, an
+            MLP is needed, since it requires curved decision boundaries, which
+            can’t be achieved with ONLY linear equations.
           </p>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Batching and dimensions
@@ -405,10 +405,11 @@ export default function Home() {
             <li>Transpose it!</li>
           </ul>
           <p className="mt-2">
-            Note that the transpose is just for mathematical bookkeeping – it's
-            required to make the matrix math work because of how we set up our
-            weight pointers within the neural network drawing. It is simply
-            required to make the matrix multiplication mathematically legal.
+            Note that the transpose is just for mathematical bookkeeping –
+            it&apos;s required to make the matrix math work because of how we
+            set up our weight pointers within the neural network drawing. It is
+            simply required to make the matrix multiplication mathematically
+            legal.
           </p>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Staggering and FIFOs
@@ -465,8 +466,8 @@ export default function Home() {
             Pipelining
           </h3>
           <p>
-            Now you might be asking – why don't we merge the bias term and the
-            activation term in one clock cycle? Well, this is because of
+            Now you might be asking – why don&apos;t we merge the bias term and
+            the activation term in one clock cycle? Well, this is because of
             something called pipelining! Pipelining allows multiple operations
             to be executed simultaneously across different stages of the TPU
             —instead of waiting for one complete operation to finish before
@@ -479,15 +480,15 @@ export default function Home() {
             we have one module that tries to squeeze many operations in a single
             cycle, our clock speed will be bottlenecked by that module, as the
             other modules can only run as fast as that single module. Therefore,
-            it’s efficient and best practice to split up operations into
+            it&apos;s efficient and best practice to split up operations into
             individual clock cycles as much as possible.
           </p>
           <p>
             Another mechanism we used to run our chip as efficiently as
-            possible, was a propagating "start" signal, which we called a
-            travelling chip enable (denoted by the red dot). Because everything
-            in our design was staggered, we realized that we could very
-            elegantly assert a start signal for a single clock cycle at the
+            possible, was a propagating &quot;start&quot; signal, which we
+            called a travelling chip enable (denoted by the red dot). Because
+            everything in our design was staggered, we realized that we could
+            very elegantly assert a start signal for a single clock cycle at the
             first accumulator and have it propagate to neighbouring modules
             exactly when they needed to be turned on.
           </p>
