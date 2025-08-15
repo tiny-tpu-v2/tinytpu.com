@@ -537,6 +537,202 @@ export default function Home() {
             about what we had accomplished.
           </p>
           <p className="italic">[INSERT VIDEO OF US SOLVING INFERENCE?]</p>
+
+          <div className="relative mt-12 w-full h-56 md:h-72">
+            <Image
+              src="/longchain.svg"
+              alt="Long chain diagram"
+              fill
+              className="object-contain"
+            />
+          </div>
+
+          <h2 className="text-base md:text-lg font-semibold text-neutral-800 mt-10">
+            Backpropagation and Training
+          </h2>
+          <div className="space-y-4 md:space-y-6">
+            <p>
+              Ok we&apos;ve solved inference — but what about training? Well
+              here&apos;s the beauty: We can use the same architecture we use
+              for inference for training! Why? Because training is just matrix
+              multiplications with a few extra steps.
+            </p>
+            <p>
+              Here&apos;s where things get really exciting. Let&apos;s say we
+              just ran inference on the XOR problem and got a prediction that
+              looks something like [0.8, 0.3, 0.1, 0.9] when we actually wanted
+              [1, 0, 0, 1]. Our model is performing poorly! We need to make it
+              better. This is where training comes in. We&apos;re going to use
+              something called a loss function to tell our model exactly how
+              poorly it&apos;s doing. For simplicity, we chose Mean Squared
+              Error (MSE) — think of it like measuring the &quot;distance&quot;
+              between what we predicted and what we actually wanted, just like
+              how you might measure how far off target your basketball shot was.
+            </p>
+            <p>
+              So right after we finish computing our final layer&apos;s
+              activations (let&apos;s call them H[2]), we immediately stream
+              them into a loss module to calculate just how bad our predictions
+              are. These loss modules sit right below our activation modules,
+              and we only use them when we&apos;ve reached our final layer. But
+              here&apos;s the key insight: you don&apos;t actually need to
+              calculate the loss value itself to train. You just need its
+              derivative. Why? Because that derivative tells us which direction
+              to adjust our weights to make the loss smaller. It&apos;s like
+              having a compass that points toward &quot;better
+              performance.&quot;
+            </p>
+            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+              The magic of the chain rule
+            </h3>
+            <p>
+              This is where calculus enters the picture. To make our model
+              better, we need to figure out how changing each weight affects our
+              loss. The chain rule lets us break this massive calculation into
+              smaller, manageable pieces.
+            </p>
+            <p className="italic">[INSERT COMPUTATIONAL GRAPH]</p>
+            <p>
+              Let&apos;s trace through what happens step by step. First, we
+              calculate dL/dH[2] — how much the loss changes with respect to our
+              final activations. Instead of using input accumulators like we did
+              for inference, we created a scratchpad memory to store our target
+              values and stream them directly into a derivative loss module
+              alongside our H[2] values. You&apos;ll notice a really cool
+              pattern emerging: all these modules that sit underneath the
+              systolic array process column vectors that stream out one by one.
+              This gave us the idea to unify them into something we called a
+              vector processing unit (VPU) — because that&apos;s exactly what
+              they&apos;re doing, processing vectors element-wise!
+            </p>
+            <p className="italic">
+              [INSERT DIAGRAM/GIF WITH UB, VPU, and SYS ARRAY]
+            </p>
+            <p>
+              As we continued tracing through the computational graph, we
+              realized we needed to compute element- wise multiplications too.
+              So we added an element-wise multiplication module to our VPU. We
+              also created a leaky ReLU derivative module, and here&apos;s a
+              clever optimization: since we only use the H[2] values once (for
+              computing dH[2]/dZ[2]), we created a tiny cache within our vector
+              unit instead of storing them in our main scratchpad memory.
+            </p>
+            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+              The beautiful symmetry of forward and backward pass
+            </h3>
+            <p>
+              After drawing out the entire computational graph, we discovered
+              something remarkable: the longest chain in backpropagation closely
+              resembles forward pass! In forward pass, we multiply activation
+              matrices with transposed weight matrices. In backward pass, we
+              multiply gradient matrices with weight matrices (untransposed).
+              It&apos;s like looking in a mirror!
+            </p>
+            <p>
+              But before we dive into implementation, we need to understand
+              three fundamental mathematical identities that govern how
+              gradients flow through our network:
+            </p>
+            <ul className="list-disc list-inside">
+              <li>
+                If we have Z = X@W^T and take its derivative with respect to the
+                weights, we get dZ/dW = X
+              </li>
+              <li>
+                If we have Z = X@W^T and take its derivative with respect to the
+                inputs X, we get dZ/dX = W^T
+              </li>
+              <li>For the bias term, the derivative is simply 1</li>
+            </ul>
+            <p>
+              These identities are beautiful because two of them express most of
+              our gradient computations as matrix multiplications — which means
+              they can run very efficiently on the same systolic array we use
+              for forward pass!
+            </p>
+            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+              Computing derivatives in hardware: The Leaky ReLU case
+            </h3>
+            <p>
+              Now you might be wondering — how do we actually compute
+              derivatives in hardware? Let&apos;s look at Leaky ReLU as an
+              example, since it&apos;s beautifully simple but demonstrates the
+              key principles. Remember that Leaky ReLU applies different
+              operations based on whether the input is positive or negative. The
+              derivative follows the same pattern: it outputs 1 for positive
+              inputs and a small constant (we used 0.01) for negative inputs. In
+              hardware, this translates to a very elegant solution:
+            </p>
+            <p className="italic">[INSERT CODE BLOCK]</p>
+            <p>
+              What&apos;s beautiful about this is that it&apos;s just a simple
+              comparison and multiplexer — no complex arithmetic needed! The
+              hardware can compute this derivative in a single clock cycle,
+              keeping our pipeline flowing smoothly. This same principle applies
+              to other activation functions: their derivatives often simplify to
+              basic operations that hardware can execute very efficiently. This
+              insight led us to compute the long chain first — getting all our
+              dL/dZ[n] gradients just like we computed activations in forward
+              pass. We could cache these gradients and reuse them, following the
+              same efficient pattern we&apos;d already mastered.
+            </p>
+            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+              Computing weight gradients
+            </h3>
+            <p>
+              Next challenge: calculating weight gradients. Here&apos;s where
+              our first identity comes into play: dL/dW = H (the activation from
+              the previous layer). Since we cached our activation matrices H[0]
+              and H[1] during forward pass, we can reuse them!
+            </p>
+            <p>We create a loop where we:</p>
+            <ul className="list-disc list-inside">
+              <li>Fetch a bridge node (dL/dZ[n]) from our unified buffer</li>
+              <li>
+                Fetch the corresponding H[n] matrix, also from unified buffer
+              </li>
+              <li>
+                Stream these through our systolic array to compute the weight
+                gradients
+              </li>
+            </ul>
+            <p>
+              And here&apos;s where something really magical happens: we can
+              stream these weight gradients directly into a gradient descent
+              module while we&apos;re still computing them! This module takes
+              the current weights stored in memory and updates them using the
+              gradients. No waiting around — everything flows like water through
+              our pipeline.
+            </p>
+            <p>
+              You might be wondering: &quot;We&apos;ve used our matrix
+              multiplication identities for the long chain and weight gradients
+              — how do we calculate bias gradients?&quot; Well, we&apos;ve
+              actually already done most of the work! Since we&apos;re
+              processing batches of data, we can simply sum (the technical term
+              is &quot;reduce&quot;) the dL/dZ[n] gradients across the batch
+              dimension. The beauty is that we can do this reduction right when
+              we&apos;re computing the long chain — no extra work required!
+            </p>
+            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+              Putting it all together
+            </h3>
+            <p>
+              By continuing this same process iteratively — forward pass,
+              backward pass, weight updates — we can train our network until it
+              performs exactly how we want. The same systolic array that powered
+              our inference now powers our training, with just a few additional
+              modules to handle the gradient computations. What started as a
+              simple idea about matrix multiplication has grown into a complete
+              training system. Every component works together in harmony: data
+              flows through pipelines, modules operate in parallel, and our
+              systolic array stays fed with useful work. This is the essence of
+              what makes TPUs so powerful — they take the fundamental operations
+              that neural networks need and implement them in the most efficient
+              way possible, keeping all the hardware busy and the data flowing
+              smoothly from start to finish.
+            </p>
+          </div>
         </div>
         <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
         <h2 className="text-xs uppercase tracking-wide text-neutral-500">
