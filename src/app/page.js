@@ -139,7 +139,13 @@ export default function Home() {
           how it works–from the perspective of complete novices!
         </p>
         <br />
-        <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg"></div>
+        <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg flex items-center justify-center p-4">
+          <img
+            src="/longslideshow.svg"
+            alt="Long slideshow diagram"
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
 
         <div className="flex justify-start items-center gap-4 mt-4 mb-6">
           <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
