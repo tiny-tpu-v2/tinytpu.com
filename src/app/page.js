@@ -282,13 +282,260 @@ export default function Home() {
             />
           </div>
         </div>
+        <br />
+        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1">
+          What is a TPU?
+        </h2>
+        <div className="space-y-4 md:space-y-6">
+          <p>
+            A TPU is an application specific chip (ASIC) designed by Google to
+            make inferencing and training ML models faster and more efficient.
+            Whereas a GPU can be used to render frames AND run ML workloads, a
+            TPU can only perform math operations, allowing it to be better at
+            what it’s designed for. Naturally, trying to master a single task is
+            much easier and will yield better results than trying to master
+            multiple tasks and the TPU strongly employs this philosophy. We can
+            use numbers to prove this: The best NVIDIA GPU that existed when the
+            TPUv1 released was the NVIDIA GeForce GTX Titan X. This GPU had 3584
+            CUDA cores, each of which could perform one fused multiply-add (the
+            predominant operation in ML workloads) per clock cycle. To perform a
+            matrix multiplication on two 256x256 matrices, it would take the
+            Titan X 4682 clock cycles. It would take the TPUv1 511 clock cycles.
+          </p>
+          <p>
+            Specifically, the TPU is very efficient at performing matrix
+            multiplications, which make up 90-90% of the compute operations in
+            transformers (up to 95% in very large models) and 70-80% in CNNs.
+            Each matrix multiplication represents the calculation for a single
+            layer in an MLP, and in deep learning, we have many of these layers,
+            making TPUs increasingly efficient for larger models.
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Systolic array and PEs
+          </h3>
+          <p>
+            The heart of a TPU is a unit called the systolic array. It consists
+            of individual building blocks called Processing Elements (PE) which
+            are connected together in a grid-like structure. Each PE performs a
+            multiply-accumulate operation, meaning it multiplies an incoming
+            input X with a stationary weight W and adds it to an incoming
+            accumulated sum, all in the same clock cycle.
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Systolic matrix multiplication
+          </h3>
+          <p>
+            When these PEs are connected together, they can be used to perform
+            matrix multiplication systolically, meaning multiple elements of the
+            output matrix can be calculated every clock cycle.
+          </p>
+          <p className="italic">[INSERT GIF OF SYSTOLIC ARRAY WITH SYMBOLS]</p>
+          <p>
+            Because of this single unit (and the fact that matrix
+            multiplications dominate the computations performed in models), TPUs
+            can very easily inference and train any model.
+          </p>
+        </div>
+        <br />
+        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1">
+          How did we develop the TPU?
+        </h2>
+        <div className="space-y-4 md:space-y-6">
+          <p>
+            When we started this project, all we knew was that systolic arrays
+            could be used for matrix multiplication and that the equation y = mx
+            + b is the foundational building block for neural networks. However,
+            we needed to fully UNDERSTAND the math behind neural networks to
+            build other modules in our TPU. So before we started writing any
+            code, each of us worked out the math of a simple 2 -&gt; 2 -&gt; 1
+            multi-layer perceptron (MLP).
+          </p>
+          <p className="italic">[INSERT IMAGE OF WHITEBOARD MATH]</p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Why XOR?
+          </h3>
+          <p>
+            The reason we chose this specific network is because we were
+            targeting inference and training for the XOR problem (the "hello
+            world” of neural networks). The XOR problem is one of the simplest
+            problems a neural network can solve. All other gates (AND, OR, etc)
+            can predict the outputs from its inputs using just one linear line
+            (one neuron) to separate which inputs correspond to a 0 and which
+            ones correspond to a 1. But to classify all XOR, an MLP is needed,
+            since it requires curved decision boundaries, which can’t be
+            achieved with ONLY linear equations.
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Batching and dimensions
+          </h3>
+          <p>
+            Now, say we want to do continuous inference (i.e. self driving car
+            making multiple predictions a second). That would imply that we’re
+            sending multiple pieces of data at once. Since data is inherently
+            multidimensional and has many features, we would have matrices with
+            very large dimensions. However, the XOR problem simplifies the
+            dimensions for us, as there are only two features (0 or 1) and 4
+            possible pieces of input data (four possible binary combinations of
+            0 and 1). This gives us a 4x2 matrix, where 4 is the number of rows
+            (batch size) and 2 is the number of columns (feature size). Another
+            simplification we’re making for our systolic array example here is
+            that we’ll use a 2x2 instead of the 256x256 array used in the TPUv1.
+            However, the math is still faithful so nothing is actually dumbed
+            down, rather scaled instead!
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Worked example
+          </h3>
+          <p>Now let’s try an example with real numbers:</p>
+          <p>
+            Our systolic array takes two inputs: the input matrix and the weight
+            matrix.
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Input and weight scheduling
+          </h3>
+          <p>To input our input batch within the systolic array, we need to:</p>
+          <ul className="list-disc list-inside mt-2">
+            <li>Rotate our X matrix by 90 degrees</li>
+            <li>STAGGER the inputs</li>
+          </ul>
+          <p className="mt-2">To input our weight matrix: we need to:</p>
+          <ul className="list-disc list-inside mt-2">
+            <li>Stagger the weight matrix (similar to the inputs)</li>
+            <li>Transpose it!</li>
+          </ul>
+          <p className="mt-2">
+            Note that the transpose is just for mathematical bookkeeping – it's
+            required to make the matrix math work because of how we set up our
+            weight pointers within the neural network drawing. It is simply
+            required to make the matrix multiplication mathematically legal.
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Staggering and FIFOs
+          </h3>
+          <p>
+            To perform the staggering, we designed near-identical accumulators
+            for the weights and inputs that would sit above and to the left of
+            the systolic array, respectively.
+          </p>
+          <p>
+            Since the activations are fed into the systolic array one-by-one, we
+            thought a first-in-first-out queue (FIFO) would be the optimal data
+            storage option. There was a slight difference between a traditional
+            FIFO and the accumulators we built, however. Our accumulators had 2
+            input ports — one for writing weights manually to the FIFO and one
+            for writing the previous layer’s outputs from the activation modules
+            BACK into the input FIFOs (the previous layer’s outputs are inputs
+            for the current layer).
+          </p>
+          <p>
+            We also needed to load the weights in a similar fashion for every
+            layer, so we replicated the logic for the weight FIFOs, without the
+            second port.
+          </p>
+          <p className="italic">[INSERT DRAWING OF MATMUL MATH]</p>
+          <p className="italic">[INSERT GIF OF SYSTOLIC ARRAY COMPUTING IT]</p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Bias and activation
+          </h3>
+          <p>
+            The next step in the equation is adding the bias. To do this in
+            hardware, we need to create a bias module under each column of the
+            systolic array. We can see that as the sums move out of the last row
+            within the systolic array, we can immediately stream them into our
+            bias modules to compute our pre-activations. We will denote these
+            values with the variable Z.
+          </p>
+          <p>
+            Now our equation is starting to look a lot like what we’ve learned
+            in high school –but just in multidimensional form, where each column
+            that streams out of the systolic array represents its own feature!
+          </p>
+          <p>
+            Next we have to apply the activation, for which we chose Leaky ReLU.
+            This is also an element-wise operation, similar to the bias, meaning
+            we need an activation module under every bias module (and by proxy
+            under every column of the systolic array) and we can stream the
+            outputs of our bias modules into the activation modules immediately.
+          </p>
+          <p className="italic">
+            [INSERT DRAWING OF SYS ARRAY + BIAS + LR MODULES]
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Pipelining
+          </h3>
+          <p>
+            Now you might be asking – why don't we merge the bias term and the
+            activation term in one clock cycle? Well, this is because of
+            something called pipelining! Pipelining allows multiple operations
+            to be executed simultaneously across different stages of the TPU
+            —instead of waiting for one complete operation to finish before
+            starting the next, you break the work into stages that can overlap.
+            Think of it like an assembly line: while one worker (activation
+            module) processes a part, the previous worker (bias module) is
+            already working on the next part. This keeps all of the modules busy
+            rather than having them sit idle waiting for the previous stage to
+            complete. It also affects the speed at which we can run our TPU — if
+            we have one module that tries to squeeze many operations in a single
+            cycle, our clock speed will be bottlenecked by that module, as the
+            other modules can only run as fast as that single module. Therefore,
+            it’s efficient and best practice to split up operations into
+            individual clock cycles as much as possible.
+          </p>
+          <p>
+            Another mechanism we used to run our chip as efficiently as
+            possible, was a propagating "start" signal, which we called a
+            travelling chip enable (denoted by the red dot). Because everything
+            in our design was staggered, we realized that we could very
+            elegantly assert a start signal for a single clock cycle at the
+            first accumulator and have it propagate to neighbouring modules
+            exactly when they needed to be turned on.
+          </p>
+          <p>
+            This would extend into the systolic array and eventually the bias
+            and activation modules, where neighbouring PEs and modules, moving
+            from the top left to the bottom right, were turned on in consecutive
+            clock cycles. This ensured that every module was only performing
+            computations when it was required to and wasn’t wasting power in the
+            background.
+          </p>
+          <p className="italic">[INSERT DIAGRAM TO EXPLAIN PIPELINING]</p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Double buffering
+          </h3>
+          <p>
+            If you haven’t already noticed, this allows the systolic array to do
+            something powerful…continuous inference!!! We can continuously
+            stream in new weights and inputs and compute forward pass for as
+            many layers as we want. This touches into a core design philosophy
+            of the systolic array: we want to maximize PE usage. We always want
+            to keep the systolic array fed!
+          </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Control unit and ISA
+          </h3>
+          <p>
+            Our final step for inference was making a control unit to use a
+            custom instruction set to assert all of our control flags and load
+            data through a data bus. Including the data bus, our ISA was 24 bits
+            long and it made our testbench more elegant as we could pass a
+            single string of bits every clock cycle, rather than individually
+            setting multiple flags.
+          </p>
+          <p>
+            We then put everything together and got inference completely
+            working! This was a big milestone for us and we were very proud
+            about what we had accomplished.
+          </p>
+          <p className="italic">[INSERT VIDEO OF US SOLVING INFERENCE?]</p>
+        </div>
         <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
         <h2 className="text-xs uppercase tracking-wide text-neutral-500">
           Footnotes
         </h2>
         <p id="fn1" className="text-xs md:text-sm text-neutral-700 mt-2">
-          [1] We firmly believe in &quot;how you do anything is how you do
-          everything&quot;
+          [1] We firmly believe in "how you do anything is how you do
+          everything"
         </p>
 
         <footer className="mt-10">
