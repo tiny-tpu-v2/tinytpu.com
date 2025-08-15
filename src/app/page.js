@@ -535,8 +535,8 @@ export default function Home() {
           Footnotes
         </h2>
         <p id="fn1" className="text-xs md:text-sm text-neutral-700 mt-2">
-          [1] We firmly believe in "how you do anything is how you do
-          everything"
+          [1] We firmly believe in &quot;how you do anything is how you do
+          everything&quot;
         </p>
 
         <footer className="mt-10">
