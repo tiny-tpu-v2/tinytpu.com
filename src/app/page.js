@@ -1,4 +1,5 @@
 import { Roboto_Mono } from "next/font/google";
+import Image from "next/image";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -140,11 +141,15 @@ export default function Home() {
         </p>
         <br />
         <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg flex items-center justify-center p-4">
-          <img
-            src="/longslideshow.svg"
-            alt="Long slideshow diagram"
-            className="max-w-full max-h-full object-contain"
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src="/longslideshow.svg"
+              alt="Long slideshow diagram"
+              fill
+              className="object-contain p-4"
+              priority
+            />
+          </div>
         </div>
 
         <div className="flex justify-start items-center gap-4 mt-4 mb-6">
@@ -275,11 +280,14 @@ export default function Home() {
             of the TPU — it is our attempt at re-inventing the TPU ourselves.
           </p>
           <div className="mt-6 overflow-x-auto">
-            <img
-              src="/PE.svg"
-              alt="PE diagram"
-              className="block w-1/2 h-auto mx-auto"
-            />
+            <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
+              <Image
+                src="/PE.svg"
+                alt="PE diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
         <br />
