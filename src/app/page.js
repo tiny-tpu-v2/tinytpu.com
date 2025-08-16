@@ -483,7 +483,7 @@ export default function Home() {
           <p>To input our input batch within the systolic array, we need to:</p>
           <ul className="list-disc list-inside mt-2">
             <li>Rotate our X matrix by 90 degrees</li>
-            <div className="relative mt-12 w-full h-48 md:h-64">
+            <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
               <Image
                 src="/rotate.svg"
                 alt="Rotate X matrix by 90 degrees"
@@ -493,7 +493,7 @@ export default function Home() {
             </div>
             <br />
             <li>STAGGER the inputs</li>
-            <div className="relative mt-12 w-full h-48 md:h-64">
+            <div className="relative mt-12 w-full h-48 md:h-42">
               <Image
                 src="/stagger-x.svg"
                 alt="Stagger input matrix"
@@ -515,7 +515,7 @@ export default function Home() {
               />
             </div>
             <li>Transpose it!</li>
-            <div className="relative mt-12 w-full h-48 md:h-64">
+            <div className="relative mt-12 w-full h-48 md:h-42">
               <Image
                 src="/transpose.svg"
                 alt="Rotate X matrix by 90 degrees"
