@@ -944,7 +944,7 @@ export default function Home() {
           </p>
           <p className="italic">[INSERT SVG OF PREV DIAGRAM WITH DOUBLE BUFFERING]</p>
           <p>
-            If you haven't already noticed, this allows the systolic array to do
+            If you haven&apos;t already noticed, this allows the systolic array to do
             something powerful…continuous inference!!! We can continuously
             stream in new weights and inputs and compute forward pass for as
             many layers as we want. This touches into a core design philosophy
