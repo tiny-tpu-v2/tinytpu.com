@@ -910,7 +910,41 @@ export default function Home() {
             Double buffering
           </h3>
           <p>
-            If you haven’t already noticed, this allows the systolic array to do
+            Now, we know that starting a new layer means we must compute the same 
+            X@(W)^T using a new weight matrix. How can we do this if our systolic 
+            array is weight-stationary? How can we change the weights?
+          </p>
+          <p>
+            While thinking about this problem, we came across the idea of double 
+            buffering, which originates from video games. The reason why double 
+            buffering exists is to prevent something called screen tearing on your 
+            monitor. Ultimately, pixels take time to load and we&apos;d like to 
+            &quot;hide away&quot; that time somehow. And if you paid attention, 
+            this is the exact same problem we&apos;re currently facing with the 
+            systolic array. Fortunately, video game designers have already come up 
+            with a solution for this problem. By adding a second &quot;shadow&quot; 
+            buffer, which holds the weights of the next layer while the current 
+            layer is being computed on, we can load in new weights during computation, 
+            cutting the total clock cycle count in half.
+          </p>
+          <p>
+            To make this work, we also needed to add some signals to move the data. 
+            First, we needed a signal to indicate when to switch the weights in the 
+            shadow buffer and the active buffer. We called this signal the 
+            &quot;switch&quot; signal and it copied the values in the shadow buffer 
+            to the active buffer. It propagated from the top left of the systolic 
+            array to the bottom right (the same path as the travelling chip enable, 
+            but only within the systolic array). We then needed one more signal to 
+            indicate when we wanted to move the weights down by one row and we called 
+            this the &quot;accept&quot; flag (because each row is ACCEPTING a new set 
+            of weights). This would move the new weights into the top row of the 
+            systolic array, as well as each row of weights down into the next row of 
+            the systolic array. These two control flags worked in tandem to make our 
+            double buffering mechanism work.
+          </p>
+          <p className="italic">[INSERT SVG OF PREV DIAGRAM WITH DOUBLE BUFFERING]</p>
+          <p>
+            If you haven't already noticed, this allows the systolic array to do
             something powerful…continuous inference!!! We can continuously
             stream in new weights and inputs and compute forward pass for as
             many layers as we want. This touches into a core design philosophy
@@ -1110,6 +1144,13 @@ export default function Home() {
               is &quot;reduce&quot;) the dL/dZ[n] gradients across the batch
               dimension. The beauty is that we can do this reduction right when
               we&apos;re computing the long chain — no extra work required!
+            </p>
+            <p>
+              With all these new changes and control flags, our instruction is 
+              significantly longer — 156 bits in fact! But we can confirm that 
+              every single one of these bits is needed and we ensured that we 
+              couldn&apos;t make the instruction set any smaller without 
+              compromising the speed and efficiency of the TPU.
             </p>
             <h3 className="text-sm md:text-base font-semibold text-neutral-800">
               Putting it all together
