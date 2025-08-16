@@ -363,11 +363,11 @@ export default function Home() {
 
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-6">
-            Forward Pass Operations
+            Forward pass operations
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Matrix Multiplication (Linear Transformation):</p>
+            <p className="font-semibold mb-2">Matrix multiplication (linear transformation):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{b}"} />
             </div>
@@ -379,7 +379,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Leaky ReLU Activation (Element-wise on Matrices):</p>
+            <p className="font-semibold mb-2">Leaky relu activation (element-wise on matrices):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\text{LeakyReLU}_\\alpha(\\mathbf{Z}) = \\begin{bmatrix} \\text{LeakyReLU}_\\alpha(z_{11}) & \\text{LeakyReLU}_\\alpha(z_{12}) & \\cdots \\\\[0.3em] \\text{LeakyReLU}_\\alpha(z_{21}) & \\text{LeakyReLU}_\\alpha(z_{22}) & \\cdots \\\\[0.3em] \\vdots & \\vdots & \\ddots \\end{bmatrix}"} />
             </div>
@@ -393,7 +393,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Bias Addition (Broadcasting):</p>
+            <p className="font-semibold mb-2">Bias addition (broadcasting):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{Z}_{\\text{biased}} = \\mathbf{Z} + \\mathbf{b}"} />
             </div>
@@ -403,7 +403,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Mean Squared Error Loss:</p>
+            <p className="font-semibold mb-2">Mean squared error loss:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathcal{L} = \\frac{1}{N}\\sum_{i=1}^{N}(y_i - \\hat{y}_i)^2"} />
             </div>
@@ -414,11 +414,11 @@ export default function Home() {
             
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Backward Pass Operations
+            Backward pass operations
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Vector/Matrix Chain Rule:</p>
+            <p className="font-semibold mb-2">Vector/matrix chain rule:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}} \\cdot \\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"} />
             </div>
@@ -428,18 +428,18 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Leaky ReLU Gradient (Element-wise):</p>
+            <p className="font-semibold mb-2">Leaky relu gradient (element-wise):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\text{LeakyReLU}_\\alpha(\\mathbf{Z})}{\\partial \\mathbf{Z}} = \\begin{bmatrix} \\dfrac{\\partial \\text{LeakyReLU}_\\alpha(z_{11})}{\\partial z_{11}} & \\dfrac{\\partial \\text{LeakyReLU}_\\alpha(z_{12})}{\\partial z_{12}} & \\cdots \\\\[1em] \\dfrac{\\partial \\text{LeakyReLU}_\\alpha(z_{21})}{\\partial z_{21}} & \\dfrac{\\partial \\text{LeakyReLU}_\\alpha(z_{22})}{\\partial z_{22}} & \\cdots \\\\[1em] \\vdots & \\vdots & \\ddots \\end{bmatrix}"} />
             </div>
-            <p className="text-sm text-gray-700 leading-relaxed mb-2">where each element's gradient is:</p>
+            <p className="text-sm text-gray-700 leading-relaxed mb-2">where each element&apos;s gradient is:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\frac{\\partial \\text{LeakyReLU}_\\alpha(z_{ij})}{\\partial z_{ij}} = \\begin{cases} 1 & \\text{if } z_{ij} > 0 \\\\[0.3em] \\alpha & \\text{if } z_{ij} \\leq 0 \\end{cases}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Gradient Descent Update:</p>
+            <p className="font-semibold mb-2">Gradient descent update:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\bm{\\theta}_{\\text{new}} = \\bm{\\theta}_{\\text{old}} - \\alpha \\nabla_{\\bm{\\theta}} \\mathcal{L}"} />
             </div>
@@ -447,17 +447,17 @@ export default function Home() {
               where <InlineMath math={"\\alpha"} /> is the scalar learning rate and <InlineMath math={"\\bm{\\theta}"} /> represents any parameter (weight matrix or bias vector)
             </p>
             <p className="text-sm text-gray-700 leading-relaxed mb-8">
-              Note: Scalar multiplication with a vector or matrix is always element-wise
+              Note: scalar multiplication with a vector or matrix is always element-wise
             </p>
           </div>
           
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Network Architecture Definition
+            Network architecture
           </h3>
 
           <div className="mb-6">
-          <p className="font-semibold mb-2">Input Matrix:</p>
+          <p className="font-semibold mb-2">Input matrix:</p>
           <div className="text-center mb-6">
             <BlockMath
               math={`
@@ -476,46 +476,46 @@ export default function Home() {
 
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Target Output Vector:</p>
+            <p className="font-semibold mb-2">Target output vector:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\mathbf{y} = \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} \\in \\mathbb{R}^{4 \\times 1}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Weight Matrix and Bias Vector:</p>
+            <p className="font-semibold mb-2">Layer 1 weight matrix and bias vector:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\mathbf{W}_1 = \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & -0.5792\\phantom{0} \\\\[0.3em] \\phantom{-}0.0913\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{2 \\times 2}, \\quad \\mathbf{b}_1 = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.189\\phantom{00} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}"} />
             </div>
           </div>
 
           <div className="mb-8">
-            <p className="font-semibold mb-2">Layer 2 Weight Matrix and Bias Vector:</p>
+            <p className="font-semibold mb-2">Layer 2 weight matrix and bias vector:</p>
             <div className="text-center mb-8">
               <BlockMath math={"\\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}, \\quad \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 1}"} />
             </div>
           </div>
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Forward Pass with Exact Values
+            Forward pass with exact values
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Linear Transformation:</p>
+            <p className="font-semibold mb-2">Layer 1 linear transformation:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\mathbf{Z}_1 = \\mathbf{X}\\mathbf{W}_1^T = \\begin{bmatrix} \\phantom{.}2\\phantom{.} & \\phantom{.}2\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5614\\phantom{0} & \\phantom{-}1.0294\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\\\[0.3em] \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.2807\\phantom{0} & \\phantom{-}0.5147\\phantom{0} \\end{bmatrix}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 with Bias Addition:</p>
+            <p className="font-semibold mb-2">Layer 1 with bias addition:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\mathbf{Z}_1 = \\mathbf{Z}_1 + \\mathbf{b}_1 = \\begin{bmatrix} -1.0553\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.3em] -1.0731\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.1954\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.7746\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Activation (Element-wise Application):</p>
+            <p className="font-semibold mb-2">Layer 1 activation (element-wise application):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{H}_1 = \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)"} />
             </div>
@@ -532,14 +532,14 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 2 Linear Transformation:</p>
+            <p className="font-semibold mb-2">Layer 2 linear transformation:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\mathbf{z}_2 = \\mathbf{H}_1\\mathbf{W}_2^T = \\begin{bmatrix} -0.5277\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} \\\\[0.3em] \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0825\\phantom{0} \\\\[0.3em] -0.1014\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 2 with Bias Addition:</p>
+            <p className="font-semibold mb-2">Layer 2 with bias addition:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{z}_2 = \\mathbf{z}_2 + \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.0825\\phantom{0} \\\\[0.3em] -0.1014\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix}"} />
             </div>
@@ -549,7 +549,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Output Vector (Element-wise Activation):</p>
+            <p className="font-semibold mb-2">Output vector (element-wise activation):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\hat{\\mathbf{y}} = \\mathbf{h}_2 = \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2) = \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] \\phantom{-}0.5344\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"} />
             </div>
@@ -559,18 +559,18 @@ export default function Home() {
           </div>
 
           <div className="mb-8">
-            <p className="font-semibold mb-2">Scalar Loss:</p>
+            <p className="font-semibold mb-2">Scalar loss:</p>
             <div className="text-center mb-8">
               <BlockMath math={"\\mathcal{L} = \\frac{1}{4}\\sum_{i=1}^{4}(y_i - \\hat{y}_i)^2 = 0.3133"} />
             </div>
           </div>
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Backward Pass with Exact Values
+            Backward pass with exact values
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Output Layer Gradient Vector (Element-wise Subtraction):</p>
+            <p className="font-semibold mb-2">Output layer gradient vector (element-wise subtraction):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{2}{N}(\\mathbf{h}_2 - \\mathbf{y})"} />
             </div>
@@ -585,7 +585,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Pre-activation Gradient Layer 2 (Hadamard Product):</p>
+            <p className="font-semibold mb-2">Pre-activation gradient layer 2 (hadamard product):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2}"} />
             </div>
@@ -600,14 +600,14 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Hidden Layer Gradient Matrix:</p>
+            <p className="font-semibold mb-2">Hidden layer gradient matrix:</p>
             <div className="text-center mb-6">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} \\\\[0.5em] -0.2328\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1891\\phantom{0} & \\phantom{-}0.1062\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"} />
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Pre-activation Gradient Layer 1 Matrix (Hadamard Product):</p>
+            <p className="font-semibold mb-2">Pre-activation gradient layer 1 matrix (hadamard product):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1}"} />
             </div>
@@ -622,11 +622,11 @@ export default function Home() {
           </div>
           <br></br>
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Weight Gradients
+            Weight gradients
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 2 Weight Gradient Matrix:</p>
+            <p className="font-semibold mb-2">Layer 2 weight gradient matrix:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"} />
             </div>
@@ -644,7 +644,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 2 Bias Gradient (Sum Over Samples):</p>
+            <p className="font-semibold mb-2">Layer 2 bias gradient (sum over samples):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = \\sum_{i=1}^{N} \\frac{\\partial \\mathcal{L}}{\\partial z_2^{(i)}}"} />
             </div>
@@ -659,7 +659,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Weight Gradient Matrix:</p>
+            <p className="font-semibold mb-2">Layer 1 weight gradient matrix:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X}"} />
             </div>
@@ -674,7 +674,7 @@ export default function Home() {
           </div>
 
           <div className="mb-8">
-            <p className="font-semibold mb-2">Layer 1 Bias Gradient Vector (Sum Over Samples):</p>
+            <p className="font-semibold mb-2">Layer 1 bias gradient vector (sum over samples):</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\sum_{i=1}^{N} \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1^{(i)}}"} />
             </div>
@@ -687,15 +687,15 @@ export default function Home() {
           <br></br>
 
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-            Weight Updates (Gradient Descent)
+            Weight updates (gradient descent)
           </h3>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Learning Rate (Scalar): <InlineMath math={"\\alpha = 0.75"} /></p>
+            <p className="font-semibold mb-2">Learning rate (scalar): <InlineMath math={"\\alpha = 0.75"} /></p>
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Weight Matrix Update:</p>
+            <p className="font-semibold mb-2">Layer 1 weight matrix update:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{W}_1^{\\text{new}} = \\mathbf{W}_1 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1}"} />
             </div>
@@ -710,7 +710,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 1 Bias Vector Update:</p>
+            <p className="font-semibold mb-2">Layer 1 bias vector update:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{b}_1^{\\text{new}} = \\mathbf{b}_1 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1}"} />
             </div>
@@ -725,7 +725,7 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <p className="font-semibold mb-2">Layer 2 Weight Matrix Update:</p>
+            <p className="font-semibold mb-2">Layer 2 weight matrix update:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{W}_2^{\\text{new}} = \\mathbf{W}_2 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2}"} />
             </div>
@@ -740,7 +740,7 @@ export default function Home() {
           </div>
 
           <div className="mb-8">
-            <p className="font-semibold mb-2">Layer 2 Bias Vector Update:</p>
+            <p className="font-semibold mb-2">Layer 2 bias vector update:</p>
             <div className="text-center mb-4">
               <BlockMath math={"\\mathbf{b}_2^{\\text{new}} = \\mathbf{b}_2 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2}"} />
             </div>
