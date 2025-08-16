@@ -357,7 +357,7 @@ export default function Home() {
             we needed to fully UNDERSTAND the math behind neural networks to
             build other modules in our TPU. So before we started writing any
             code, each of us worked out the math of a simple 2 -&gt; 2 -&gt; 1
-            multi-layer perceptron (MLP).
+            multi-layer perceptron (MLP). An example forward and backward pass is worked out below. 
           </p>
 
 
