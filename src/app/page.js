@@ -505,9 +505,11 @@ export default function Home() {
             0 and 1). This gives us a 4x2 matrix, where 4 is the number of rows
             (batch size) and 2 is the number of columns (feature size).
           </p>
-          
+
           <div className="my-6">
-            <p className="text-sm text-gray-700 mb-2">The XOR input matrix and target outputs:</p>
+            <p className="text-sm text-gray-700 mb-2">
+              The XOR input matrix and target outputs:
+            </p>
             <div className="text-center mb-4">
               <BlockMath
                 math={`
@@ -523,23 +525,24 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Each row represents one of the four possible XOR inputs, and the output vector shows the expected XOR results
+              Each row represents one of the four possible XOR inputs, and the
+              output vector shows the expected XOR results
             </p>
           </div>
-          
+
           <p>
-            Another
-            simplification we're making for our systolic array example here is
-            that we'll use a 2x2 instead of the 256x256 array used in the TPUv1.
-            However, the math is still faithful so nothing is actually dumbed
-            down, rather scaled down instead.
+            Another simplification we&apos;re making for our systolic array
+            example here is that we&apos;ll use a 2x2 instead of the 256x256
+            array used in the TPUv1. However, the math is still faithful so
+            nothing is actually dumbed down, rather scaled down instead.
           </p>
 
           <p>
             The first step in the equation is multiplying m with x, which, in
-            matrix form, would be <InlineMath math={"\\mathbf{X}\\mathbf{W}^T"} />.
+            matrix form, would be{" "}
+            <InlineMath math={"\\mathbf{X}\\mathbf{W}^T"} />.
           </p>
-          
+
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">More formally:</p>
             <div className="text-center mb-4">
@@ -557,11 +560,10 @@ export default function Home() {
               is our bias vector
             </p>
           </div>
-          
+
           <p>
-            How can we perform matrix
-            multiplication in hardware? Well, we can use a unit called the
-            systolic array!
+            How can we perform matrix multiplication in hardware? Well, we can
+            use a unit called the systolic array!
           </p>
 
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
@@ -768,7 +770,7 @@ export default function Home() {
             outputs of our bias modules into the activation modules immediately.
             <b>We will denote these post-activation values with H</b>.
           </p>
-          
+
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
               The Leaky ReLU function applies element-wise:
@@ -781,7 +783,8 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              where <InlineMath math={"\\alpha = 0.5"} /> is our leak factor. For matrices, this applies to each element independently.
+              where <InlineMath math={"\\alpha = 0.5"} /> is our leak factor.
+              For matrices, this applies to each element independently.
             </p>
           </div>
           <p className="italic">
@@ -845,8 +848,9 @@ export default function Home() {
           </h3>
           <p>
             Now, we know that starting a new layer means we must compute the
-            same <InlineMath math={"\\mathbf{X}\\mathbf{W}^T"} /> using a new weight matrix. How can we do this if our
-            systolic array is weight-stationary? How can we change the weights?
+            same <InlineMath math={"\\mathbf{X}\\mathbf{W}^T"} /> using a new
+            weight matrix. How can we do this if our systolic array is
+            weight-stationary? How can we change the weights?
           </p>
           <p>
             While thinking about this problem, we came across the idea of double
@@ -930,7 +934,7 @@ export default function Home() {
               how you might measure how far off target your basketball shot was.{" "}
               <b>Let&apos;s denote the loss with L.</b>
             </p>
-            
+
             <div className="my-6">
               <div className="text-center mb-4">
                 <BlockMath
@@ -940,21 +944,24 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed">
-                where <InlineMath math={"y_i"} /> is the target output, <InlineMath math={"\\hat{y}_i"} /> is our prediction, and <InlineMath math={"N"} /> is the number of samples
+                where <InlineMath math={"y_i"} /> is the target output,{" "}
+                <InlineMath math={"\\hat{y}_i"} /> is our prediction, and{" "}
+                <InlineMath math={"N"} /> is the number of samples
               </p>
             </div>
             <p>
               So right after we finish computing our final layer&apos;s
-              activations (let&apos;s call them <InlineMath math={"\\mathbf{H}_2"} />), we immediately stream
-              them into a loss module to calculate just how bad our predictions
-              are. These loss modules sit right below our activation modules,
-              and we only use them when we&apos;ve reached our final layer. But
-              here&apos;s the key insight: you don&apos;t actually need to
-              calculate the loss value itself to train. You just need its
-              derivative. Why? Because that derivative tells us which direction
-              to adjust our weights to make the loss smaller. It&apos;s like
-              having a compass that points toward &quot;better
-              performance.&quot;
+              activations (let&apos;s call them{" "}
+              <InlineMath math={"\\mathbf{H}_2"} />
+              ), we immediately stream them into a loss module to calculate just
+              how bad our predictions are. These loss modules sit right below
+              our activation modules, and we only use them when we&apos;ve
+              reached our final layer. But here&apos;s the key insight: you
+              don&apos;t actually need to calculate the loss value itself to
+              train. You just need its derivative. Why? Because that derivative
+              tells us which direction to adjust our weights to make the loss
+              smaller. It&apos;s like having a compass that points toward
+              &quot;better performance.&quot;
             </p>
             <h3 className="text-sm md:text-base font-semibold text-neutral-800">
               The magic of the chain rule
@@ -965,9 +972,11 @@ export default function Home() {
               loss. The chain rule lets us break this massive calculation into
               smaller, manageable pieces.
             </p>
-            
+
             <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">The chain rule for gradients:</p>
+              <p className="text-sm text-gray-700 mb-2">
+                The chain rule for gradients:
+              </p>
               <div className="text-center mb-4">
                 <BlockMath
                   math={
@@ -976,7 +985,8 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed">
-                This allows us to compute gradients layer by layer, propagating them backwards through the network
+                This allows us to compute gradients layer by layer, propagating
+                them backwards through the network
               </p>
             </div>
             <div className="relative mt-12 w-full h-56 md:h-72">
@@ -989,16 +999,20 @@ export default function Home() {
             </div>
             <p>
               Let&apos;s trace through what happens step by step. First, we
-              calculate <InlineMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_2}"} /> — how much the loss changes with respect to our
-              final activations. Instead of using input accumulators like we did
-              for inference, we created a scratchpad memory to store our target
-              values and stream them directly into a derivative loss module
-              alongside our <InlineMath math={"\\mathbf{H}_2"} /> values. You&apos;ll notice a really cool
-              pattern emerging: all these modules that sit underneath the
-              systolic array process column vectors that stream out one by one.
-              This gave us the idea to unify them into something we called a
-              vector processing unit (VPU) — because that&apos;s exactly what
-              they&apos;re doing, processing vectors element-wise!
+              calculate{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_2}"}
+              />{" "}
+              — how much the loss changes with respect to our final activations.
+              Instead of using input accumulators like we did for inference, we
+              created a scratchpad memory to store our target values and stream
+              them directly into a derivative loss module alongside our{" "}
+              <InlineMath math={"\\mathbf{H}_2"} /> values. You&apos;ll notice a
+              really cool pattern emerging: all these modules that sit
+              underneath the systolic array process column vectors that stream
+              out one by one. This gave us the idea to unify them into something
+              we called a vector processing unit (VPU) — because that&apos;s
+              exactly what they&apos;re doing, processing vectors element-wise!
             </p>
             <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
               <Image
@@ -1017,9 +1031,15 @@ export default function Home() {
               realized we needed to compute element- wise multiplications too.
               So we added an element-wise multiplication module to our VPU. We
               also created a leaky ReLU derivative module, and here&apos;s a
-              clever optimization: since we only use the <InlineMath math={"\\mathbf{H}_2"} /> values once (for
-              computing <InlineMath math={"\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"} />), we created a tiny cache within our vector
-              unit instead of storing them in our main scratchpad memory.
+              clever optimization: since we only use the{" "}
+              <InlineMath math={"\\mathbf{H}_2"} /> values once (for computing{" "}
+              <InlineMath
+                math={
+                  "\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"
+                }
+              />
+              ), we created a tiny cache within our vector unit instead of
+              storing them in our main scratchpad memory.
             </p>
             <h3 className="text-sm md:text-base font-semibold text-neutral-800">
               The beautiful symmetry of forward and backward pass
@@ -1039,12 +1059,25 @@ export default function Home() {
             </p>
             <ul className="list-disc list-inside">
               <li>
-                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to the
-                weights, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"} />
+                If we have{" "}
+                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
+                and take its derivative with respect to the weights, we get{" "}
+                <InlineMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
+                  }
+                />
               </li>
               <li>
-                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to the
-                inputs <InlineMath math={"\\mathbf{X}"} />, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"} />
+                If we have{" "}
+                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
+                and take its derivative with respect to the inputs{" "}
+                <InlineMath math={"\\mathbf{X}"} />, we get{" "}
+                <InlineMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
+                  }
+                />
               </li>
               <li>For the bias term, the derivative is simply 1</li>
             </ul>
@@ -1063,9 +1096,11 @@ export default function Home() {
               derivative follows the same pattern: it outputs 1 for positive
               inputs and a small constant (we used 0.01) for negative inputs.
             </p>
-            
+
             <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">The Leaky ReLU gradient:</p>
+              <p className="text-sm text-gray-700 mb-2">
+                The Leaky ReLU gradient:
+              </p>
               <div className="text-center mb-4">
                 <BlockMath
                   math={
@@ -1074,11 +1109,8 @@ export default function Home() {
                 />
               </div>
             </div>
-            
-            <p>
-              In
-              hardware, this translates to a very elegant solution:
-            </p>
+
+            <p>In hardware, this translates to a very elegant solution:</p>
             <p>
               Now you might be wondering – how do we actually compute
               derivatives of activation functions in hardware? Remember that
@@ -1115,9 +1147,12 @@ export default function Home() {
               activation functions: their derivatives often simplify to basic
               operations that hardware can execute very efficiently. This
               insight led us to compute the long chain first — getting all our
-              <InlineMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"} /> gradients just like we computed activations in forward
-              pass. We could cache these gradients and reuse them, following the
-              same efficient pattern we&apos;d already mastered.
+              <InlineMath
+                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+              />{" "}
+              gradients just like we computed activations in forward pass. We
+              could cache these gradients and reuse them, following the same
+              efficient pattern we&apos;d already mastered.
             </p>
             <p>
               You&apos;ll notice a really cool pattern emerging: all these
@@ -1155,20 +1190,49 @@ export default function Home() {
             </p>
             <ol className="list-decimal list-inside mt-2 space-y-2">
               <li>
-                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to
-                the weights, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"} />
+                If we have{" "}
+                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
+                and take its derivative with respect to the weights, we get{" "}
+                <InlineMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
+                  }
+                />
               </li>
               <li>
-                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to
-                the inputs <InlineMath math={"\\mathbf{X}"} />, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"} /> (just the weight matrix)
+                If we have{" "}
+                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
+                and take its derivative with respect to the inputs{" "}
+                <InlineMath math={"\\mathbf{X}"} />, we get{" "}
+                <InlineMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
+                  }
+                />{" "}
+                (just the weight matrix)
               </li>
               <li>For the bias term, the derivative is simply 1.</li>
             </ol>
             <p>
-              This means that we can multiply the previous <InlineMath math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{Z}}"} /> with <InlineMath math={"\\mathbf{X}"} />, <InlineMath math={"\\mathbf{W}^T"} />,
-              and 1 to get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"} />, <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"} />, and <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"} />, respectively. And because
-              all of the gradients are actually gradient matrices, we can use
-              the systolic array!
+              This means that we can multiply the previous{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{Z}}"}
+              />{" "}
+              with <InlineMath math={"\\mathbf{X}"} />,{" "}
+              <InlineMath math={"\\mathbf{W}^T"} />, and 1 to get{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
+              />
+              ,{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"}
+              />
+              , and{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"}
+              />
+              , respectively. And because all of the gradients are actually
+              gradient matrices, we can use the systolic array!
             </p>
             <p>
               Now something to note about the activation derivative dH[2]/dZ[2]
@@ -1308,7 +1372,8 @@ export default function Home() {
             <ol className="list-decimal list-inside mt-2 space-y-2">
               <li>Fetch a bridge node (dL/dZ[n]) from our unified buffer</li>
               <li>
-                Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} /> matrix, also from unified buffer
+                Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} />{" "}
+                matrix, also from unified buffer
               </li>
               <li>
                 Stream these through our systolic array to compute the weight
@@ -1322,9 +1387,11 @@ export default function Home() {
               the current weights stored in memory and updates them using the
               gradients.
             </p>
-            
+
             <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">The gradient descent update rule:</p>
+              <p className="text-sm text-gray-700 mb-2">
+                The gradient descent update rule:
+              </p>
               <div className="text-center mb-4">
                 <BlockMath
                   math={
@@ -1333,13 +1400,15 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed">
-                where <InlineMath math={"\\alpha"} /> is the learning rate and <InlineMath math={"\\bm{\\theta}"} /> represents any parameter (weights or biases)
+                where <InlineMath math={"\\alpha"} /> is the learning rate and{" "}
+                <InlineMath math={"\\bm{\\theta}"} /> represents any parameter
+                (weights or biases)
               </p>
             </div>
-            
+
             <p>
-              No waiting around — everything flows like water through
-              our pipeline.
+              No waiting around — everything flows like water through our
+              pipeline.
             </p>
             <p>
               You might be wondering: &quot;We&apos;ve used our matrix
@@ -1347,9 +1416,13 @@ export default function Home() {
               — how do we calculate bias gradients?&quot; Well, we&apos;ve
               actually already done most of the work! Since we&apos;re
               processing batches of data, we can simply sum (the technical term
-              is &quot;reduce&quot;) the <InlineMath math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"} /> gradients across the batch
-              dimension. The beauty is that we can do this reduction right when
-              we&apos;re computing the long chain — no extra work required!
+              is &quot;reduce&quot;) the{" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+              />{" "}
+              gradients across the batch dimension. The beauty is that we can do
+              this reduction right when we&apos;re computing the long chain — no
+              extra work required!
             </p>
             <p>
               With all these new changes and control flags, our instruction is
@@ -1396,8 +1469,6 @@ export default function Home() {
         </div>
         <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
 
-
-
         <div className="mb-6">
           <p className="font-semibold mb-2">Bias addition (broadcasting):</p>
           <div className="text-center mb-4">
@@ -1411,10 +1482,6 @@ export default function Home() {
             added to each row of the <InlineMath math={"\\mathbf{Z}"} /> matrix
           </p>
         </div>
-
-
-
-
 
         <br></br>
         <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
