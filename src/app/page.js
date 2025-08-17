@@ -178,17 +178,22 @@ export default function Home() {
           how it works–from the perspective of complete novices!
         </p>
         <br />
-        <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg flex items-center justify-center p-4">
-          <div className="relative w-full h-full">
-            <Image
-              src="/longslideshow.svg"
-              alt="Long slideshow diagram"
-              fill
-              className="object-contain p-4"
-              priority
-            />
+        <figure className="w-full">
+          <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg flex items-center justify-center p-4">
+            <div className="relative w-full h-full">
+              <Image
+                src="/longslideshow.svg"
+                alt="Long slideshow diagram"
+                fill
+                className="object-contain p-4"
+                priority
+              />
+            </div>
           </div>
-        </div>
+          <figcaption className="text-sm text-center text-gray-600 mt-2">
+            Overview of the TPU architecture and its key components
+          </figcaption>
+        </figure>
 
         <div className="flex justify-start items-center gap-4 mt-4 mb-6">
           <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
@@ -245,13 +250,13 @@ export default function Home() {
 
         {/* Slideshow 1 */}
         <div className="mt-12 pt-8 border-t border-neutral-200">
-          <Slideshow 
+          <Slideshow
             slides={[
               "/slideshow_1/1.png",
               "/slideshow_1/2.png",
               "/slideshow_1/3.png",
               "/slideshow_1/4.png",
-              "/slideshow_1/5.png"
+              "/slideshow_1/5.png",
             ]}
             title="Slideshow 1: TPU Architecture Overview"
             aspectRatio="aspect-[2228/1944]"
@@ -260,11 +265,11 @@ export default function Home() {
 
         {/* Slideshow 2 */}
         <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow 
+          <Slideshow
             slides={[
               "/slideshow_2/1.png",
               "/slideshow_2/2.png",
-              "/slideshow_2/3.png"
+              "/slideshow_2/3.png",
             ]}
             title="Slideshow 2: Implementation Details"
             aspectRatio="aspect-[2228/2739]"
@@ -273,7 +278,7 @@ export default function Home() {
 
         {/* Slideshow 3 */}
         <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow 
+          <Slideshow
             slides={[
               "/slideshow_3/1.png",
               "/slideshow_3/2.png",
@@ -283,7 +288,7 @@ export default function Home() {
               "/slideshow_3/6.png",
               "/slideshow_3/7.png",
               "/slideshow_3/8.png",
-              "/slideshow_3/9.png"
+              "/slideshow_3/9.png",
             ]}
             title="Slideshow 3: Advanced Topics"
             aspectRatio="aspect-[2228/2739]"
@@ -382,15 +387,21 @@ export default function Home() {
               any operations we run will be executed BETWEEN clock cycles.
             </p>
 
-            <div className="flex justify-center my-6">
-              <Image
-                src="/clock-cycle.svg"
-                alt="XOR MLP Neural Network Architecture showing 2 input nodes, 2 hidden layer nodes, and 1 output node with weight connections"
-                width={679}
-                height={269}
-                className="max-w-full h-auto"
-              />
-            </div>
+            <figure className="my-6">
+              <div className="flex justify-center">
+                <Image
+                  src="/clock-cycle.svg"
+                  alt="Clock cycle diagram"
+                  width={679}
+                  height={269}
+                  className="max-w-full h-auto"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Clock cycle timing diagram showing how operations are
+                synchronized in hardware
+              </figcaption>
+            </figure>
             <br />
             <p>
               The language we use to describe hardware is called Verilog.
@@ -465,15 +476,21 @@ export default function Home() {
             MLP is needed, since it requires curved decision boundaries, which
             can&apos;t be achieved with ONLY linear equations.
           </p>
-          <div className="flex justify-center my-6">
-            <Image
-              src="/xor-mlp.svg"
-              alt="XOR MLP Neural Network Architecture showing 2 input nodes, 2 hidden layer nodes, and 1 output node with weight connections"
-              width={679}
-              height={269}
-              className="max-w-full h-auto"
-            />
-          </div>
+          <figure className="my-6">
+            <div className="flex justify-center">
+              <Image
+                src="/xor-mlp.svg"
+                alt="XOR MLP Neural Network Architecture showing 2 input nodes, 2 hidden layer nodes, and 1 output node with weight connections"
+                width={679}
+                height={269}
+                className="max-w-full h-auto"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Architecture of our 2→2→1 multi-layer perceptron for solving the
+              XOR problem
+            </figcaption>
+          </figure>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Batching and dimensions
           </h3>
@@ -511,7 +528,7 @@ export default function Home() {
             input X with a stationary weight W and adds it to an incoming
             accumulated sum, all in the same clock cycle.
           </p>
-          <div className="mt-6 overflow-x-auto">
+          <figure className="mt-6 overflow-x-auto">
             <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
               <Image
                 src="/PE.svg"
@@ -520,7 +537,11 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-          </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Processing Element (PE) architecture showing multiply-accumulate
+              operation
+            </figcaption>
+          </figure>
           <div className="mt-10 md:mt-16 w-full">
             <pre
               className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
@@ -545,14 +566,20 @@ export default function Home() {
             added to the products of each successive PE, until they up at the
             last row of PEs where they become an element of the output matrix.
           </p>
-          <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
-            <Image
-              src="/sys-array-standalone.svg"
-              alt="Systolic array diagram"
-              fill
-              className="object-contain"
-            />
-          </div>
+          <figure className="mt-12">
+            <div className="relative w-full h-[32rem] md:h-[40rem]">
+              <Image
+                src="/sys-array-standalone.svg"
+                alt="Systolic array diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Systolic array architecture showing how PEs are connected to
+              perform matrix multiplication
+            </figcaption>
+          </figure>
           <p>
             Because of this single unit (and the fact that matrix
             multiplications dominate the computations performed in models), TPUs
@@ -574,47 +601,68 @@ export default function Home() {
           <ul className="list-disc list-inside mt-2">
             <li>Rotate our X matrix by 90 degrees</li>
             <br />
-            <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
-              <Image
-                src="/rotate.svg"
-                alt="Rotate X matrix by 90 degrees"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure>
+              <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
+                <Image
+                  src="/rotate.svg"
+                  alt="Rotate X matrix by 90 degrees"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Matrix rotation by 90 degrees to prepare for systolic array
+                input
+              </figcaption>
+            </figure>
             <br />
             <li>STAGGER the inputs (delay each row by 1 clock cycle)</li>
-            <div className="relative mt-12 w-full h-48 md:h-42">
-              <Image
-                src="/stagger-x.svg"
-                alt="Stagger input matrix"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-48 md:h-42">
+                <Image
+                  src="/stagger-x.svg"
+                  alt="Stagger input matrix"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Input matrix staggering pattern for systolic array processing
+              </figcaption>
+            </figure>
             <br />
           </ul>
 
           <p className="mt-2">To input our weight matrix: we need to:</p>
           <ul className="list-disc list-inside mt-2">
             <li>Stagger the weight matrix (similar to the inputs)</li>
-            <div className="relative mt-12 w-full h-48 md:h-64">
-              <Image
-                src="/stagger-w.svg"
-                alt="Stagger weight matrix"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-48 md:h-64">
+                <Image
+                  src="/stagger-w.svg"
+                  alt="Stagger weight matrix"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Weight matrix staggering pattern for systolic array processing
+              </figcaption>
+            </figure>
             <li>Transpose it!</li>
-            <div className="relative mt-12 w-full h-48 md:h-42">
-              <Image
-                src="/transpose.svg"
-                alt="Rotate X matrix by 90 degrees"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-48 md:h-42">
+                <Image
+                  src="/transpose.svg"
+                  alt="Matrix transposition"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Weight matrix transposition for correct mathematical alignment
+              </figcaption>
+            </figure>
           </ul>
           <p className="mt-2">
             Note that the transpose is just for mathematical bookkeeping –
@@ -697,14 +745,20 @@ export default function Home() {
             it&apos;s efficient and best practice to split up operations into
             individual clock cycles as much as possible.
           </p>
-          <div className="relative mt-12 w-full h-56 md:h-64">
-            <Image
-              src="/pipelining.svg"
-              alt="Pipeline diagram"
-              fill
-              className="object-contain"
-            />
-          </div>
+          <figure className="mt-12">
+            <div className="relative w-full h-56 md:h-64">
+              <Image
+                src="/pipelining.svg"
+                alt="Pipeline diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Pipelining stages showing how operations overlap across clock
+              cycles
+            </figcaption>
+          </figure>
           <br />
           <p>
             Another mechanism we used to run our chip as efficiently as
@@ -834,14 +888,20 @@ export default function Home() {
               loss. The chain rule lets us break this massive calculation into
               smaller, manageable pieces.
             </p>
-            <div className="relative mt-12 w-full h-56 md:h-72">
-              <Image
-                src="/longchain.svg"
-                alt="Long chain diagram"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-56 md:h-72">
+                <Image
+                  src="/longchain.svg"
+                  alt="Long chain diagram"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Chain rule visualization showing how gradients flow through the
+                network
+              </figcaption>
+            </figure>
             <p>
               This is where calculus enters the picture. To make our model
               better, we need to figure out how changing each weight affects our
@@ -900,14 +960,20 @@ export default function Home() {
             >
               {leaky_relu_derivative_verilogSnippet}
             </pre>
-            <div className="relative mt-12 w-full h-66 md:h-85">
-              <Image
-                src="/leaky-relu-derivative.svg"
-                alt="Leaky ReLU derivative"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-85">
+                <Image
+                  src="/leaky-relu-derivative.svg"
+                  alt="Leaky ReLU derivative"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Leaky ReLU derivative implementation in hardware showing the
+                conditional logic
+              </figcaption>
+            </figure>
             <p>
               What&apos;s beautiful about this is that it&apos;s just a simple
               comparison – no complex arithmetic needed. The hardware can
@@ -930,14 +996,20 @@ export default function Home() {
               module makes our design more scalable and elegant!
             </p>
             <br />
-            <div className="relative mt-12 w-full h-66 md:h-150">
-              <Image
-                src="/vpu.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-150">
+                <Image
+                  src="/vpu.svg"
+                  alt="Vector processing unit"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Vector Processing Unit (VPU) architecture showing unified
+                element-wise operations
+              </figcaption>
+            </figure>
             <br />
             <p>
               The next few derivatives are interesting because we can actually
@@ -994,22 +1066,33 @@ export default function Home() {
               read, meaning we only need to provide an instruction for this
               every few clock cycles.
             </p>
-            <div className="relative mt-12 w-full h-66 md:h-102">
-              <Image
-                src="/ub-diagram.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <div className="relative mt-12 w-full h-66 md:h-82">
-              <Image
-                src="/ub-waveform.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-102">
+                <Image
+                  src="/ub-diagram.svg"
+                  alt="Unified Buffer diagram"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Unified Buffer (UB) architecture showing dual-port memory
+                organization
+              </figcaption>
+            </figure>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-82">
+                <Image
+                  src="/ub-waveform.svg"
+                  alt="Unified Buffer waveform"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Unified Buffer timing waveform showing read and write operations
+              </figcaption>
+            </figure>
             <p>
               At the end of the day, not having these mechanisms wouldn&apos;t
               break having these mechanisms wouldn&apos;t break the TPU — but
@@ -1024,26 +1107,37 @@ export default function Home() {
               UB. The rest of the H values will be stored in the UB because
               they&apos;re needed to compute multiple derivatives.
             </p>
-            <div className="relative mt-12 w-full h-66 md:h-100  ">
-              <Image
-                src="/h-cache.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-100">
+                <Image
+                  src="/h-cache.svg"
+                  alt="H-cache diagram"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                H-cache optimization for storing temporary activation values
+              </figcaption>
+            </figure>
             <p>
               This is what the new TPU architecture, modified to perform
               training, looks like:
             </p>
-            <div className="relative mt-12 w-full h-66 md:h-130  ">
-              <Image
-                src="/tpu.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-130">
+                <Image
+                  src="/tpu.svg"
+                  alt="Complete TPU architecture"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Complete TPU architecture showing all components for both
+                inference and training
+              </figcaption>
+            </figure>
             <p>Now we can do backpropagation!</p>
             <p>
               Going back to the computational graph, we discovered something
@@ -1053,14 +1147,19 @@ export default function Home() {
               gradient matrices with weight matrices (untransposed). It&apos;s
               like looking in a mirror!
             </p>
-            <div className="relative mt-12 w-full h-66 md:h-50  ">
-              <Image
-                src="/forward-pass.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-50">
+                <Image
+                  src="/forward-pass.svg"
+                  alt="Forward pass diagram"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                Forward pass computation flow showing matrix operations
+              </figcaption>
+            </figure>
             <p>
               This insight led us to compute the long chain of the computational
               graph first (highlighted in yellow) – getting all our dL/dZ[n]
@@ -1111,14 +1210,20 @@ export default function Home() {
               couldn&apos;t make the instruction set any smaller without
               compromising the speed and efficiency of the TPU.
             </p>
-            <div className="relative mt-12 w-full h-66 md:h-40">
-              <Image
-                src="/isa.svg"
-                alt="Vector processing unit"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <figure className="mt-12">
+              <div className="relative w-full h-66 md:h-40">
+                <Image
+                  src="/isa.svg"
+                  alt="Instruction Set Architecture diagram"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <figcaption className="text-sm text-center text-gray-600 mt-2">
+                156-bit Instruction Set Architecture (ISA) layout showing
+                control flags and data fields
+              </figcaption>
+            </figure>
             <h3>Putting it all together</h3>
             <p>
               By continuing this same process iteratively – forward pass,
