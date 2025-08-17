@@ -13,13 +13,37 @@ const pe_verilogSnippet = `always_ff @(posedge clk or posedge rst) begin
             weight_reg <= weight;
         end else if (start) begin
             input_out <= input_in;
+            // the main multiply-accumulate operation
             psum_out <= (input_in * weight_reg) + psum_in;
         end
     end`;
 
-const clock_cycle_verilogSnippet = `always @(posedge clk) begin
-    b <= a;
-end`;
+const clock_cycle_verilogSnippet = `module add (
+    input wire clk,
+    // reset signal to reset the module
+    input wire rst,
+
+    // registers to hold the input and output values
+    input reg a,
+    input reg b,
+    output reg c
+  );
+    
+    always @(posedge clk) begin 
+
+    // everything in this block will be executed every clock cycle
+    
+      if (rst) begin
+      // reset the output to 0 when the reset signal is high
+        c <= 0; 
+      end else begin
+        // add the two inputs and store the result in the output
+        c <= a + b; 
+      end
+    end
+
+endmodule
+`;
 
 function highlightVerilog(code) {
   const escaped = code
@@ -36,10 +60,9 @@ function highlightVerilog(code) {
       '<span class="text-blue-700">$1</span>'
     )
     .replace(/\b(0|1)\b/g, '<span class="text-rose-700">$1</span>')
-    .replace(
-      /(&lt;=|==|\+|\*|\(|\))/g,
-      '<span class="text-gray-700">$1</span>'
-    );
+    .replace(/(&lt;=|==|\+|\*|\(|\))/g, '<span class="text-gray-700">$1</span>')
+    .replace(/\/\/.*$/gm, '<span class="text-gray-400">$&</span>')
+    .replace(/\/\*[\s\S]*?\*\//g, '<span class="text-gray-400">$&</span>');
 }
 
 export default function Home() {
@@ -215,10 +238,9 @@ export default function Home() {
         <p>Why did we start this project?</p>
         <br />
         <p>
-          We wanted to do something very challenging (maybe even olympic level)
-          to prove to ourselves that we can do anything we put our mind to. The
-          reasoning for why we chose to build a TPU specifically is fairly
-          simple:
+          We wanted to do something very challenging to prove to ourselves that
+          we can do anything we put our mind to. The reasoning for why we chose
+          to build a TPU specifically is fairly simple:
         </p>
         <ul className="list-disc list-inside text-left mt-4 break-words">
           <li>Building a chip for ML workloads seemed cool</li>
@@ -236,17 +258,17 @@ export default function Home() {
           philosophy: ALWAYS TRY THE HACKY WAY. This meant trying out the “dumb”
           ideas that came to our mind first BEFORE consulting external sources.
           This philosophy helped us make sure we weren’t reverse engineering the
-          TPU, but rather re-inventing it, which helped us derive many of the
-          key mechanisms used in the TPU ourselves.
+          TPU, but rather <b>re-inventing it</b>, which helped us derive many of
+          the key mechanisms used in the TPU ourselves.
         </p>
         <br />
         <p>
           We also wanted to treat this project as an exercise to code without
           relying on AI to write for us, since we felt that our initial instinct
           recently has been to reach for these AI tools whenever we faced a
-          slight struggle. We wanted to cultivate a certain style of thinking
-          that we could take forward with us and use in any future endeavours to
-          think through difficult problems.
+          slight struggle. We wanted to cultivate a certain{" "}
+          <b>style of thinking</b> that we could take forward with us and use in
+          any future endeavours to think through difficult problems.
           <sup className="ml-1 text-[12px]">
             <a
               href="#fn1"
@@ -269,7 +291,7 @@ export default function Home() {
           <br />
           <p>
             Before we move forward, we want to make it clear what this article
-            covers and what it doesn’t. Note that this is NOT A 1-to-1 replica
+            covers and what it doesn’t. Note that this is NOT a 1-to-1 replica
             of the TPU — it is our attempt at re-inventing the TPU ourselves.
           </p>
         </div>
@@ -280,12 +302,13 @@ export default function Home() {
         <div className="space-y-4 md:space-y-6">
           <p>
             A TPU is an application specific chip (ASIC) designed by Google to
-            make inferencing and training ML models faster and more efficient.
-            Whereas a GPU can be used to render frames AND run ML workloads, a
-            TPU can only perform math operations, allowing it to be better at
-            what it’s designed for. Naturally, trying to master a single task is
-            much easier and will yield better results than trying to master
-            multiple tasks and the TPU strongly employs this philosophy.
+            make inferencing (using) and training ML models faster and more
+            efficient. Whereas a GPU can be used to render frames AND run ML
+            workloads, a TPU can only perform math operations, allowing it to be
+            better at what it’s designed for. Naturally, trying to master a
+            single task is much easier and will yield better results than trying
+            to master multiple tasks and the TPU strongly employs this
+            philosophy.
           </p>
 
           <div className="pl-4 ml-4 border-l-4 border-neutral-300">
@@ -309,6 +332,16 @@ export default function Home() {
                 className="max-w-full h-auto"
               />
             </div>
+            <br />
+            <p>
+              The language we use to describe hardware is called Verilog.
+              It&apos;s a hardware description language that allows us to
+              describe the behaviour of a given hardware module (similar to
+              programming software), but synthesizes into boolean logic gates
+              (AND, OR, NOT, etc.) that can be combined to build any chip we
+              want. Here&apos;s a simple example of an addition in Verilog:
+            </p>
+            <br />
             <pre
               className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
             >
@@ -338,7 +371,7 @@ export default function Home() {
           </p>
           <p>
             Specifically, the TPU is very efficient at performing matrix
-            multiplications, which make up 90-90% of the compute operations in
+            multiplications, which make up 80-90% of the compute operations in
             transformers (up to 95% in very large models) and 70-80% in CNNs.
             Each matrix multiplication represents the calculation for a single
             layer in an MLP, and in deep learning, we have many of these layers,
@@ -455,7 +488,7 @@ export default function Home() {
             added to the products of each successive PE, until they up at the
             last row of PEs where they become an element of the output matrix.
           </p>
-          <div className="relative mt-12 w-full h-96 md:h-[32rem]">
+          <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
             <Image
               src="/sys-array-standalone.svg"
               alt="Systolic array diagram"
@@ -483,6 +516,7 @@ export default function Home() {
           <p>To input our input batch within the systolic array, we need to:</p>
           <ul className="list-disc list-inside mt-2">
             <li>Rotate our X matrix by 90 degrees</li>
+            <br />
             <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
               <Image
                 src="/rotate.svg"
@@ -492,7 +526,7 @@ export default function Home() {
               />
             </div>
             <br />
-            <li>STAGGER the inputs</li>
+            <li>STAGGER the inputs (delay each row by 1 clock cycle)</li>
             <div className="relative mt-12 w-full h-48 md:h-42">
               <Image
                 src="/stagger-x.svg"
@@ -501,6 +535,7 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
+            <br />
           </ul>
 
           <p className="mt-2">To input our weight matrix: we need to:</p>
@@ -753,6 +788,15 @@ export default function Home() {
               vector processing unit (VPU) — because that&apos;s exactly what
               they&apos;re doing, processing vectors element-wise!
             </p>
+            <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
+              <Image
+                src="/vpu.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <br />
             <p className="italic">
               [INSERT DIAGRAM/GIF WITH UB, VPU, and SYS ARRAY]
             </p>
@@ -814,11 +858,11 @@ export default function Home() {
             <p className="italic">[INSERT CODE BLOCK]</p>
             <p>
               What&apos;s beautiful about this is that it&apos;s just a simple
-              comparison and multiplexer — no complex arithmetic needed! The
-              hardware can compute this derivative in a single clock cycle,
-              keeping our pipeline flowing smoothly. This same principle applies
-              to other activation functions: their derivatives often simplify to
-              basic operations that hardware can execute very efficiently. This
+              comparison — no complex arithmetic needed! The hardware can
+              compute this derivative in a single clock cycle, keeping our
+              pipeline flowing smoothly. This same principle applies to other
+              activation functions: their derivatives often simplify to basic
+              operations that hardware can execute very efficiently. This
               insight led us to compute the long chain first — getting all our
               dL/dZ[n] gradients just like we computed activations in forward
               pass. We could cache these gradients and reuse them, following the
