@@ -1152,20 +1152,20 @@ export default function Home() {
               use matrix multiplication (and systolic array!) to compute the
               derivatives with the help of these three identities:
             </p>
+            <ol className="list-decimal list-inside mt-2 space-y-2">
+              <li>
+                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to
+                the weights, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"} />
+              </li>
+              <li>
+                If we have <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and take its derivative with respect to
+                the inputs <InlineMath math={"\\mathbf{X}"} />, we get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"} /> (just the weight matrix)
+              </li>
+              <li>For the bias term, the derivative is simply 1.</li>
+            </ol>
             <p>
-              <ol className="list-decimal list-inside mt-2 space-y-2">
-                <li>
-                  If we have Z = X@W^T and take its derivative with respect to
-                  the weights, we get dZ/dW = X
-                </li>
-                <li>
-                  If we have Z = X@W^T and take its derivative with respect to
-                  the inputs X, we get dZ/dX = W^T (just the weight matrix)
-                </li>
-                <li>For the bias term, the derivative is simply 1.</li>
-              </ol>
-              This means that we can multiply the previous dH/dZ with X, W^T,
-              and 1 to get dZ/dW, dZ/dX, and dZ/db, respectively. And because
+              This means that we can multiply the previous <InlineMath math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{Z}}"} /> with <InlineMath math={"\\mathbf{X}"} />, <InlineMath math={"\\mathbf{W}^T"} />,
+              and 1 to get <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"} />, <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"} />, and <InlineMath math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"} />, respectively. And because
               all of the gradients are actually gradient matrices, we can use
               the systolic array!
             </p>
@@ -1313,7 +1313,7 @@ export default function Home() {
                 Stream these through our systolic array to compute the weight
                 gradients
               </li>
-            </ul>
+            </ol>
             <p>
               And here&apos;s where something really magical happens: we can
               stream these weight gradients directly into a gradient descent
