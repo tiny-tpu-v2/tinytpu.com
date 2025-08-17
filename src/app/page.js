@@ -1,6 +1,7 @@
 import { Roboto_Mono } from "next/font/google";
 import Image from "next/image";
 import { BlockMath, InlineMath } from "react-katex";
+import Slideshow from "../components/slideshow";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -232,7 +233,55 @@ export default function Home() {
             Return Back
           </button>
         </div>
-        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1">
+
+        {/* Slideshow 1 */}
+        <div className="mt-12 pt-8 border-t border-neutral-200">
+          <Slideshow 
+            slides={[
+              "/slideshow_1/1.png",
+              "/slideshow_1/2.png",
+              "/slideshow_1/3.png",
+              "/slideshow_1/4.png",
+              "/slideshow_1/5.png"
+            ]}
+            title="Slideshow 1: TPU Architecture Overview"
+            aspectRatio="aspect-[2228/1944]"
+          />
+        </div>
+
+        {/* Slideshow 2 */}
+        <div className="mt-8 pt-8 border-t border-neutral-200">
+          <Slideshow 
+            slides={[
+              "/slideshow_2/1.png",
+              "/slideshow_2/2.png",
+              "/slideshow_2/3.png"
+            ]}
+            title="Slideshow 2: Implementation Details"
+            aspectRatio="aspect-[2228/2739]"
+          />
+        </div>
+
+        {/* Slideshow 3 */}
+        <div className="mt-8 pt-8 border-t border-neutral-200">
+          <Slideshow 
+            slides={[
+              "/slideshow_3/1.png",
+              "/slideshow_3/2.png",
+              "/slideshow_3/3.png",
+              "/slideshow_3/4.png",
+              "/slideshow_3/5.png",
+              "/slideshow_3/6.png",
+              "/slideshow_3/7.png",
+              "/slideshow_3/8.png",
+              "/slideshow_3/9.png"
+            ]}
+            title="Slideshow 3: Advanced Topics"
+            aspectRatio="aspect-[2228/2739]"
+          />
+        </div>
+
+        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1 mt-12">
           Background
         </h2>
         <p>Why did we start this project?</p>
