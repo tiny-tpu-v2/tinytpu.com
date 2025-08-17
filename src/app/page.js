@@ -172,9 +172,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        
-        
-        
+
         <p>
           Nobody really understands how TPUs work…and neither do we! So we
           wanted to make this because we wanted to take a shot and try to guess
@@ -182,7 +180,7 @@ export default function Home() {
         </p>
         <br />
         <figure className="w-full">
-          <div className="w-full aspect-square bg-white border border-neutral-300 rounded-lg flex items-center justify-center p-4">
+          <div className="w-full aspect-square rounded-lg flex items-center justify-center p-4">
             <div className="relative w-full h-full">
               <Image
                 src="/longslideshow.svg"
@@ -250,12 +248,6 @@ export default function Home() {
             Return Back
           </button>
         </div>
-
-        
-
-        
-
-        
 
         <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1 mt-12">
           Background
@@ -458,7 +450,7 @@ export default function Home() {
           </h3>
           <p>
             Now, say we want to do continuous inference (i.e. self driving car
-            making multiple predictions a second). That would imply that we’re
+            making multiple predictions a second). That would imply that we're
             sending multiple pieces of data at once. Since data is inherently
             multidimensional and has many features, we would have matrices with
             very large dimensions. However, the XOR problem simplifies the
@@ -493,10 +485,10 @@ export default function Home() {
           </div>
 
           <p>
-            Another simplification we&apos;re making for our systolic array
-            example here is that we&apos;ll use a 2x2 instead of the 256x256
-            array used in the TPUv1. However, the math is still faithful so
-            nothing is actually dumbed down, rather scaled down instead.
+            Another simplification we're making for our systolic array example
+            here is that we'll use a 2x2 instead of the 256x256 array used in
+            the TPUv1. However, the math is still faithful so nothing is
+            actually dumbed down, rather scaled down instead.
           </p>
 
           <p>
@@ -597,16 +589,16 @@ export default function Home() {
             can very easily inference and train any model.
           </p>
 
-              
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Worked example
           </h3>
           <p>Now let&apos;s walk through the example of our XOR problem:</p>
           <p>
             Our systolic array takes two inputs: the input matrix and the weight
-            matrix. For our XOR network, we initialize with the following weights and biases:
+            matrix. For our XOR network, we initialize with the following
+            weights and biases:
           </p>
-          
+
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">Layer 1 parameters:</p>
             <div className="text-center mb-4">
@@ -743,7 +735,6 @@ export default function Home() {
             />
           </div>
 
-
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Bias and activation
           </h3>
@@ -755,15 +746,19 @@ export default function Home() {
             bias modules to compute our pre-activations.
             <b>We will denote these values with the variable Z.</b>
           </p>
-          
+
           <div className="my-6">
             <div className="text-center mb-4">
               <BlockMath
-                math={"\\mathbf{Z}_{\\text{biased}} = \\mathbf{Z} + \\mathbf{b}"}
+                math={
+                  "\\mathbf{Z}_{\\text{biased}} = \\mathbf{Z} + \\mathbf{b}"
+                }
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              The bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast across all rows of the matrix — meaning it&apos;s added to each row of <InlineMath math={"\\mathbf{Z}"} />
+              The bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast
+              across all rows of the matrix — meaning it&apos;s added to each
+              row of <InlineMath math={"\\mathbf{Z}"} />
             </p>
           </div>
           <p>
@@ -797,10 +792,12 @@ export default function Home() {
               For matrices, this applies to each element independently.
             </p>
           </div>
-          
+
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
-              For our XOR example, let&apos;s see how Layer 1 processes the data. First, the systolic array computes <InlineMath math={"\\mathbf{X}\\mathbf{W}_1^T"} />:
+              For our XOR example, let&apos;s see how Layer 1 processes the
+              data. First, the systolic array computes{" "}
+              <InlineMath math={"\\mathbf{X}\\mathbf{W}_1^T"} />:
             </p>
             <div className="text-center mb-3">
               <BlockMath
@@ -817,7 +814,9 @@ export default function Home() {
                 }
               />
             </div>
-            <p className="text-sm text-gray-700 mb-2">Finally, LeakyReLU is applied element-wise:</p>
+            <p className="text-sm text-gray-700 mb-2">
+              Finally, LeakyReLU is applied element-wise:
+            </p>
             <div className="text-center mb-4">
               <BlockMath
                 math={
@@ -826,24 +825,25 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Negative values are multiplied by 0.5, positive values pass through unchanged.
+              Negative values are multiplied by 0.5, positive values pass
+              through unchanged.
             </p>
           </div>
           {/* <p className="italic">
             [INSERT DRAWING OF SYS ARRAY + BIAS + LR MODULES]
           </p> */}
           {/* Slideshow 2 */}
-        <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow
-            slides={[
-              "/slideshow_2/1.png",
-              "/slideshow_2/2.png",
-              "/slideshow_2/3.png",
-            ]}
-            title="Systolic array with bias and leaky ReLU"
-            aspectRatio="aspect-[2228/2739]"
-          />
-        </div>
+          <div className="mt-8 pt-8 border-t border-neutral-200">
+            <Slideshow
+              slides={[
+                "/slideshow_2/1.png",
+                "/slideshow_2/2.png",
+                "/slideshow_2/3.png",
+              ]}
+              title="Systolic array with bias and leaky ReLU"
+              aspectRatio="aspect-[2228/2739]"
+            />
+          </div>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Pipelining
           </h3>
@@ -947,10 +947,11 @@ export default function Home() {
             of the systolic array: we want to maximize PE usage. We always want
             to keep the systolic array fed!
           </p>
-          
+
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
-              For Layer 2, the outputs from Layer 1 (<InlineMath math={"\\mathbf{H}_1"} />) now become our inputs:
+              For Layer 2, the outputs from Layer 1 (
+              <InlineMath math={"\\mathbf{H}_1"} />) now become our inputs:
             </p>
             <div className="text-center mb-3">
               <BlockMath
@@ -959,7 +960,9 @@ export default function Home() {
                 }
               />
             </div>
-            <p className="text-sm text-gray-700 mb-2">Adding bias and applying activation:</p>
+            <p className="text-sm text-gray-700 mb-2">
+              Adding bias and applying activation:
+            </p>
             <div className="text-center mb-4">
               <BlockMath
                 math={
@@ -975,28 +978,28 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              All values are positive, so they pass through unchanged. These are our final predictions for the XOR problem!
+              All values are positive, so they pass through unchanged. These are
+              our final predictions for the XOR problem!
             </p>
 
             {/* Slideshow 3 */}
-        <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow
-            slides={[
-              "/slideshow_3/1.png",
-              "/slideshow_3/2.png",
-              "/slideshow_3/3.png",
-              "/slideshow_3/4.png",
-              "/slideshow_3/5.png",
-              "/slideshow_3/6.png",
-              "/slideshow_3/7.png",
-              "/slideshow_3/8.png",
-              "/slideshow_3/9.png",
-            ]}
-            title="Forward pass walkthrough"
-            aspectRatio="aspect-[2228/2739]"
-          />
-        </div>
-
+            <div className="mt-8 pt-8 border-t border-neutral-200">
+              <Slideshow
+                slides={[
+                  "/slideshow_3/1.png",
+                  "/slideshow_3/2.png",
+                  "/slideshow_3/3.png",
+                  "/slideshow_3/4.png",
+                  "/slideshow_3/5.png",
+                  "/slideshow_3/6.png",
+                  "/slideshow_3/7.png",
+                  "/slideshow_3/8.png",
+                  "/slideshow_3/9.png",
+                ]}
+                title="Forward pass walkthrough"
+                aspectRatio="aspect-[2228/2739]"
+              />
+            </div>
           </div>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Control unit and ISA
@@ -1054,10 +1057,17 @@ export default function Home() {
                 <InlineMath math={"N"} /> is the number of samples
               </p>
             </div>
-            
+
             <div className="my-6">
               <p className="text-sm text-gray-700 mb-2">
-                For our XOR example, with predictions <InlineMath math={"\\hat{\\mathbf{y}} = [0.5617, 0.5344, 0.6673, 0.6400]^T"} /> and targets <InlineMath math={"\\mathbf{y} = [0, 1, 1, 0]^T"} />:
+                For our XOR example, with predictions{" "}
+                <InlineMath
+                  math={
+                    "\\hat{\\mathbf{y}} = [0.5617, 0.5344, 0.6673, 0.6400]^T"
+                  }
+                />{" "}
+                and targets <InlineMath math={"\\mathbf{y} = [0, 1, 1, 0]^T"} />
+                :
               </p>
               <div className="text-center mb-4">
                 <BlockMath
@@ -1074,7 +1084,8 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed">
-                This loss value tells us how far off our predictions are from the true XOR outputs.
+                This loss value tells us how far off our predictions are from
+                the true XOR outputs.
               </p>
             </div>
             <p>
@@ -1216,7 +1227,8 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed mb-2">
-                Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are positive, the LeakyReLU gradient is 1:
+                Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are
+                positive, the LeakyReLU gradient is 1:
               </p>
               <div className="text-center mb-6">
                 <BlockMath
@@ -1260,7 +1272,8 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 leading-relaxed mb-2">
-                With mixed positive and negative values in <InlineMath math={"\\mathbf{Z}_1"} />, the gradient is:
+                With mixed positive and negative values in{" "}
+                <InlineMath math={"\\mathbf{Z}_1"} />, the gradient is:
               </p>
               <div className="text-center mb-8">
                 <BlockMath
@@ -1614,7 +1627,6 @@ export default function Home() {
               />
             </div>
 
-            
             <p>
               And here&apos;s where something really magical happens: we can
               stream these weight gradients directly into a gradient descent
@@ -1680,7 +1692,8 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 mb-2">
-                Applying gradient descent with learning rate <InlineMath math={"\\alpha = 0.75"} />:
+                Applying gradient descent with learning rate{" "}
+                <InlineMath math={"\\alpha = 0.75"} />:
               </p>
               <div className="text-center mb-6">
                 <BlockMath
