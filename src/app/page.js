@@ -760,7 +760,7 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              The bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast across all rows of the matrix — meaning it's added to each row of <InlineMath math={"\\mathbf{Z}"} />
+              The bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast across all rows of the matrix — meaning it&apos;s added to each row of <InlineMath math={"\\mathbf{Z}"} />
             </p>
           </div>
           <p>
@@ -797,7 +797,7 @@ export default function Home() {
           
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
-              For our XOR example, let's see how Layer 1 processes the data. First, the systolic array computes <InlineMath math={"\\mathbf{X}\\mathbf{W}_1^T"} />:
+              For our XOR example, let&apos;s see how Layer 1 processes the data. First, the systolic array computes <InlineMath math={"\\mathbf{X}\\mathbf{W}_1^T"} />:
             </p>
             <div className="text-center mb-3">
               <BlockMath
@@ -1247,7 +1247,7 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-gray-700 mb-2">
-                And through the first layer's activation:
+                And through the first layer&apos;s activation:
               </p>
               <div className="text-center mb-4">
                 <BlockMath
