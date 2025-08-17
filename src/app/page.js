@@ -450,14 +450,15 @@ export default function Home() {
           </h3>
           <p>
             Now, say we want to do continuous inference (i.e. self driving car
-            making multiple predictions a second). That would imply that we're
-            sending multiple pieces of data at once. Since data is inherently
-            multidimensional and has many features, we would have matrices with
-            very large dimensions. However, the XOR problem simplifies the
-            dimensions for us, as there are only two features (0 or 1) and 4
-            possible pieces of input data (four possible binary combinations of
-            0 and 1). This gives us a 4x2 matrix, where 4 is the number of rows
-            (batch size) and 2 is the number of columns (feature size).
+            making multiple predictions a second). That would imply that
+            we&apos;re sending multiple pieces of data at once. Since data is
+            inherently multidimensional and has many features, we would have
+            matrices with very large dimensions. However, the XOR problem
+            simplifies the dimensions for us, as there are only two features (0
+            or 1) and 4 possible pieces of input data (four possible binary
+            combinations of 0 and 1). This gives us a 4x2 matrix, where 4 is the
+            number of rows (batch size) and 2 is the number of columns (feature
+            size).
           </p>
 
           <div className="my-6">
@@ -485,10 +486,10 @@ export default function Home() {
           </div>
 
           <p>
-            Another simplification we're making for our systolic array example
-            here is that we'll use a 2x2 instead of the 256x256 array used in
-            the TPUv1. However, the math is still faithful so nothing is
-            actually dumbed down, rather scaled down instead.
+            Another simplification we&apos;re making for our systolic array
+            example here is that we&apos;ll use a 2x2 instead of the 256x256
+            array used in the TPUv1. However, the math is still faithful so
+            nothing is actually dumbed down, rather scaled down instead.
           </p>
 
           <p>
