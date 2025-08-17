@@ -248,52 +248,11 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Slideshow 1 */}
-        <div className="mt-12 pt-8 border-t border-neutral-200">
-          <Slideshow
-            slides={[
-              "/slideshow_1/1.png",
-              "/slideshow_1/2.png",
-              "/slideshow_1/3.png",
-              "/slideshow_1/4.png",
-              "/slideshow_1/5.png",
-            ]}
-            title="Slideshow 1: TPU Architecture Overview"
-            aspectRatio="aspect-[2228/1944]"
-          />
-        </div>
+        
 
-        {/* Slideshow 2 */}
-        <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow
-            slides={[
-              "/slideshow_2/1.png",
-              "/slideshow_2/2.png",
-              "/slideshow_2/3.png",
-            ]}
-            title="Slideshow 2: Implementation Details"
-            aspectRatio="aspect-[2228/2739]"
-          />
-        </div>
+        
 
-        {/* Slideshow 3 */}
-        <div className="mt-8 pt-8 border-t border-neutral-200">
-          <Slideshow
-            slides={[
-              "/slideshow_3/1.png",
-              "/slideshow_3/2.png",
-              "/slideshow_3/3.png",
-              "/slideshow_3/4.png",
-              "/slideshow_3/5.png",
-              "/slideshow_3/6.png",
-              "/slideshow_3/7.png",
-              "/slideshow_3/8.png",
-              "/slideshow_3/9.png",
-            ]}
-            title="Slideshow 3: Advanced Topics"
-            aspectRatio="aspect-[2228/2739]"
-          />
-        </div>
+        
 
         <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1 mt-12">
           Background
@@ -519,8 +478,8 @@ export default function Home() {
                   0 & 1 \\\\[0.3em]
                   1 & 0 \\\\[0.3em]
                   1 & 1
-                  \\end{bmatrix}, \\quad
-                  \\mathbf{y} = \\begin{bmatrix} 0 \\\\[0.3em] 1 \\\\[0.3em] 1 \\\\[0.3em] 0 \\end{bmatrix}
+                  \\end{bmatrix} \\in \\mathbb{R}^{4 \\times 2}, \\quad
+                  \\mathbf{y} = \\begin{bmatrix} 0 \\\\[0.3em] 1 \\\\[0.3em] 1 \\\\[0.3em] 0 \\end{bmatrix} \\in \\mathbb{R}^{4 \\times 1}
                 `}
               />
             </div>
@@ -635,14 +594,34 @@ export default function Home() {
             can very easily inference and train any model.
           </p>
 
+              
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Worked example
           </h3>
           <p>Now let&apos;s walk through the example of our XOR problem:</p>
           <p>
             Our systolic array takes two inputs: the input matrix and the weight
-            matrix.
+            matrix. For our XOR network, we initialize with the following weights and biases:
           </p>
+          
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">Layer 1 parameters:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\mathbf{W}_1 = \\begin{bmatrix} \\phantom{-}0.2985 & -0.5792 \\\\[0.3em] \\phantom{-}0.0913 & \\phantom{-}0.4234 \\end{bmatrix} \\in \\mathbb{R}^{2 \\times 2}, \\quad \\mathbf{b}_1 = \\begin{bmatrix} -0.4939 & \\phantom{-}0.189\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">Layer 2 parameters:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.5266 & \\phantom{-}0.2958 \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}, \\quad \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.6358 \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 1}"
+                }
+              />
+            </div>
+          </div>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Input and weight scheduling
           </h3>
@@ -743,8 +722,25 @@ export default function Home() {
             layer, so we replicated the logic for the weight FIFOs, without the
             second port.
           </p>
-          <p className="italic">[INSERT DRAWING OF MATMUL MATH]</p>
-          <p className="italic">[INSERT GIF OF SYSTOLIC ARRAY COMPUTING IT]</p>
+          {/* <p className="italic">[INSERT DRAWING OF MATMUL MATH]</p> */}
+          {/* <p className="italic">[INSERT GIF OF SYSTOLIC ARRAY COMPUTING IT]</p> */}
+
+          {/* Slideshow 1 */}
+          <div className="mt-12 pt-8 border-t border-neutral-200">
+            <Slideshow
+              slides={[
+                "/slideshow_1/1.png",
+                "/slideshow_1/2.png",
+                "/slideshow_1/3.png",
+                "/slideshow_1/4.png",
+                "/slideshow_1/5.png",
+              ]}
+              title="Systolic array matrix multiplication"
+              aspectRatio="aspect-[2228/1944]"
+            />
+          </div>
+
+
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Bias and activation
           </h3>
@@ -798,9 +794,53 @@ export default function Home() {
               For matrices, this applies to each element independently.
             </p>
           </div>
-          <p className="italic">
+          
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              For our XOR example, let's see how Layer 1 processes the data. First, the systolic array computes <InlineMath math={"\\mathbf{X}\\mathbf{W}_1^T"} />:
+            </p>
+            <div className="text-center mb-3">
+              <BlockMath
+                math={
+                  "\\mathbf{Z}_1 = \\begin{bmatrix} \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.2em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.2em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.2em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.2985 & \\phantom{-}0.0913 \\\\[0.2em] -0.5792 & \\phantom{-}0.4234 \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0000 & \\phantom{-}0.0000 \\\\[0.2em] -0.5792 & \\phantom{-}0.4234 \\\\[0.2em] \\phantom{-}0.2985 & \\phantom{-}0.0913 \\\\[0.2em] -0.2807 & \\phantom{-}0.5147 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">Then bias is added:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\mathbf{Z}_1 = \\mathbf{Z}_1 + \\mathbf{b}_1 = \\begin{bmatrix} -0.4939 & \\phantom{-}0.1890 \\\\[0.2em] -1.0731 & \\phantom{-}0.6124 \\\\[0.2em] -0.1954 & \\phantom{-}0.2803 \\\\[0.2em] -0.7746 & \\phantom{-}0.7037 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">Finally, LeakyReLU is applied element-wise:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\mathbf{H}_1 = \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1) = \\begin{bmatrix} -0.2470 & \\phantom{-}0.1890 \\\\[0.2em] -0.5366 & \\phantom{-}0.6124 \\\\[0.2em] -0.0977 & \\phantom{-}0.2803 \\\\[0.2em] -0.3873 & \\phantom{-}0.7037 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Negative values are multiplied by 0.5, positive values pass through unchanged.
+            </p>
+          </div>
+          {/* <p className="italic">
             [INSERT DRAWING OF SYS ARRAY + BIAS + LR MODULES]
-          </p>
+          </p> */}
+          {/* Slideshow 2 */}
+        <div className="mt-8 pt-8 border-t border-neutral-200">
+          <Slideshow
+            slides={[
+              "/slideshow_2/1.png",
+              "/slideshow_2/2.png",
+              "/slideshow_2/3.png",
+            ]}
+            title="Systolic array with bias and leaky ReLU"
+            aspectRatio="aspect-[2228/2739]"
+          />
+        </div>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Pipelining
           </h3>
@@ -904,6 +944,57 @@ export default function Home() {
             of the systolic array: we want to maximize PE usage. We always want
             to keep the systolic array fed!
           </p>
+          
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              For Layer 2, the outputs from Layer 1 (<InlineMath math={"\\mathbf{H}_1"} />) now become our inputs:
+            </p>
+            <div className="text-center mb-3">
+              <BlockMath
+                math={
+                  "\\mathbf{z}_2 = \\mathbf{H}_1\\mathbf{W}_2^T = \\begin{bmatrix} -0.2470 & \\phantom{-}0.1890 \\\\[0.2em] -0.5366 & \\phantom{-}0.6124 \\\\[0.2em] -0.0977 & \\phantom{-}0.2803 \\\\[0.2em] -0.3873 & \\phantom{-}0.7037 \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266 \\\\[0.2em] \\phantom{-}0.2958 \\end{bmatrix} = \\begin{bmatrix} -0.0741 \\\\[0.2em] -0.1014 \\\\[0.2em] \\phantom{-}0.0315 \\\\[0.2em] \\phantom{-}0.0042 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">Adding bias and applying activation:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\mathbf{z}_2 = \\mathbf{z}_2 + \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.5617 \\\\[0.2em] \\phantom{-}0.5344 \\\\[0.2em] \\phantom{-}0.6673 \\\\[0.2em] \\phantom{-}0.6400 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\hat{\\mathbf{y}} = \\mathbf{h}_2 = \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2) = \\begin{bmatrix} \\phantom{-}0.5617 \\\\[0.2em] \\phantom{-}0.5344 \\\\[0.2em] \\phantom{-}0.6673 \\\\[0.2em] \\phantom{-}0.6400 \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              All values are positive, so they pass through unchanged. These are our final predictions for the XOR problem!
+            </p>
+
+            {/* Slideshow 3 */}
+        <div className="mt-8 pt-8 border-t border-neutral-200">
+          <Slideshow
+            slides={[
+              "/slideshow_3/1.png",
+              "/slideshow_3/2.png",
+              "/slideshow_3/3.png",
+              "/slideshow_3/4.png",
+              "/slideshow_3/5.png",
+              "/slideshow_3/6.png",
+              "/slideshow_3/7.png",
+              "/slideshow_3/8.png",
+              "/slideshow_3/9.png",
+            ]}
+            title="Forward pass walkthrough"
+            aspectRatio="aspect-[2228/2739]"
+          />
+        </div>
+
+          </div>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Control unit and ISA
           </h3>
@@ -958,6 +1049,29 @@ export default function Home() {
                 where <InlineMath math={"y_i"} /> is the target output,{" "}
                 <InlineMath math={"\\hat{y}_i"} /> is our prediction, and{" "}
                 <InlineMath math={"N"} /> is the number of samples
+              </p>
+            </div>
+            
+            <div className="my-6">
+              <p className="text-sm text-gray-700 mb-2">
+                For our XOR example, with predictions <InlineMath math={"\\hat{\\mathbf{y}} = [0.5617, 0.5344, 0.6673, 0.6400]^T"} /> and targets <InlineMath math={"\\mathbf{y} = [0, 1, 1, 0]^T"} />:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\mathcal{L} = \\frac{1}{4}[(0 - 0.5617)^2 + (1 - 0.5344)^2 + (1 - 0.6673)^2 + (0 - 0.6400)^2]"
+                  }
+                />
+              </div>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\mathcal{L} = \\frac{1}{4}[0.3155 + 0.2168 + 0.1107 + 0.4096] = 0.2631"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                This loss value tells us how far off our predictions are from the true XOR outputs.
               </p>
             </div>
             <p>
@@ -1025,6 +1139,40 @@ export default function Home() {
               we called a vector processing unit (VPU) — because that&apos;s
               exactly what they&apos;re doing, processing vectors element-wise!
             </p>
+
+            <div className="my-6">
+              <p className="text-sm text-gray-700 mb-2">
+                For our XOR example, the output layer gradient:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{2}{N}(\\mathbf{h}_2 - \\mathbf{y})"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-2">
+                First, compute the element-wise difference:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\mathbf{h}_2 - \\mathbf{y} = \\begin{bmatrix} \\phantom{-}0.5617\\phantom{0} \\\\[0.3em] \\phantom{-}0.5344\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5617\\phantom{0} \\\\[0.3em] -0.4656\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-2">
+                Then scale by{" "}
+                <InlineMath math={"\\frac{2}{N} = \\frac{1}{2}"} />:
+              </p>
+              <div className="text-center mb-6">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{1}{2} \\begin{bmatrix} \\phantom{-}0.5617\\phantom{0} \\\\[0.3em] -0.4656\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+            </div>
             <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
               <Image
                 src="/vpu.svg"
@@ -1052,6 +1200,29 @@ export default function Home() {
               ), we created a tiny cache within our vector unit instead of
               storing them in our main scratchpad memory.
             </p>
+
+            <div className="my-6">
+              <p className="text-sm text-gray-700 mb-2">
+                Computing pre-activation gradients using the chain rule:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-2">
+                Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are positive, the LeakyReLU gradient is 1:
+              </p>
+              <div className="text-center mb-6">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+            </div>
             <h3 className="text-sm md:text-base font-semibold text-neutral-800">
               The beautiful symmetry of forward and backward pass
             </h3>
@@ -1063,6 +1234,39 @@ export default function Home() {
               multiply gradient matrices with weight matrices (untransposed).
               It&apos;s like looking in a mirror!
             </p>
+
+            <div className="my-6">
+              <p className="text-sm text-gray-700 mb-2">
+                Propagating gradients to the hidden layer:
+              </p>
+              <div className="text-center mb-6">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.5em] -0.2328\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 mb-2">
+                And through the first layer's activation:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-2">
+                With mixed positive and negative values in <InlineMath math={"\\mathbf{Z}_1"} />, the gradient is:
+              </p>
+              <div className="text-center mb-8">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0739\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+            </div>
             <p>
               Once we have all of these individual derivatives, we can multiply
               them together to find any derivative with respect of the loss
@@ -1417,6 +1621,56 @@ export default function Home() {
               </p>
             </div>
 
+            <div className="my-6">
+              <p className="text-sm text-gray-700 mb-2">
+                Computing weight gradients for our XOR network:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
+                  }
+                />
+              </div>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "= \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 mb-2">
+                Similarly for Layer 1:
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} & \\phantom{-}0.0920\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} & -0.0404\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 mb-2">
+                Bias gradients (sum over samples):
+              </p>
+              <div className="text-center mb-6">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2017, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+              <p className="text-sm text-gray-700 mb-2">
+                Applying gradient descent with learning rate <InlineMath math={"\\alpha = 0.75"} />:
+              </p>
+              <div className="text-center mb-6">
+                <BlockMath
+                  math={
+                    "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5657\\phantom{0} & \\phantom{-}0.2290\\phantom{0} \\end{bmatrix}"
+                  }
+                />
+              </div>
+            </div>
+
             <p>
               No waiting around — everything flows like water through our
               pipeline.
@@ -1479,584 +1733,6 @@ export default function Home() {
           </div>
         </div>
         <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Bias addition (broadcasting):</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={"\\mathbf{Z}_{\\text{biased}} = \\mathbf{Z} + \\mathbf{b}"}
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-6">
-            where bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast
-            across all rows of matrix. This means the bias vector is copied, and
-            added to each row of the <InlineMath math={"\\mathbf{Z}"} /> matrix
-          </p>
-        </div>
-
-        <br></br>
-        <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-          Network architecture
-        </h3>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Input matrix:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={`
-                \\mathbf{X} =
-                \\begin{bmatrix}
-                \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em]
-                \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em]
-                \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em]
-                \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.}
-                \\end{bmatrix}
-                \\in \\mathbb{R}^{4 \\times 2}
-              `}
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Target output vector:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{y} = \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} \\in \\mathbb{R}^{4 \\times 1}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Layer 1 weight matrix and bias vector:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{W}_1 = \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & -0.5792\\phantom{0} \\\\[0.3em] \\phantom{-}0.0913\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{2 \\times 2}, \\quad \\mathbf{b}_1 = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.189\\phantom{00} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <p className="font-semibold mb-2">
-            Layer 2 weight matrix and bias vector:
-          </p>
-          <div className="text-center mb-8">
-            <BlockMath
-              math={
-                "\\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 2}, \\quad \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix} \\in \\mathbb{R}^{1 \\times 1}"
-              }
-            />
-          </div>
-        </div>
-        <br></br>
-        <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-          Forward pass with exact values
-        </h3>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 1 linear transformation:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{Z}_1 = \\mathbf{X}\\mathbf{W}_1^T = \\begin{bmatrix} \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0000\\phantom{0} & \\phantom{-}0.0000\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\\\[0.3em] \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.2807\\phantom{0} & \\phantom{-}0.5147\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 1 with bias addition:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{Z}_1 = \\mathbf{Z}_1 + \\mathbf{b}_1 = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -1.0731\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.1954\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.7746\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Layer 1 activation (element-wise application):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={"\\mathbf{H}_1 = \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)"}
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            This applies LeakyReLU to each element of the matrix:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{H}_1 = \\begin{bmatrix} \\text{LeakyReLU}_{0.5}(-0.4939) & \\text{LeakyReLU}_{0.5}(0.1890) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-1.0731) & \\text{LeakyReLU}_{0.5}(0.6124) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.1954) & \\text{LeakyReLU}_{0.5}(0.2803) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.7746) & \\text{LeakyReLU}_{0.5}(0.7037) \\end{bmatrix}"
-              }
-            />
-          </div>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "= \\begin{bmatrix} 0.5 \\times (-0.4939) & 0.1890 \\\\[0.3em] 0.5 \\times (-1.0731) & 0.6124 \\\\[0.3em] 0.5 \\times (-0.1954) & 0.2803 \\\\[0.3em] 0.5 \\times (-0.7746) & 0.7037 \\end{bmatrix}"
-              }
-            />
-          </div>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "= \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 2 linear transformation:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{z}_2 = \\mathbf{H}_1\\mathbf{W}_2^T = \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} \\\\[0.3em] \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0742\\phantom{0} \\\\[0.3em] -0.1015\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 2 with bias addition:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{z}_2 = \\mathbf{z}_2 + \\mathbf{b}_2 = \\begin{bmatrix} -0.0742\\phantom{0} \\\\[0.3em] -0.1015\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "= \\begin{bmatrix} -0.0742 + 0.6358\\phantom{0} \\\\[0.3em] -0.1015 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042 + 0.6358\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Output vector (element-wise activation):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\hat{\\mathbf{y}} = \\mathbf{h}_2 = \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2) = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-6">
-            (All elements are positive, so they pass through unchanged)
-          </p>
-        </div>
-
-        <div className="mb-8">
-          <p className="font-semibold mb-2">Scalar loss:</p>
-          <div className="text-center mb-8">
-            <BlockMath
-              math={
-                "\\mathcal{L} = \\frac{1}{4}\\sum_{i=1}^{4}(y_i - \\hat{y}_i)^2 = 0.2632"
-              }
-            />
-          </div>
-        </div>
-        <br></br>
-        <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-          Backward pass with exact values
-        </h3>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Output layer gradient vector (element-wise subtraction):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{2}{N}(\\mathbf{h}_2 - \\mathbf{y})"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First, compute the element-wise difference:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{h}_2 - \\mathbf{y} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.5616 - 0\\phantom{0} \\\\[0.3em] 0.5343 - 1\\phantom{0} \\\\[0.3em] 0.6673 - 1\\phantom{0} \\\\[0.3em] 0.6400 - 0\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] -0.4657\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then scale by{" "}
-            <InlineMath math={"\\frac{2}{N} = \\frac{2}{4} = \\frac{1}{2}"} />{" "}
-            (scalar multiplication is element-wise):
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{1}{2} \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] -0.4657\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Pre-activation gradient layer 2 (hadamard product):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First, compute the LeakyReLU gradient for each element of{" "}
-            <InlineMath math={"\\mathbf{z}_2"} />:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}1 \\text{ (since } 0.5616 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.5343 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6673 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6400 > 0)\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then compute the Hadamard (element-wise) product:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.2808 \\times 1\\phantom{0} \\\\[0.3em] -0.2329 \\times 1\\phantom{.} \\\\[0.3em] -0.1664 \\times 1\\phantom{.} \\\\[0.3em] 0.3200 \\times 1\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Hidden layer gradient matrix:</p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.5em] -0.2329\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Pre-activation gradient layer 1 matrix (hadamard product):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First, compute the LeakyReLU gradient for{" "}
-            <InlineMath math={"\\mathbf{Z}_1"} />:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{.}0.5 \\text{ (since } -0.4939 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.1890 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -1.0731 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.6124 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.1954 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.2803 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.7746 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.7037 > 0)\\phantom{.} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then compute the Hadamard product:
-          </p>
-          <div className="text-center mb-8">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-        <br></br>
-        <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-          Weight gradients
-        </h3>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 2 weight gradient matrix:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First transpose the gradient vector:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2329\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then multiply:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2329\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "= \\begin{bmatrix} -0.2273\\phantom{0} & \\phantom{-}0.0779\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Layer 2 bias gradient (sum over samples):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = \\sum_{i=1}^{N} \\frac{\\partial \\mathcal{L}}{\\partial z_2^{(i)}}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Sum all elements of the gradient vector:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2808 + (-0.2329) + (-0.1664) + 0.3200 = 0.2015"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            As a 1×1 vector:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = \\begin{bmatrix} \\phantom{-}0.2015\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 1 weight gradient matrix:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First transpose the gradient matrix:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then multiply:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.5em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0230\\phantom{0} \\\\[0.5em] \\phantom{-}0.0455\\phantom{0} & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <p className="font-semibold mb-2">
-            Layer 1 bias gradient vector (sum over samples):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\sum_{i=1}^{N} \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1^{(i)}}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Sum each column across all rows:
-          </p>
-          <div className="text-center mb-8">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} 0.0740 + (-0.0613) + (-0.0438) + 0.0843 \\\\[0.5em] 0.0831 + (-0.0689) + (-0.0492) + 0.0947 \\end{bmatrix}^T = \\begin{bmatrix} \\phantom{-}0.0532\\phantom{0} & \\phantom{-}0.0597\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <br></br>
-
-        <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mb-4 mt-8">
-          Weight updates (gradient descent)
-        </h3>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">
-            Learning rate (scalar): <InlineMath math={"\\alpha = 0.75"} />
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 1 weight matrix update:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{W}_1^{\\text{new}} = \\mathbf{W}_1 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First compute the scaled gradient (scalar multiplication is
-            element-wise):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0231\\phantom{0} \\\\[0.5em] \\phantom{-}0.0455\\phantom{0} & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0304\\phantom{0} & \\phantom{-}0.0173\\phantom{0} \\\\[0.5em] \\phantom{-}0.0341\\phantom{0} & \\phantom{-}0.0194\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then subtract element-wise:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{W}_1^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & -0.5792\\phantom{0} \\\\[0.3em] \\phantom{-}0.0913\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.0304\\phantom{0} & \\phantom{-}0.0173\\phantom{0} \\\\[0.3em] \\phantom{-}0.0341\\phantom{0} & \\phantom{-}0.0194\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2681\\phantom{0} & -0.5965\\phantom{0} \\\\[0.3em] \\phantom{-}0.0572\\phantom{0} & \\phantom{-}0.4040\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 1 bias vector update:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{b}_1^{\\text{new}} = \\mathbf{b}_1 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First compute the scaled gradient (scalar multiplication is
-            element-wise):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.0532\\phantom{0} & \\phantom{-}0.0597\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0399\\phantom{0} & \\phantom{-}0.0448\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then subtract element-wise:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{b}_1^{\\text{new}} = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.0399\\phantom{0} & \\phantom{-}0.0448\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5338\\phantom{0} & \\phantom{-}0.1442\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <p className="font-semibold mb-2">Layer 2 weight matrix update:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{W}_2^{\\text{new}} = \\mathbf{W}_2 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First compute the scaled gradient (scalar multiplication is
-            element-wise):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = 0.75 \\times \\begin{bmatrix} -0.2273\\phantom{0} & \\phantom{-}0.0779\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.1705\\phantom{0} & \\phantom{-}0.0584\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then subtract element-wise:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} -0.1705\\phantom{0} & \\phantom{-}0.0584\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.6971\\phantom{0} & \\phantom{-}0.2374\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <p className="font-semibold mb-2">Layer 2 bias vector update:</p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\mathbf{b}_2^{\\text{new}} = \\mathbf{b}_2 - \\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            First compute the scaled gradient (scalar multiplication):
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.2015\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1511\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Then subtract:
-          </p>
-          <div className="text-center mb-8">
-            <BlockMath
-              math={
-                "\\mathbf{b}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.1511\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.4847\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-        </div>
-        <br></br>
         <h2 className="text-xs uppercase tracking-wide text-neutral-500">
           Footnotes
         </h2>
