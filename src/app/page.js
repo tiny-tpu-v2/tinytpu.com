@@ -753,9 +753,20 @@ export default function Home() {
             hardware, we need to create a bias module under each column of the
             systolic array. We can see that as the sums move out of the last row
             within the systolic array, we can immediately stream them into our
-            bias modules to compute our pre-activations.{" "}
+            bias modules to compute our pre-activations.
             <b>We will denote these values with the variable Z.</b>
           </p>
+          
+          <div className="my-6">
+            <div className="text-center mb-4">
+              <BlockMath
+                math={"\\mathbf{Z}_{\\text{biased}} = \\mathbf{Z} + \\mathbf{b}"}
+              />
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              The bias vector <InlineMath math={"\\mathbf{b}"} /> is broadcast across all rows of the matrix — meaning it's added to each row of <InlineMath math={"\\mathbf{Z}"} />
+            </p>
+          </div>
           <p>
             Now our equation is starting to look a lot like what we&apos;ve
             learned in high school –but just in multidimensional form, where
@@ -1495,7 +1506,7 @@ export default function Home() {
               math={`
                 \\mathbf{X} =
                 \\begin{bmatrix}
-                \\phantom{.}2\\phantom{.} & \\phantom{.}2\\phantom{.} \\\\[0.3em]
+                \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em]
                 \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em]
                 \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em]
                 \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.}
@@ -1552,7 +1563,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{Z}_1 = \\mathbf{X}\\mathbf{W}_1^T = \\begin{bmatrix} \\phantom{.}2\\phantom{.} & \\phantom{.}2\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5614\\phantom{0} & \\phantom{-}1.0294\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\\\[0.3em] \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.2807\\phantom{0} & \\phantom{-}0.5147\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{Z}_1 = \\mathbf{X}\\mathbf{W}_1^T = \\begin{bmatrix} \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0000\\phantom{0} & \\phantom{-}0.0000\\phantom{0} \\\\[0.3em] -0.5792\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\\\[0.3em] \\phantom{-}0.2985\\phantom{0} & \\phantom{-}0.0913\\phantom{0} \\\\[0.3em] -0.2807\\phantom{0} & \\phantom{-}0.5147\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1563,7 +1574,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{Z}_1 = \\mathbf{Z}_1 + \\mathbf{b}_1 = \\begin{bmatrix} -1.0553\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.3em] -1.0731\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.1954\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.7746\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{Z}_1 = \\mathbf{Z}_1 + \\mathbf{b}_1 = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -1.0731\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.1954\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.7746\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1584,21 +1595,21 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\mathbf{H}_1 = \\begin{bmatrix} \\text{LeakyReLU}_{0.5}(-1.0553) & \\text{LeakyReLU}_{0.5}(1.2184) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-1.0731) & \\text{LeakyReLU}_{0.5}(0.6124) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.1954) & \\text{LeakyReLU}_{0.5}(0.2803) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.7746) & \\text{LeakyReLU}_{0.5}(0.7037) \\end{bmatrix}"
+                "\\mathbf{H}_1 = \\begin{bmatrix} \\text{LeakyReLU}_{0.5}(-0.4939) & \\text{LeakyReLU}_{0.5}(0.1890) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-1.0731) & \\text{LeakyReLU}_{0.5}(0.6124) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.1954) & \\text{LeakyReLU}_{0.5}(0.2803) \\\\[0.3em] \\text{LeakyReLU}_{0.5}(-0.7746) & \\text{LeakyReLU}_{0.5}(0.7037) \\end{bmatrix}"
               }
             />
           </div>
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "= \\begin{bmatrix} 0.5 \\times (-1.0553) & 1.2184 \\\\[0.3em] 0.5 \\times (-1.0731) & 0.6124 \\\\[0.3em] 0.5 \\times (-0.1954) & 0.2803 \\\\[0.3em] 0.5 \\times (-0.7746) & 0.7037 \\end{bmatrix}"
+                "= \\begin{bmatrix} 0.5 \\times (-0.4939) & 0.1890 \\\\[0.3em] 0.5 \\times (-1.0731) & 0.6124 \\\\[0.3em] 0.5 \\times (-0.1954) & 0.2803 \\\\[0.3em] 0.5 \\times (-0.7746) & 0.7037 \\end{bmatrix}"
               }
             />
           </div>
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "= \\begin{bmatrix} -0.5277\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
+                "= \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1609,7 +1620,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{z}_2 = \\mathbf{H}_1\\mathbf{W}_2^T = \\begin{bmatrix} -0.5277\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} \\\\[0.3em] \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0825\\phantom{0} \\\\[0.3em] -0.1014\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{z}_2 = \\mathbf{H}_1\\mathbf{W}_2^T = \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.3em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.3em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.3em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} \\\\[0.3em] \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0742\\phantom{0} \\\\[0.3em] -0.1015\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1620,14 +1631,14 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\mathbf{z}_2 = \\mathbf{z}_2 + \\mathbf{b}_2 = \\begin{bmatrix} \\phantom{-}0.0825\\phantom{0} \\\\[0.3em] -0.1014\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{z}_2 = \\mathbf{z}_2 + \\mathbf{b}_2 = \\begin{bmatrix} -0.0742\\phantom{0} \\\\[0.3em] -0.1015\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "= \\begin{bmatrix} \\phantom{-}0.0825 + 0.6358\\phantom{0} \\\\[0.3em] -0.1014 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042 + 0.6358\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] \\phantom{-}0.5344\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
+                "= \\begin{bmatrix} -0.0742 + 0.6358\\phantom{0} \\\\[0.3em] -0.1015 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0315 + 0.6358\\phantom{0} \\\\[0.3em] \\phantom{-}0.0042 + 0.6358\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1640,7 +1651,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\hat{\\mathbf{y}} = \\mathbf{h}_2 = \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2) = \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] \\phantom{-}0.5344\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
+                "\\hat{\\mathbf{y}} = \\mathbf{h}_2 = \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2) = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1654,7 +1665,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <BlockMath
               math={
-                "\\mathcal{L} = \\frac{1}{4}\\sum_{i=1}^{4}(y_i - \\hat{y}_i)^2 = 0.3133"
+                "\\mathcal{L} = \\frac{1}{4}\\sum_{i=1}^{4}(y_i - \\hat{y}_i)^2 = 0.2632"
               }
             />
           </div>
@@ -1681,7 +1692,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\mathbf{h}_2 - \\mathbf{y} = \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] \\phantom{-}0.5344\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.7183 - 0\\phantom{0} \\\\[0.3em] 0.5344 - 1\\phantom{0} \\\\[0.3em] 0.6673 - 1\\phantom{0} \\\\[0.3em] 0.6400 - 0\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] -0.4656\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{h}_2 - \\mathbf{y} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] \\phantom{-}0.5343\\phantom{0} \\\\[0.3em] \\phantom{-}0.6673\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{.}0\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}0\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.5616 - 0\\phantom{0} \\\\[0.3em] 0.5343 - 1\\phantom{0} \\\\[0.3em] 0.6673 - 1\\phantom{0} \\\\[0.3em] 0.6400 - 0\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] -0.4657\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1693,7 +1704,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{1}{2} \\begin{bmatrix} \\phantom{-}0.7183\\phantom{0} \\\\[0.3em] -0.4656\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{h}_2} = \\frac{1}{2} \\begin{bmatrix} \\phantom{-}0.5616\\phantom{0} \\\\[0.3em] -0.4657\\phantom{0} \\\\[0.3em] -0.3327\\phantom{0} \\\\[0.3em] \\phantom{-}0.6400\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1717,7 +1728,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}1 \\text{ (since } 0.7183 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.5344 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6673 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6400 > 0)\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{z}_2)}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}1 \\text{ (since } 0.5616 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.5343 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6673 > 0)\\phantom{0} \\\\[0.3em] \\phantom{-}1 \\text{ (since } 0.6400 > 0)\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1727,7 +1738,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.3592 \\times 1\\phantom{0} \\\\[0.3em] -0.2328 \\times 1\\phantom{.} \\\\[0.3em] -0.1664 \\times 1\\phantom{.} \\\\[0.3em] 0.3200 \\times 1\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} \\\\[0.3em] -0.2328\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\\\[0.3em] \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} 0.2808 \\times 1\\phantom{0} \\\\[0.3em] -0.2329 \\times 1\\phantom{.} \\\\[0.3em] -0.1664 \\times 1\\phantom{.} \\\\[0.3em] 0.3200 \\times 1\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.3em] -0.2329\\phantom{0} \\\\[0.3em] -0.1664\\phantom{0} \\\\[0.3em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1738,7 +1749,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} \\\\[0.5em] -0.2328\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1891\\phantom{0} & \\phantom{-}0.1062\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.5em] -0.2329\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1762,7 +1773,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{.}0.5 \\text{ (since } -1.0553 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 1.2184 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -1.0731 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.6124 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.1954 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.2803 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.7746 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.7037 > 0)\\phantom{.} \\end{bmatrix}"
+                "\\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{.}0.5 \\text{ (since } -0.4939 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.1890 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -1.0731 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.6124 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.1954 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.2803 > 0)\\phantom{.} \\\\[0.5em] \\phantom{.}0.5 \\text{ (since } -0.7746 \\leq 0)\\phantom{.0} & \\phantom{.}1 \\text{ (since } 0.7037 > 0)\\phantom{.} \\end{bmatrix}"
               }
             />
           </div>
@@ -1772,7 +1783,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1891\\phantom{0} & \\phantom{-}0.1062\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0946\\phantom{0} & \\phantom{-}0.1062\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1797,7 +1808,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
+                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2329\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1807,14 +1818,14 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\begin{bmatrix} \\phantom{-}0.3592\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.5277\\phantom{0} & \\phantom{-}1.2184\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2329\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "= \\begin{bmatrix} -0.1723\\phantom{0} & \\phantom{-}0.4736\\phantom{0} \\end{bmatrix}"
+                "= \\begin{bmatrix} -0.2273\\phantom{0} & \\phantom{-}0.0779\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1837,7 +1848,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.3592 + (-0.2328) + (-0.1664) + 0.3200 = 0.2800"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2808 + (-0.2329) + (-0.1664) + 0.3200 = 0.2015"
               }
             />
           </div>
@@ -1847,7 +1858,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = \\begin{bmatrix} \\phantom{-}0.2800\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = \\begin{bmatrix} \\phantom{-}0.2015\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1868,7 +1879,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T = \\begin{bmatrix} \\phantom{-}0.0946\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.1062\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                "\\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1878,7 +1889,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\begin{bmatrix} \\phantom{-}0.0946\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.1062\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{.}2\\phantom{.} & \\phantom{.}2\\phantom{.} \\\\[0.5em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2296\\phantom{0} & \\phantom{-}0.2121\\phantom{0} \\\\[0.5em] \\phantom{-}0.2579\\phantom{0} & \\phantom{-}0.2383\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\begin{bmatrix} \\phantom{-}0.0740\\phantom{0} & -0.0613\\phantom{0} & -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831\\phantom{0} & -0.0689\\phantom{0} & -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{.}0\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.5em] \\phantom{.}0\\phantom{.} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}0\\phantom{.} \\\\[0.5em] \\phantom{.}1\\phantom{.} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0230\\phantom{0} \\\\[0.5em] \\phantom{-}0.0455\\phantom{0} & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1901,7 +1912,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <BlockMath
               math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} 0.0946 + (-0.0613) + (-0.0438) + 0.0843 \\\\[0.5em] 0.1062 + (-0.0689) + (-0.0492) + 0.0947 \\end{bmatrix}^T = \\begin{bmatrix} \\phantom{-}0.0737\\phantom{0} & \\phantom{-}0.0828\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} 0.0740 + (-0.0613) + (-0.0438) + 0.0843 \\\\[0.5em] 0.0831 + (-0.0689) + (-0.0492) + 0.0947 \\end{bmatrix}^T = \\begin{bmatrix} \\phantom{-}0.0532\\phantom{0} & \\phantom{-}0.0597\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1935,7 +1946,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.2296\\phantom{0} & \\phantom{-}0.2121\\phantom{0} \\\\[0.5em] \\phantom{-}0.2579\\phantom{0} & \\phantom{-}0.2383\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1722\\phantom{0} & \\phantom{-}0.1591\\phantom{0} \\\\[0.5em] \\phantom{-}0.1934\\phantom{0} & \\phantom{-}0.1787\\phantom{0} \\end{bmatrix}"
+                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0231\\phantom{0} \\\\[0.5em] \\phantom{-}0.0455\\phantom{0} & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0304\\phantom{0} & \\phantom{-}0.0173\\phantom{0} \\\\[0.5em] \\phantom{-}0.0341\\phantom{0} & \\phantom{-}0.0194\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1945,7 +1956,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{W}_1^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & -0.5792\\phantom{0} \\\\[0.3em] \\phantom{-}0.0913\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.1722\\phantom{0} & \\phantom{-}0.1591\\phantom{0} \\\\[0.3em] \\phantom{-}0.1934\\phantom{0} & \\phantom{-}0.1787\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1263\\phantom{0} & -0.7383\\phantom{0} \\\\[0.3em] -0.1021\\phantom{0} & \\phantom{-}0.2447\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{W}_1^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.2985\\phantom{0} & -0.5792\\phantom{0} \\\\[0.3em] \\phantom{-}0.0913\\phantom{0} & \\phantom{-}0.4234\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.0304\\phantom{0} & \\phantom{-}0.0173\\phantom{0} \\\\[0.3em] \\phantom{-}0.0341\\phantom{0} & \\phantom{-}0.0194\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2681\\phantom{0} & -0.5965\\phantom{0} \\\\[0.3em] \\phantom{-}0.0572\\phantom{0} & \\phantom{-}0.4040\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1967,7 +1978,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.0737\\phantom{0} & \\phantom{-}0.0828\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0553\\phantom{0} & \\phantom{-}0.0621\\phantom{0} \\end{bmatrix}"
+                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.0532\\phantom{0} & \\phantom{-}0.0597\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0399\\phantom{0} & \\phantom{-}0.0448\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1977,7 +1988,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{b}_1^{\\text{new}} = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.0553\\phantom{0} & \\phantom{-}0.0621\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5492\\phantom{0} & \\phantom{-}0.1269\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{b}_1^{\\text{new}} = \\begin{bmatrix} -0.4939\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.0399\\phantom{0} & \\phantom{-}0.0448\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5338\\phantom{0} & \\phantom{-}0.1442\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -1999,7 +2010,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = 0.75 \\times \\begin{bmatrix} -0.1723\\phantom{0} & \\phantom{-}0.4736\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.1292\\phantom{0} & \\phantom{-}0.3552\\phantom{0} \\end{bmatrix}"
+                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = 0.75 \\times \\begin{bmatrix} -0.2273\\phantom{0} & \\phantom{-}0.0779\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.1705\\phantom{0} & \\phantom{-}0.0584\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -2009,7 +2020,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <BlockMath
               math={
-                "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} -0.1292\\phantom{0} & \\phantom{-}0.3552\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.6558\\phantom{0} & -0.0594\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} -0.1705\\phantom{0} & \\phantom{-}0.0584\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.6971\\phantom{0} & \\phantom{-}0.2374\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -2030,7 +2041,7 @@ export default function Home() {
           <div className="text-center mb-4">
             <BlockMath
               math={
-                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.2800\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2100\\phantom{0} \\end{bmatrix}"
+                "\\alpha \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.75 \\times \\begin{bmatrix} \\phantom{-}0.2015\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1511\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
@@ -2040,7 +2051,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <BlockMath
               math={
-                "\\mathbf{b}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.2100\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.4258\\phantom{0} \\end{bmatrix}"
+                "\\mathbf{b}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.6358\\phantom{0} \\end{bmatrix} - \\begin{bmatrix} \\phantom{-}0.1511\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.4847\\phantom{0} \\end{bmatrix}"
               }
             />
           </div>
