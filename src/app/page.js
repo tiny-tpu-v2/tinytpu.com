@@ -172,6 +172,9 @@ export default function Home() {
             </a>
           </div>
         </div>
+        
+        
+        
         <p>
           Nobody really understands how TPUs work…and neither do we! So we
           wanted to make this because we wanted to take a shot and try to guess
@@ -1595,6 +1598,23 @@ export default function Home() {
                 gradients
               </li>
             </ol>
+
+            {/* Slideshow 4 */}
+            <div className="mb-8">
+              <Slideshow
+                slides={[
+                  "/slideshow_4/1.png",
+                  "/slideshow_4/2.png",
+                  "/slideshow_4/3.png",
+                  "/slideshow_4/4.png",
+                  "/slideshow_4/5.png",
+                ]}
+                title="Backward pass through second hidden layer"
+                aspectRatio="aspect-[4/3]"
+              />
+            </div>
+
+            
             <p>
               And here&apos;s where something really magical happens: we can
               stream these weight gradients directly into a gradient descent
