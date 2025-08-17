@@ -46,6 +46,15 @@ const clock_cycle_verilogSnippet = `module add (
 endmodule
 `;
 
+const leaky_relu_derivative_verilogSnippet = `always @(posedge clk) begin
+    if (rst) begin
+        output <= 0;
+    end else begin
+        output <= (input > 0) ? input : 0.01 * input;
+    end
+end
+`;
+
 function highlightVerilog(code) {
   const escaped = code
     .replace(/&/g, "&amp;")
@@ -301,14 +310,14 @@ export default function Home() {
         <br />
         <p>
           None of us have real professional experience in hardware design,
-          which, in a way, made the TPU even more appealing since we weren’t
-          able to estimate exactly how difficult it would be. As we worked on
-          the initial stages of this project, we established a strict design
-          philosophy: ALWAYS TRY THE HACKY WAY. This meant trying out the “dumb”
-          ideas that came to our mind first BEFORE consulting external sources.
-          This philosophy helped us make sure we weren’t reverse engineering the
-          TPU, but rather <b>re-inventing it</b>, which helped us derive many of
-          the key mechanisms used in the TPU ourselves.
+          which, in a way, made the TPU even more appealing since we
+          weren&apos;t able to estimate exactly how difficult it would be. As we
+          worked on the initial stages of this project, we established a strict
+          design philosophy: ALWAYS TRY THE HACKY WAY. This meant trying out the
+          &quot;dumb&quot; ideas that came to our mind first BEFORE consulting
+          external sources. This philosophy helped us make sure we weren&apos;t
+          reverse engineering the TPU, but rather <b>re-inventing it</b>, which
+          helped us derive many of the key mechanisms used in the TPU ourselves.
         </p>
         <br />
         <p>
@@ -340,8 +349,9 @@ export default function Home() {
           <br />
           <p>
             Before we move forward, we want to make it clear what this article
-            covers and what it doesn’t. Note that this is NOT a 1-to-1 replica
-            of the TPU — it is our attempt at re-inventing the TPU ourselves.
+            covers and what it doesn&apos;t. Note that this is NOT a 1-to-1
+            replica of the TPU — it is our attempt at re-inventing the TPU
+            ourselves.
           </p>
         </div>
         <br />
@@ -354,7 +364,7 @@ export default function Home() {
             make inferencing (using) and training ML models faster and more
             efficient. Whereas a GPU can be used to render frames AND run ML
             workloads, a TPU can only perform math operations, allowing it to be
-            better at what it’s designed for. Naturally, trying to master a
+            better at what it&apos;s designed for. Naturally, trying to master a
             single task is much easier and will yield better results than trying
             to master multiple tasks and the TPU strongly employs this
             philosophy.
@@ -386,9 +396,10 @@ export default function Home() {
               The language we use to describe hardware is called Verilog.
               It&apos;s a hardware description language that allows us to
               describe the behaviour of a given hardware module (similar to
-              programming software), but synthesizes into boolean logic gates
-              (AND, OR, NOT, etc.) that can be combined to build any chip we
-              want. Here&apos;s a simple example of an addition in Verilog:
+              functions in software), but instead of executing as a program, it
+              synthesizes into boolean logic gates (AND, OR, NOT, etc.) that can
+              be combined to build the ditial logic for any chip we want.
+              Here&apos;s a simple example of an addition in Verilog:
             </p>
             <br />
             <pre
@@ -403,20 +414,17 @@ export default function Home() {
             <br />
             <p>
               In the example above, the value of the signal b at the next clock
-              cycle is set to the current value of the signal a. You’ll find
-              that in most cases, signals (variables) are updated in sequential
-              clock cycles, as opposed to immediate updates like you would find
-              in software design.
+              cycle is set to the current value of the signal a. You&apos;ll
+              find that in most cases, signals (variables) are updated in
+              sequential clock cycles, as opposed to immediate updates like you
+              would find in software design.
             </p>
           </div>
           <p>
-            We can use numbers to prove this: The best NVIDIA GPU that existed
-            when the TPUv1 released was the NVIDIA GeForce GTX Titan X. This GPU
-            had 3584 CUDA cores, each of which could perform one fused
-            multiply-add (the predominant operation in ML workloads) per clock
-            cycle. To perform a matrix multiplication on two 256x256 matrices,
-            it would take the Titan X 4682 clock cycles. It would take the TPUv1
-            511 clock cycles.
+            We can use numbers to prove the TPU&apos;s efficiency: BERT-Large
+            (an open-source language model) was trained on a GPU cluster and a
+            TPUv3 pod. The TPU pod was 1.8x faster and had a 2.4x better power
+            efficiency.
           </p>
           <p>
             Specifically, the TPU is very efficient at performing matrix
@@ -471,18 +479,18 @@ export default function Home() {
           </h3>
           <p>
             Now, say we want to do continuous inference (i.e. self driving car
-            making multiple predictions a second). That would imply that we’re
-            sending multiple pieces of data at once. Since data is inherently
-            multidimensional and has many features, we would have matrices with
-            very large dimensions. However, the XOR problem simplifies the
-            dimensions for us, as there are only two features (0 or 1) and 4
-            possible pieces of input data (four possible binary combinations of
-            0 and 1). This gives us a 4x2 matrix, where 4 is the number of rows
-            (batch size) and 2 is the number of columns (feature size). Another
-            simplification we’re making for our systolic array example here is
-            that we’ll use a 2x2 instead of the 256x256 array used in the TPUv1.
-            However, the math is still faithful so nothing is actually dumbed
-            down, rather scaled down instead.
+            making multiple predictions a second). That would imply that
+            we&apos;re sending multiple pieces of data at once. Since data is
+            inherently multidimensional and has many features, we would have
+            matrices with very large dimensions. However, the XOR problem
+            simplifies the dimensions for us, as there are only two features (0
+            or 1) and 4 possible pieces of input data (four possible binary
+            combinations of 0 and 1). This gives us a 4x2 matrix, where 4 is the
+            number of rows (batch size) and 2 is the number of columns (feature
+            size). Another simplification we&apos;re making for our systolic
+            array example here is that we&apos;ll use a 2x2 instead of the
+            256x256 array used in the TPUv1. However, the math is still faithful
+            so nothing is actually dumbed down, rather scaled down instead.
           </p>
 
           <p>
@@ -629,9 +637,9 @@ export default function Home() {
             storage option. There was a slight difference between a traditional
             FIFO and the accumulators we built, however. Our accumulators had 2
             input ports — one for writing weights manually to the FIFO and one
-            for writing the previous layer’s outputs from the activation modules
-            BACK into the input FIFOs (the previous layer’s outputs are inputs
-            for the current layer).
+            for writing the previous layer&apos;s outputs from the activation
+            modules BACK into the input FIFOs (the previous layer&apos;s outputs
+            are inputs for the current layer).
           </p>
           <p>
             We also needed to load the weights in a similar fashion for every
@@ -652,9 +660,10 @@ export default function Home() {
             values with the variable Z.
           </p>
           <p>
-            Now our equation is starting to look a lot like what we’ve learned
-            in high school –but just in multidimensional form, where each column
-            that streams out of the systolic array represents its own feature!
+            Now our equation is starting to look a lot like what we&apos;ve
+            learned in high school –but just in multidimensional form, where
+            each column that streams out of the systolic array represents its
+            own feature!
           </p>
           <p>
             Next we have to apply the activation, for which we chose Leaky ReLU.
@@ -662,6 +671,7 @@ export default function Home() {
             we need an activation module under every bias module (and by proxy
             under every column of the systolic array) and we can stream the
             outputs of our bias modules into the activation modules immediately.
+            We will denote these post-activation values with H.
           </p>
           <p className="italic">
             [INSERT DRAWING OF SYS ARRAY + BIAS + LR MODULES]
@@ -687,6 +697,15 @@ export default function Home() {
             it&apos;s efficient and best practice to split up operations into
             individual clock cycles as much as possible.
           </p>
+          <div className="relative mt-12 w-full h-56 md:h-64">
+            <Image
+              src="/pipelining.svg"
+              alt="Pipeline diagram"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <br />
           <p>
             Another mechanism we used to run our chip as efficiently as
             possible, was a propagating &quot;start&quot; signal, which we
@@ -701,10 +720,9 @@ export default function Home() {
             and activation modules, where neighbouring PEs and modules, moving
             from the top left to the bottom right, were turned on in consecutive
             clock cycles. This ensured that every module was only performing
-            computations when it was required to and wasn’t wasting power in the
-            background.
+            computations when it was required to and wasn&apos;t wasting power
+            in the background.
           </p>
-          <p className="italic">[INSERT DIAGRAM TO EXPLAIN PIPELINING]</p>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
             Double buffering
           </h3>
@@ -825,19 +843,94 @@ export default function Home() {
               />
             </div>
             <p>
-              Let&apos;s trace through what happens step by step. First, we
-              calculate dL/dH[2] — how much the loss changes with respect to our
-              final activations. Instead of using input accumulators like we did
-              for inference, we created a scratchpad memory to store our target
-              values and stream them directly into a derivative loss module
-              alongside our H[2] values. You&apos;ll notice a really cool
-              pattern emerging: all these modules that sit underneath the
-              systolic array process column vectors that stream out one by one.
-              This gave us the idea to unify them into something we called a
-              vector processing unit (VPU) — because that&apos;s exactly what
-              they&apos;re doing, processing vectors element-wise!
+              This is where calculus enters the picture. To make our model
+              better, we need to figure out how changing each weight affects our
+              loss. The chain rule lets us break this massive calculation into
+              smaller, manageable pieces to find the derivative of the loss with
+              respect to every single weight and bias. Let&apos;s trace through
+              what happens step by step.
             </p>
-            <div className="relative mt-12 w-full h-[32rem] md:h-[40rem]">
+            <p>
+              <ol className="list-decimal list-inside mt-2 space-y-2">
+                <li>
+                  Calculate dL/dH[2] – how much the loss changes with respect to
+                  our final activations.
+                </li>
+                <li>
+                  Compute dH[2]/dZ[2] by taking the derivative of the activation
+                  (leaky ReLU in our case)
+                </li>
+                <li>Compute dZ[2]/dW[2], dZ[2]/dH[2], and dZ[2]/db[2]</li>
+                <li>Repeat these steps for the first layer</li>
+              </ol>
+            </p>
+            <p>
+              Once we have all of these individual derivatives, we can multiply
+              them together to find any derivative with respect of the loss
+              (i.e. dL/dH[2] * dH/dZ[2] * dZ[2]/dW[2] gives us dL/dW[2]).
+            </p>
+
+            <p>Now let&apos;s see HOW we can compute these derivatives.</p>
+            <p>
+              The formula for dL/dH[2] is [INSERT LATEX]. Since it&apos;s an
+              element-wise computation, we can have a loss module right under
+              the activation module for each column in the systolic array to
+              compute the loss right after we compute the outputs.
+            </p>
+            <p>
+              After that, we have to compute the activation derivative
+              dH[2]/dZ[2]), for which the formula is [INSERT LATEX]. This is
+              also an element-wise computation, meaning we can structure it
+              exactly like the loss module (and bias and activation modules),
+              but it will perform a different calculation. One important note
+              about this module, however, is that it requires the activations we
+              computed during forward pass.
+            </p>
+            <p>
+              Now you might be wondering – how do we actually compute
+              derivatives of activation functions in hardware? Remember that
+              Leaky ReLU applies different operations based on whether the input
+              is positive or negative. The derivative follows the same pattern:
+              it outputs 1 for positive inputs and a small constant called the
+              leak factor (we used 0.01) for negative inputs. In hardware, this
+              translates to a very elegant solution:
+            </p>
+            <pre
+              className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
+            >
+              {leaky_relu_derivative_verilogSnippet}
+            </pre>
+            <div className="relative mt-12 w-full h-66 md:h-85">
+              <Image
+                src="/leaky-relu-derivative.svg"
+                alt="Leaky ReLU derivative"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p>
+              What&apos;s beautiful about this is that it&apos;s just a simple
+              comparison – no complex arithmetic needed. The hardware can
+              compute this derivative in a single clock cycle, keeping our
+              pipeline flowing smoothly. This same principle applies to other
+              activation functions: their derivatives often simplify to basic
+              operations that hardware can execute very efficiently.
+            </p>
+            <p>
+              You&apos;ll notice a really cool pattern emerging: all these
+              modules that sit underneath the systolic array process column
+              vectors that stream out one by one. This gave us the idea to unify
+              them into something we called a vector processing unit (VPU) –
+              because that&apos;s exactly what they&apos;re doing, processing
+              vectors element-wise! Not only is this more elegant to work with,
+              it&apos;s also useful when we scale our TPU beyond a 2x2 systolic
+              array, as we&apos;ll have N number of these modules (N being the
+              size of the systolic array), each of which we would have to
+              interface with individually. Unifying these modules under a parent
+              module makes our design more scalable and elegant!
+            </p>
+            <br />
+            <div className="relative mt-12 w-full h-66 md:h-150">
               <Image
                 src="/vpu.svg"
                 alt="Vector processing unit"
@@ -846,88 +939,137 @@ export default function Home() {
               />
             </div>
             <br />
-            <p className="italic">
-              [INSERT DIAGRAM/GIF WITH UB, VPU, and SYS ARRAY]
+            <p>
+              The next few derivatives are interesting because we can actually
+              use matrix multiplication (and systolic array!) to compute the
+              derivatives with the help of these three identities:
             </p>
             <p>
-              As we continued tracing through the computational graph, we
-              realized we needed to compute element- wise multiplications too.
-              So we added an element-wise multiplication module to our VPU. We
-              also created a leaky ReLU derivative module, and here&apos;s a
-              clever optimization: since we only use the H[2] values once (for
-              computing dH[2]/dZ[2]), we created a tiny cache within our vector
-              unit instead of storing them in our main scratchpad memory.
-            </p>
-            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-              The beautiful symmetry of forward and backward pass
-            </h3>
-            <p>
-              After drawing out the entire computational graph, we discovered
-              something remarkable: the longest chain in backpropagation closely
-              resembles forward pass! In forward pass, we multiply activation
-              matrices with transposed weight matrices. In backward pass, we
-              multiply gradient matrices with weight matrices (untransposed).
-              It&apos;s like looking in a mirror!
+              <ol className="list-decimal list-inside mt-2 space-y-2">
+                <li>
+                  If we have Z = X@W^T and take its derivative with respect to
+                  the weights, we get dZ/dW = X
+                </li>
+                <li>
+                  If we have Z = X@W^T and take its derivative with respect to
+                  the inputs X, we get dZ/dX = W^T (just the weight matrix)
+                </li>
+                <li>For the bias term, the derivative is simply 1.</li>
+              </ol>
+              This means that we can multiply the previous dH/dZ with X, W^T,
+              and 1 to get dZ/dW, dZ/dX, and dZ/db, respectively. And because
+              all of the gradients are actually gradient matrices, we can use
+              the systolic array!
             </p>
             <p>
-              But before we dive into implementation, we need to understand
-              three fundamental mathematical identities that govern how
-              gradients flow through our network:
+              Now something to note about the activation derivative dH[2]/dZ[2]
+              and the weight derivative dZ/dW is that they both require the
+              post-activations (H) we calculate during forward pass to be
+              computed. This means the outputs of every layer in some form of
+              memory to be able to perform training. Here&apos;s where we
+              created a new scratchpad memory module which we called the unified
+              buffer (UB). This lets us store our H values immediately after we
+              compute them during forward pass.
             </p>
-            <ul className="list-disc list-inside">
-              <li>
-                If we have Z = X@W^T and take its derivative with respect to the
-                weights, we get dZ/dW = X
-              </li>
-              <li>
-                If we have Z = X@W^T and take its derivative with respect to the
-                inputs X, we get dZ/dX = W^T
-              </li>
-              <li>For the bias term, the derivative is simply 1</li>
-            </ul>
             <p>
-              These identities are beautiful because two of them express most of
-              our gradient computations as matrix multiplications — which means
-              they can run very efficiently on the same systolic array we use
-              for forward pass!
+              We realized that we can also get rid of the input and weight
+              accumulators, as well as manually loading the bias and leak
+              factors into their respective modules, by using the UB to store
+              them. This is also better practice, rather than loading in new
+              data every clock cycle with the instruction set. Since we want to
+              access two values (2 inputs or 2 weights for each row/col of the
+              systolic array) at the same time, we added TWO read and write
+              ports. We did this for each data primitive (inputs, weights, bias,
+              leak factor, post activations) to minimize data contention since
+              we have many different types of data.
             </p>
-            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-              Computing derivatives in hardware: The Leaky ReLU case
-            </h3>
             <p>
-              Now you might be wondering — how do we actually compute
-              derivatives in hardware? Let&apos;s look at Leaky ReLU as an
-              example, since it&apos;s beautifully simple but demonstrates the
-              key principles. Remember that Leaky ReLU applies different
-              operations based on whether the input is positive or negative. The
-              derivative follows the same pattern: it outputs 1 for positive
-              inputs and a small constant (we used 0.01) for negative inputs. In
-              hardware, this translates to a very elegant solution:
+              To read values, we supply a starting address and the number of
+              values, we supply a starting address and the number of locations
+              we want the UB to read and it will read 2 values every clock
+              cycle. Writing is a similar mechanism, where we specify which
+              values we want to write to each of the two input ports. The beauty
+              in the read mechanism is that it runs in the background once we
+              supply a starting address until the number of locations given are
+              read, meaning we only need to provide an instruction for this
+              every few clock cycles.
             </p>
-            <p className="italic">[INSERT CODE BLOCK]</p>
+            <div className="relative mt-12 w-full h-66 md:h-102">
+              <Image
+                src="/ub-diagram.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="relative mt-12 w-full h-66 md:h-82">
+              <Image
+                src="/ub-waveform.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
             <p>
-              What&apos;s beautiful about this is that it&apos;s just a simple
-              comparison — no complex arithmetic needed! The hardware can
-              compute this derivative in a single clock cycle, keeping our
-              pipeline flowing smoothly. This same principle applies to other
-              activation functions: their derivatives often simplify to basic
-              operations that hardware can execute very efficiently. This
-              insight led us to compute the long chain first — getting all our
-              dL/dZ[n] gradients just like we computed activations in forward
-              pass. We could cache these gradients and reuse them, following the
-              same efficient pattern we&apos;d already mastered.
+              At the end of the day, not having these mechanisms wouldn&apos;t
+              break having these mechanisms wouldn&apos;t break the TPU — but
+              they allow us to always keep the systolic array fed, which is a
+              core design principle we couldn&apos;t compromise.
             </p>
-            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-              Computing weight gradients
-            </h3>
             <p>
-              Next challenge: calculating weight gradients. Here&apos;s where
-              our first identity comes into play: dL/dW = H (the activation from
-              the previous layer). Since we cached our activation matrices H[0]
-              and H[1] during forward pass, we can reuse them!
+              While we were working on this, we realized we could make one last
+              small optimization for the activation derivative module — since we
+              only use the H[2] values once (for computing dH[2]/dZ[2]), we
+              created a tiny cache within the VPU instead of storing them in the
+              UB. The rest of the H values will be stored in the UB because
+              they&apos;re needed to compute multiple derivatives.
+            </p>
+            <div className="relative mt-12 w-full h-66 md:h-100  ">
+              <Image
+                src="/h-cache.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p>
+              This is what the new TPU architecture, modified to perform
+              training, looks like:
+            </p>
+            <div className="relative mt-12 w-full h-66 md:h-130  ">
+              <Image
+                src="/tpu.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p>Now we can do backpropagation!</p>
+            <p>
+              Going back to the computational graph, we discovered something
+              remarkable: the longest chain in backpropagation closely resembles
+              forward pass! In forward pass, we multiply activation matrices
+              with transposed weight matrices. In backward pass, we multiply
+              gradient matrices with weight matrices (untransposed). It&apos;s
+              like looking in a mirror!
+            </p>
+            <div className="relative mt-12 w-full h-66 md:h-50  ">
+              <Image
+                src="/forward-pass.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p>
+              This insight led us to compute the long chain of the computational
+              graph first (highlighted in yellow) – getting all our dL/dZ[n]
+              gradients just like we computed activations in forward pass. We
+              could cache these gradients and reuse them, following the same
+              efficient pattern we&apos;d already mastered.
             </p>
             <p>We create a loop where we:</p>
-            <ul className="list-disc list-inside">
+            <ol className="list-decimal list-inside mt-2 space-y-2">
               <li>Fetch a bridge node (dL/dZ[n]) from our unified buffer</li>
               <li>
                 Fetch the corresponding H[n] matrix, also from unified buffer
@@ -936,24 +1078,31 @@ export default function Home() {
                 Stream these through our systolic array to compute the weight
                 gradients
               </li>
-            </ul>
-            <p>
-              And here&apos;s where something really magical happens: we can
-              stream these weight gradients directly into a gradient descent
-              module while we&apos;re still computing them! This module takes
-              the current weights stored in memory and updates them using the
-              gradients. No waiting around — everything flows like water through
-              our pipeline.
-            </p>
+              <li>Update the weights and inputs using gradient descent</li>
+              <li>Write the gradients to the unified buffer</li>
+            </ol>
+
             <p>
               You might be wondering: &quot;We&apos;ve used our matrix
               multiplication identities for the long chain and weight gradients
-              — how do we calculate bias gradients?&quot; Well, we&apos;ve
-              actually already done most of the work! Since we&apos;re
-              processing batches of data, we can simply sum (the technical term
-              is &quot;reduce&quot;) the dL/dZ[n] gradients across the batch
-              dimension. The beauty is that we can do this reduction right when
-              we&apos;re computing the long chain — no extra work required!
+              – how do we calculate bias gradients?&quot;{" "}
+            </p>
+            <p>
+              Well, we&apos;ve actually already done most of the work! Since
+              we&apos;re processing batches of data, we can simply sum (the
+              technical term is &quot;reduce&quot;) the dL/dZ[n] gradients
+              across the batch dimension. The beauty is that we can do this
+              reduction right when we&apos;re computing the long chain – no
+              extra work required!
+            </p>
+            <p>
+              Once we compute all the gradients and store them in the unified
+              buffer, we have to update the old weights. We can elegantly stream
+              these weight gradients directly from the systolic array into a
+              gradient descent module while we&apos;re still computing them.
+              This module is the final step in training and it takes the current
+              weights stored in memory and updates them using the gradients. No
+              waiting around – everything flows like water through our pipeline.{" "}
             </p>
             <p>
               With all these new changes and control flags, our instruction is
@@ -962,23 +1111,33 @@ export default function Home() {
               couldn&apos;t make the instruction set any smaller without
               compromising the speed and efficiency of the TPU.
             </p>
-            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-              Putting it all together
-            </h3>
+            <div className="relative mt-12 w-full h-66 md:h-40">
+              <Image
+                src="/isa.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <h3>Putting it all together</h3>
             <p>
-              By continuing this same process iteratively — forward pass,
-              backward pass, weight updates — we can train our network until it
+              By continuing this same process iteratively – forward pass,
+              backward pass, weight updates – we can train our network until it
               performs exactly how we want. The same systolic array that powered
               our inference now powers our training, with just a few additional
-              modules to handle the gradient computations. What started as a
-              simple idea about matrix multiplication has grown into a complete
-              training system. Every component works together in harmony: data
-              flows through pipelines, modules operate in parallel, and our
-              systolic array stays fed with useful work. This is the essence of
-              what makes TPUs so powerful — they take the fundamental operations
-              that neural networks need and implement them in the most efficient
-              way possible, keeping all the hardware busy and the data flowing
-              smoothly from start to finish.
+              modules to handle the gradient computations.
+            </p>
+            <p>
+              What started as a simple idea about matrix multiplication has
+              grown into a complete training system. Every component works
+              together in harmony: data flows through pipelines, modules operate
+              in parallel, and our systolic array stays fed with useful work.
+            </p>
+            <p>
+              This is the essence of what makes TPUs so powerful – they take the
+              fundamental operations that neural networks need and implement
+              them in the most efficient way possible, keeping all the hardware
+              busy and the data flowing smoothly from start to finish.
             </p>
           </div>
         </div>
