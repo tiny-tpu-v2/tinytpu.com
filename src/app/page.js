@@ -751,8 +751,8 @@ export default function Home() {
             hardware, we need to create a bias module under each column of the
             systolic array. We can see that as the sums move out of the last row
             within the systolic array, we can immediately stream them into our
-            bias modules to compute our pre-activations. We will denote these
-            values with the variable Z.
+            bias modules to compute our pre-activations.{" "}
+            <b>We will denote these values with the variable Z.</b>
           </p>
           <p>
             Now our equation is starting to look a lot like what we&apos;ve
@@ -766,7 +766,7 @@ export default function Home() {
             we need an activation module under every bias module (and by proxy
             under every column of the systolic array) and we can stream the
             outputs of our bias modules into the activation modules immediately.
-            We will denote these post-activation values with H.
+            <b>We will denote these post-activation values with H</b>.
           </p>
           
           <div className="my-6">
@@ -927,7 +927,8 @@ export default function Home() {
               poorly it&apos;s doing. For simplicity, we chose Mean Squared
               Error (MSE) — think of it like measuring the &quot;distance&quot;
               between what we predicted and what we actually wanted, just like
-              how you might measure how far off target your basketball shot was.
+              how you might measure how far off target your basketball shot was.{" "}
+              <b>Let&apos;s denote the loss with L.</b>
             </p>
             
             <div className="my-6">
@@ -1212,8 +1213,8 @@ export default function Home() {
                 />
               </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Unified Buffer (UB) architecture showing dual-port memory
-                organization
+                Unified Buffer (UB) architecture showing dual-port read
+                mechanism
               </figcaption>
             </figure>
             <figure className="mt-12">
@@ -1226,7 +1227,7 @@ export default function Home() {
                 />
               </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Unified Buffer timing waveform showing read and write operations
+                Unified Buffer timing waveform showing read operation
               </figcaption>
             </figure>
             <p>
