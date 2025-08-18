@@ -779,7 +779,7 @@ export default function Home() {
           <div className="mt-8 pt-8 border-t border-neutral-200">
             <Slideshow
               slides={[
-                "/slideshow_2/1.png",
+                "/slideshow_2/1.svg",
                 "/slideshow_2/2.png",
                 "/slideshow_2/3.png",
               ]}
