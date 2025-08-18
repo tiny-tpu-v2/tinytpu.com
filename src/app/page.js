@@ -478,7 +478,7 @@ export default function Home() {
             accumulated sum, all in the same clock cycle.
           </p>
           <figure className="mt-6 overflow-x-auto">
-            <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
+            <div className="relative mx-auto w-full max-w-xl h-72 md:h-96">
               <Image
                 src="/PE.svg"
                 alt="PE diagram"
@@ -488,7 +488,7 @@ export default function Home() {
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
               Processing Element (PE) architecture showing multiply-accumulate
-              operation
+              operation (without load weight and start flags)
             </figcaption>
           </figure>
           <div className="mt-10 md:mt-16 w-full">

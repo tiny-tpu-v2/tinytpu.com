@@ -38,7 +38,7 @@ export default function Slideshow({
       setIsPlaying(true);
       intervalRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
-      }, 250);
+      }, 500);
     }
   };
 
