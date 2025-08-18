@@ -185,6 +185,7 @@ export default function Home() {
               (_, i) => `/mainslideshow/clk${i + 1}.svg`
             )}
             title=""
+            description="This slideshow depicts the forward pass and backward pass on our toy accelerator."
             aspectRatio="aspect-[1816/1938]"
           />
         </div>

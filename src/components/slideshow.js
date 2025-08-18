@@ -7,12 +7,20 @@ export default function Slideshow({
   slides,
   title,
   aspectRatio = "aspect-square",
+  description,
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const intervalRef = useRef(null);
 
   const totalSlides = slides.length;
+
+  let descriptionText = null;
+  if (Array.isArray(description)) {
+    descriptionText = description[currentSlide] ?? null;
+  } else if (typeof description === "string") {
+    descriptionText = description;
+  }
 
   const goToPrevious = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
@@ -64,6 +72,12 @@ export default function Slideshow({
           </div>
         </div>
       </div>
+
+      {descriptionText && (
+        <p className="mt-2 text-sm text-gray-600 text-center">
+          {descriptionText}
+        </p>
+      )}
 
       <div className="flex justify-center items-center gap-4 mt-4 mb-6">
         <span className="text-base md:text-lg text-neutral-600">
