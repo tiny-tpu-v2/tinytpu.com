@@ -1298,8 +1298,21 @@ export default function Home() {
           </figure>
           <br />
           <p>
+            Additionally, by incorporating 
+            control signals for each module, which we call the VPU pathway bits,
+            we can selectively enable or skip specific operations. This makes the 
+            VPU flexible enough to support both inference and training. For instance, 
+            during the forward pass, we want to apply biases and activations but 
+            skip computing loss or activation derivatives. When transitioning to 
+            the backward pass, all modules are engaged, but within the backward 
+            chain we only need to compute the activation derivative. Due to 
+            pipelining, all values that flow through the VPU pass through each 
+            of the four modules, and any unused modules simply act as registers, 
+            forwarding their inputs to outputs without performing computation.          
+          </p>
+          <p>
             The next few derivatives are interesting because we can actually use
-            matrix multiplication (and systolic array!) to compute the
+            matrix multiplication (and the systolic array!) to compute the
             derivatives with the help of these three identities:
           </p>
           <ol className="list-decimal list-inside mt-2 space-y-2">
@@ -1659,12 +1672,20 @@ export default function Home() {
             harmony: data flows through pipelines, modules operate in parallel,
             and our systolic array stays fed with useful work.
           </p>
-          <p>
-            This is the essence of what makes TPUs so powerful – they take the
-            fundamental operations that neural networks need and implement them
-            in the most efficient way possible, keeping all the hardware busy
-            and the data flowing smoothly from start to finish.
-          </p>
+
+          <figure className="mt-8">
+            <div className="relative w-full h-90 md:h-100">
+              <Image
+                src="/final-waveform.png"
+                alt="Final waveform simulation results"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Final waveform simulation in GTKWave showing the weight and bias updates in memory after one epoch!
+            </figcaption>
+          </figure>
         </div>
 
         <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
