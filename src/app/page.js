@@ -2,6 +2,7 @@ import { Roboto_Mono } from "next/font/google";
 import Image from "next/image";
 import { BlockMath, InlineMath } from "react-katex";
 import Slideshow from "../components/slideshow";
+import TweetEmbed from "../components/TweetEmbed";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -959,7 +960,7 @@ export default function Home() {
             working! This was a big milestone for us and we were very proud
             about what we had accomplished.
           </p>
-          <p className="italic">[INSERT VIDEO OF US SOLVING INFERENCE?]</p>
+          <TweetEmbed tweetId="1929249936400380055" />
 
           <h2 className="text-base md:text-lg font-semibold text-neutral-800 mt-10">
             Backpropagation and Training
