@@ -75,7 +75,7 @@ function highlightVerilog(code) {
     .replace(/\/\*[\s\S]*?\*\//g, '<span class="text-gray-400">$&</span>');
 }
 
-function Home() {
+export default function Home() {
   return (
     <main className="min-h-screen w-full overflow-x-hidden flex justify-center items-start px-4 sm:px-6 lg:px-8 pt-10 md:pt-28 pb-10 md:pb-14">
       <div className="w-full max-w-3xl text-base md:text-lg leading-7 md:leading-8 text-left break-words">
@@ -181,16 +181,16 @@ function Home() {
         <br />
         <figure className="w-full">
           <div className="w-full aspect-square rounded-lg flex items-center justify-center p-4">
-          <div className="relative w-full h-full">
-            <Image
-              src="/longslideshow.svg"
-              alt="Long slideshow diagram"
-              fill
-              className="object-contain p-4"
-              priority
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src="/longslideshow.svg"
+                alt="Long slideshow diagram"
+                fill
+                className="object-contain p-4"
+                priority
+              />
+            </div>
           </div>
-        </div>
           <figcaption className="text-sm text-center text-gray-600 mt-2">
             Overview of the TPU architecture and its key components
           </figcaption>
@@ -259,7 +259,7 @@ function Home() {
           we can do anything we put our mind to. The reasoning for why we chose
           to build a TPU specifically is fairly simple:
         </p>
-        <ul className="list-disc list-outside pl-6 text-left mt-4 break-words">
+        <ul className="list-disc list-inside text-left mt-4 break-words">
           <li>Building a chip for ML workloads seemed cool</li>
           <li>
             There was no well-documented open source repo for an ML accelerator
@@ -343,14 +343,14 @@ function Home() {
 
             <figure className="my-6">
               <div className="flex justify-center">
-              <Image
-                src="/clock-cycle.svg"
+                <Image
+                  src="/clock-cycle.svg"
                   alt="Clock cycle diagram"
-                width={679}
-                height={269}
-                className="max-w-full h-auto"
-              />
-            </div>
+                  width={679}
+                  height={269}
+                  className="max-w-full h-auto"
+                />
+              </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
                 Clock cycle timing diagram showing how operations are
                 synchronized in hardware
@@ -414,6 +414,22 @@ function Home() {
             2 -&gt; 1 multi-layer perceptron (MLP).
           </p>
 
+          <br></br>
+
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Why XOR?
+          </h3>
+          <p>
+            The reason we chose this specific network is because we were
+            targeting inference and training for the XOR problem (the
+            &quot;hello world&quot; of neural networks). The XOR problem is one
+            of the simplest problems a neural network can solve. All other gates
+            (AND, OR, etc) can predict the outputs from its inputs using just
+            one linear line (one neuron) to separate which inputs correspond to
+            a 0 and which ones correspond to a 1. But to classify all XOR, an
+            MLP is needed, since it requires curved decision boundaries, which
+            can&apos;t be achieved with ONLY linear equations.
+          </p>
           <figure className="my-6">
             <div className="flex justify-center">
               <Image
@@ -427,36 +443,6 @@ function Home() {
             <figcaption className="text-sm text-center text-gray-600 mt-2">
               Architecture of our 2→2→1 multi-layer perceptron for solving the
               XOR problem
-            </figcaption>
-          </figure>
-          <br />
-
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-            Why XOR?
-          </h3>
-          <p>
-            The reason we chose this specific network is because we were
-            targeting inference and training for the XOR problem (the
-            &quot;hello world&quot; of neural networks). The XOR problem is one
-            of the simplest problems a neural network can solve. All other gates
-            (AND, OR, etc) can predict the outputs from its inputs using just
-            one linear line (y = mx + b) to separate which inputs correspond to
-            a 0 and which ones correspond to a 1. But to classify all XOR, an
-            MLP is needed, since it requires curved decision boundaries, which
-            can&apos;t be achieved with ONLY linear equations.
-          </p>
-          <figure className="my-6">
-            <div className="flex justify-center">
-            <Image
-                src="/or-xor.svg"
-                alt="OR and XOR decision boundaries"
-              width={679}
-              height={269}
-              className="max-w-full h-auto"
-            />
-          </div>
-            <figcaption className="text-sm text-center text-gray-600 mt-2">
-              OR and XOR decision boundaries
             </figcaption>
           </figure>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
@@ -586,16 +572,16 @@ function Home() {
           </p>
           <figure className="mt-12">
             <div className="relative w-full h-[32rem] md:h-[40rem]">
-            <Image
-              src="/sys-array-standalone.svg"
-              alt="Systolic array diagram"
-              fill
-              className="object-contain"
-            />
-          </div>
+              <Image
+                src="/sys-array-standalone.svg"
+                alt="Systolic array diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
-              PEs are connected in a grid-like structure to perform matrix
-              multiplication
+              Systolic array architecture showing how PEs are connected to
+              perform matrix multiplication
             </figcaption>
           </figure>
           <p>
@@ -640,14 +626,14 @@ function Home() {
             <li>Rotate our X matrix by 90 degrees</li>
             <br />
             <figure>
-            <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
-              <Image
-                src="/rotate.svg"
-                alt="Rotate X matrix by 90 degrees"
-                fill
-                className="object-contain"
-              />
-            </div>
+              <div className="relative mx-auto w-full max-w-xl h-48 md:h-64">
+                <Image
+                  src="/rotate.svg"
+                  alt="Rotate X matrix by 90 degrees"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
                 Matrix rotation by 90 degrees to prepare for systolic array
                 input
@@ -657,13 +643,13 @@ function Home() {
             <li>STAGGER the inputs (delay each row by 1 clock cycle)</li>
             <figure className="mt-12">
               <div className="relative w-full h-48 md:h-42">
-              <Image
-                src="/stagger-x.svg"
-                alt="Stagger input matrix"
-                fill
-                className="object-contain"
-              />
-            </div>
+                <Image
+                  src="/stagger-x.svg"
+                  alt="Stagger input matrix"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
                 Input matrix staggering pattern for systolic array processing
               </figcaption>
@@ -676,13 +662,13 @@ function Home() {
             <li>Stagger the weight matrix (similar to the inputs)</li>
             <figure className="mt-12">
               <div className="relative w-full h-48 md:h-64">
-              <Image
-                src="/stagger-w.svg"
-                alt="Stagger weight matrix"
-                fill
-                className="object-contain"
-              />
-            </div>
+                <Image
+                  src="/stagger-w.svg"
+                  alt="Stagger weight matrix"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
                 Weight matrix staggering pattern for systolic array processing
               </figcaption>
@@ -690,13 +676,13 @@ function Home() {
             <li>Transpose it!</li>
             <figure className="mt-12">
               <div className="relative w-full h-48 md:h-42">
-              <Image
-                src="/transpose.svg"
+                <Image
+                  src="/transpose.svg"
                   alt="Matrix transposition"
-                fill
-                className="object-contain"
-              />
-            </div>
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <figcaption className="text-sm text-center text-gray-600 mt-2">
                 Weight matrix transposition for correct mathematical alignment
               </figcaption>
@@ -882,13 +868,13 @@ function Home() {
           </p>
           <figure className="mt-12">
             <div className="relative w-full h-56 md:h-64">
-            <Image
-              src="/pipelining.svg"
-              alt="Pipeline diagram"
-              fill
-              className="object-contain"
-            />
-          </div>
+              <Image
+                src="/pipelining.svg"
+                alt="Pipeline diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
               Pipelining stages showing how operations overlap across clock
               cycles
@@ -1032,6 +1018,7 @@ function Home() {
             working! This was a big milestone for us and we were very proud
             about what we had accomplished.
           </p>
+          <p className="italic">[INSERT VIDEO OF US SOLVING INFERENCE?]</p>
 
           <h2 className="text-base md:text-lg font-semibold text-neutral-800 mt-10">
             Backpropagation and Training
@@ -1057,49 +1044,49 @@ function Home() {
               <b>Let&apos;s denote the loss with L.</b>
             </p>
             <div className="my-6">
-          <div className="text-center mb-4">
-            <BlockMath
+              <div className="text-center mb-4">
+                <BlockMath
                   math={
                     "\\mathcal{L} = \\frac{1}{N}\\sum_{i=1}^{N}(y_i - \\hat{y}_i)^2"
                   }
-            />
-          </div>
+                />
+              </div>
               <p className="text-sm text-gray-700 leading-relaxed">
                 where <InlineMath math={"y_i"} /> is the target output,{" "}
                 <InlineMath math={"\\hat{y}_i"} /> is our prediction, and{" "}
                 <InlineMath math={"N"} /> is the number of samples
-          </p>
-        </div>
+              </p>
+            </div>
             <div className="my-6">
               <p className="text-sm text-gray-700 mb-2">
                 For our XOR example, with predictions{" "}
                 <InlineMath
-              math={
+                  math={
                     "\\hat{\\mathbf{y}} = [0.5617, 0.5344, 0.6673, 0.6400]^T"
                   }
                 />{" "}
                 and targets <InlineMath math={"\\mathbf{y} = [0, 1, 1, 0]^T"} />
                 :
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
+              </p>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
                     "\\mathcal{L} = \\frac{1}{4}[(0 - 0.5617)^2 + (1 - 0.5344)^2 + (1 - 0.6673)^2 + (0 - 0.6400)^2]"
-              }
-            />
-          </div>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
+                  }
+                />
+              </div>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
                     "\\mathcal{L} = \\frac{1}{4}[0.3155 + 0.2168 + 0.1107 + 0.4096] = 0.2631"
-              }
-            />
-          </div>
+                  }
+                />
+              </div>
               <p className="text-sm text-gray-700 leading-relaxed">
                 This loss value tells us how far off our predictions are from
                 the true XOR outputs.
-          </p>
-        </div>
+              </p>
+            </div>
             <p>
               So right after we finish computing our final layer&apos;s
               activations (let&apos;s call them{" "}
@@ -1116,7 +1103,7 @@ function Home() {
             </p>
             <h3 className="text-sm md:text-base font-semibold text-neutral-800">
               The magic of the chain rule
-        </h3>
+            </h3>
             <p>
               This is where calculus enters the picture. To make our model
               better, we need to figure out how changing each weight affects our
@@ -1127,32 +1114,32 @@ function Home() {
               <p className="text-sm text-gray-700 mb-2">
                 The chain rule for gradients:
               </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}} \\cdot \\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"
-              }
-            />
-          </div>
+              <div className="text-center mb-4">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}} \\cdot \\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"
+                  }
+                />
+              </div>
               <p className="text-sm text-gray-700 leading-relaxed">
                 This allows us to compute gradients layer by layer, propagating
                 them backwards through the network
-          </p>
-        </div>
+              </p>
+            </div>
             <div className="relative mt-12 w-full h-56 md:h-72">
               <Image
                 src="/longchain.svg"
                 alt="Long chain diagram"
                 fill
                 className="object-contain"
-            />
-          </div>
+              />
+            </div>
             <p>Let&apos;s trace through what happens step by step.</p>
             <ol className="list-decimal list-inside">
               <li>
                 Calculate{" "}
                 <InlineMath
-              math={
+                  math={
                     "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_2}"
                   }
                 />{" "}
@@ -1163,7 +1150,7 @@ function Home() {
               <li>
                 Compute{" "}
                 <InlineMath
-              math={
+                  math={
                     "\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"
                   }
                 />{" "}
@@ -1174,572 +1161,557 @@ function Home() {
               <li>
                 Compute{" "}
                 <InlineMath
-              math={
+                  math={
                     "\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{W}_2}"
                   }
                 />
                 ,{" "}
                 <InlineMath
-              math={
+                  math={
                     "\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{H}_2}"
-              }
-            />
+                  }
+                />
               </li>
             </ol>
-          </div>
-              <p className="text-sm text-gray-700 leading-relaxed mb-2">
-                Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are
-                positive, the LeakyReLU gradient is 1:
-              </p>
-              <div className="text-center mb-6">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{b}_2}"
-              }
-            />
-          </div>
-        </div>
-            <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-              The beautiful symmetry of forward and backward pass
-        </h3>
-            <p>
-              After drawing out the entire computational graph, we discovered
-              something remarkable: the longest chain in backpropagation closely
-              resembles forward pass! In forward pass, we multiply activation
-              matrices with transposed weight matrices. In backward pass, we
-              multiply gradient matrices with weight matrices (untransposed).
-              It&apos;s like looking in a mirror!
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">
-                Propagating gradients to the hidden layer:
-              </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.5em] -0.2328\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-              <p className="text-sm text-gray-700 mb-2">
-                And through the first layer&apos;s activation:
-              </p>
-              <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1}"
-              }
-            />
           </div>
           <p className="text-sm text-gray-700 leading-relaxed mb-2">
-                With mixed positive and negative values in{" "}
-                <InlineMath math={"\\mathbf{Z}_1"} />, the gradient is:
-          </p>
-              <div className="text-center mb-8">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0739\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-          </div>
-            <p>
-              Once we have all of these individual derivatives, we can multiply
-              them together to find any derivative with respect of the loss
-              (i.e.{" "}
-               <InlineMath
-              math={
-                   "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_2} \\cdot \\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2} \\cdot \\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{W}_2}"
-                 }
-               />{" "}
-               gives us{" "}
-               <InlineMath
-              math={
-                   "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2}"
-                 }
-               />).
-            </p>
-
-            <p>
-              After that, we have to compute the activation derivative{" "}
-              <InlineMath
-              math={
-                  "\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"
-              }
-            />
-              , for which the formula is{" "}
-              <InlineMath
-              math={
-                  "\\frac{\\partial \\text{LeakyReLU}_{\\alpha}(\\mathbf{Z}_2)}{\\partial \\mathbf{Z}_2} = \\begin{cases} 1 & \\text{if } \\mathbf{Z}_2 > 0 \\\\[0.3em] \\alpha & \\text{if } \\mathbf{Z}_2 \\leq 0 \\end{cases}"
-                }
-              />
-              . This is also an element-wise computation, meaning we can
-              structure it exactly like the loss module (and bias and activation
-              modules), but it will perform a different calculation. One
-              important note about this module, however, is that it requires the
-              activations we computed during forward pass.
-            </p>
-
-            <p>
-              Now you might be wondering — how do we actually compute
-              derivatives in hardware? Let&apos;s look at Leaky ReLU as an
-              example, since it&apos;s beautifully simple but demonstrates the
-              key principles. Remember that Leaky ReLU applies different
-              operations based on whether the input is positive or negative. The
-              derivative follows the same pattern: it outputs 1 for positive
-              inputs and a small constant (we used 0.01) for negative inputs.
-            </p>
-            <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">
-                The Leaky ReLU gradient:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\text{LeakyReLU}_\\alpha(z)}{\\partial z} = \\begin{cases} 1 & \\text{if } z > 0 \\\\[0.3em] \\alpha & \\text{if } z \\leq 0 \\end{cases}"
-              }
-            />
-          </div>
-        </div>
-            <pre
-              className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
-            >
-              {leaky_relu_derivative_verilogSnippet}
-            </pre>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-85">
-                <Image
-                  src="/leaky-relu-derivative.svg"
-                  alt="Leaky ReLU derivative"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Leaky ReLU derivative implementation in hardware showing the
-                conditional logic
-              </figcaption>
-            </figure>
-            <p>
-              What&apos;s beautiful about this is that it&apos;s just a simple
-              comparison – no complex arithmetic needed. The hardware can
-              compute this derivative in a single clock cycle, keeping our
-              pipeline flowing smoothly. This same principle applies to other
-              activation functions: their derivatives often simplify to basic
-              operations that hardware can execute very efficiently. This
-              insight led us to compute the long chain first — getting all our
-              <InlineMath
-                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-              />{" "}
-              gradients just like we computed activations in forward pass. We
-              could cache these gradients and reuse them, following the same
-              efficient pattern we&apos;d already mastered.
-            </p>
-            <p>
-              You&apos;ll notice a really cool pattern emerging: all these
-              modules that sit underneath the systolic array process column
-              vectors that stream out one by one. This gave us the idea to unify
-              them into something we called a{" "}
-              <b>vector processing unit (VPU)</b> – because that&apos;s exactly
-              what they&apos;re doing, processing vectors element-wise! Not only
-              is this more elegant to work with, it&apos;s also useful when we
-              scale our TPU beyond a 2x2 systolic array, as we&apos;ll have N
-              number of these modules (N being the size of the systolic array),
-              each of which we would have to interface with individually.
-              Unifying these modules under a parent module makes our design more
-              scalable and elegant!
-            </p>
-            <br />
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-150">
-                <Image
-                  src="/vpu.svg"
-                  alt="Vector processing unit"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Vector Processing Unit (VPU) architecture showing unified
-                element-wise operations
-              </figcaption>
-            </figure>
-            <br />
-            <p>
-              The next few derivatives are interesting because we can actually
-              use matrix multiplication (and systolic array!) to compute the
-              derivatives with the help of these three identities:
-            </p>
-            <ol className="list-decimal list-inside mt-2 space-y-2">
-              <li>
-                If we have{" "}
-                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
-                and take its derivative with respect to the weights, we get{" "}
-                <InlineMath
-              math={
-                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
-                  }
-                />
-              </li>
-              <li>
-                If we have{" "}
-                <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} />{" "}
-                and take its derivative with respect to the inputs{" "}
-                <InlineMath math={"\\mathbf{X}"} />, we get{" "}
-                <InlineMath
-              math={
-                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
-                  }
-                />{" "}
-                (just the weight matrix transposed)
-              </li>
-              <li>For the bias term, the derivative is simply 1.</li>
-            </ol>
-            <p>
-              This means that we can multiply the previous{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{Z}}"}
-              />{" "}
-              with <InlineMath math={"\\mathbf{X}"} />,{" "}
-              <InlineMath math={"\\mathbf{W}^T"} />, and 1 to get{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
-              />
-              ,{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"}
-              />
-              , and{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"}
-              />
-              , respectively. And because all of the gradients are actually
-              gradient matrices, we can use the systolic array!
-            </p>
-            <p>
-              Now something to note about the activation derivative{" "}
-              <InlineMath
-              math={
-                  "\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"
-                }
-              />{" "}
-              and the weight derivative{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
-              />{" "}
-              is that they both require the post-activations (H) we calculate
-              during forward pass to be computed. This means the outputs of
-              every layer in some form of memory to be able to perform training.
-              Here&apos;s where we created a new scratchpad memory module which
-              we called the unified buffer (UB). This lets us store our H values
-              immediately after we compute them during forward pass.
-            </p>
-            <p>
-              We realized that we can also get rid of the input and weight
-              accumulators, as well as manually loading the bias and leak
-              factors into their respective modules, by using the UB to store
-              them. This is also better practice, rather than loading in new
-              data every clock cycle with the instruction set. Since we want to
-              access two values (2 inputs or 2 weights for each row/col of the
-              systolic array) at the same time, we added TWO read and write
-              ports. We did this for each data primitive (inputs, weights, bias,
-              leak factor, post activations) to minimize data contention since
-              we have many different types of data.
-            </p>
-            <p>
-              To read values, we supply a starting address and the number of
-              values, we supply a starting address and the number of locations
-              we want the UB to read and it will read 2 values every clock
-              cycle. Writing is a similar mechanism, where we specify which
-              values we want to write to each of the two input ports. The beauty
-              in the read mechanism is that it runs in the background once we
-              supply a starting address until the number of locations given are
-              read, meaning we only need to provide an instruction for this
-              every few clock cycles.
-            </p>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-102">
-                <Image
-                  src="/ub-diagram.svg"
-                  alt="Unified Buffer diagram"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Unified Buffer (UB) architecture showing dual-port read
-                mechanism
-              </figcaption>
-            </figure>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-82">
-                <Image
-                  src="/ub-waveform.svg"
-                  alt="Unified Buffer waveform"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Unified Buffer timing waveform showing read operation
-              </figcaption>
-            </figure>
-            <p>
-              At the end of the day, not having these mechanisms wouldn&apos;t
-              break having these mechanisms wouldn&apos;t break the TPU — but
-              they allow us to always keep the systolic array fed, which is a
-              core design principle we couldn&apos;t compromise.
-            </p>
-            <p>
-              While we were working on this, we realized we could make one last
-              small optimization for the activation derivative module — since we
-              only use the <InlineMath math={"\\mathbf{H}_2"} /> values once
-              (for computing{" "}
-              <InlineMath
-              math={
-                  "\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"
-                }
-              />
-              ), we created a tiny cache within the VPU instead of storing them
-              in the UB. The rest of the <InlineMath math={"\\mathbf{H}"} />{" "}
-              values will be stored in the UB because they&apos;re needed to
-              compute multiple derivatives.
-            </p>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-100">
-                <Image
-                  src="/h-cache.svg"
-                  alt="H-cache diagram"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                H-cache optimization for storing temporary activation values
-              </figcaption>
-            </figure>
-            <p>
-              This is what the new TPU architecture, modified to perform
-              training, looks like:
-            </p>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-130">
-                <Image
-                  src="/tpu.svg"
-                  alt="Complete TPU architecture"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Complete TPU architecture showing all components for both
-                inference and training
-              </figcaption>
-            </figure>
-            <p>Now we can do backpropagation!</p>
-            <p>
-              Going back to the computational graph, we discovered something
-              remarkable: the longest chain in backpropagation closely resembles
-              forward pass! In forward pass, we multiply activation matrices
-              with transposed weight matrices. In backward pass, we multiply
-              gradient matrices with weight matrices (untransposed). It&apos;s
-              like looking in a mirror!
-            </p>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-50">
-                <Image
-                  src="/forward-pass.svg"
-                  alt="Forward pass diagram"
-                  fill
-                  className="object-contain"
-            />
-          </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                Forward pass computation flow showing matrix operations
-              </figcaption>
-            </figure>
-            <p>
-              This insight led us to compute the long chain of the computational
-              graph first (highlighted in yellow) – getting all our{" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-              />{" "}
-              gradients just like we computed activations in forward pass. We
-              could cache these gradients and reuse them, following the same
-              efficient pattern we&apos;d already mastered.
-            </p>
-            <p>We create a loop where we:</p>
-            <ol className="list-decimal list-inside mt-2 space-y-2">
-              <li>
-                Fetch a bridge node ({" "}
-                <InlineMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"
-                  }
-                />
-                ) from our unified buffer
-              </li>
-              <li>
-                Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} />{" "}
-                matrix, also from unified buffer
-              </li>
-              <li>
-                Stream these through our systolic array to compute the weight
-                gradients
-              </li>
-            </ol>
-
-            {/* Slideshow 4 */}
-        <div className="mb-8">
-              <Slideshow
-                slides={[
-                  "/slideshow_4/1.png",
-                  "/slideshow_4/2.png",
-                  "/slideshow_4/3.png",
-                  "/slideshow_4/4.png",
-                  "/slideshow_4/5.png",
-                ]}
-                title="Backward pass through second hidden layer"
-                aspectRatio="aspect-[4/3]"
-              />
-        </div>
-
-            <p>
-              And here&apos;s where something really magical happens: we can
-              stream these weight gradients directly into a gradient descent
-              module while we&apos;re still computing them! This module takes
-              the current weights stored in memory and updates them using the
-              gradients.
-            </p>
-            <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">
-                The gradient descent update rule:
-              </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "\\bm{\\theta}_{\\text{new}} = \\bm{\\theta}_{\\text{old}} - \\alpha \\nabla_{\\bm{\\theta}} \\mathcal{L}"
-              }
-            />
-          </div>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                where <InlineMath math={"\\alpha"} /> is the learning rate and{" "}
-                <InlineMath math={"\\bm{\\theta}"} /> represents any parameter
-                (weights or biases)
-              </p>
-          </div>
-            <div className="my-6">
-              <p className="text-sm text-gray-700 mb-2">
-                Computing weight gradients for our XOR network:
-          </p>
-              <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
-              }
-            />
-          </div>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "= \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-              <p className="text-sm text-gray-700 mb-2">
-                Similarly for Layer 1:
-          </p>
-          <div className="text-center mb-4">
-            <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} & \\phantom{-}0.0920\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} & -0.0404\\phantom{0} \\end{bmatrix}"
-              }
-            />
-          </div>
-              <p className="text-sm text-gray-700 mb-2">
-                Bias gradients (sum over samples):
+            Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are
+            positive, the LeakyReLU gradient is 1:
           </p>
           <div className="text-center mb-6">
             <BlockMath
-              math={
-                    "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2017, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} \\end{bmatrix}"
-              }
+              math={"\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{b}_2}"}
             />
           </div>
-              <p className="text-sm text-gray-700 mb-2">
-                Applying gradient descent with learning rate{" "}
-                <InlineMath math={"\\alpha = 0.75"} />:
+
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            The beautiful symmetry of forward and backward pass
+          </h3>
+          <p>
+            After drawing out the entire computational graph, we discovered
+            something remarkable: the longest chain in backpropagation closely
+            resembles forward pass! In forward pass, we multiply activation
+            matrices with transposed weight matrices. In backward pass, we
+            multiply gradient matrices with weight matrices (untransposed).
+            It&apos;s like looking in a mirror!
           </p>
-          <div className="text-center mb-6">
-            <BlockMath
+
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              Propagating gradients to the hidden layer:
+            </p>
+            <div className="text-center mb-6">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2} \\mathbf{W}_2 = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} \\\\[0.5em] -0.2328\\phantom{0} \\\\[0.5em] -0.1664\\phantom{0} \\\\[0.5em] \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">
+              And through the first layer&apos;s activation:
+            </p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_1} \\odot \\frac{\\partial \\text{LeakyReLU}_{0.5}(\\mathbf{Z}_1)}{\\partial \\mathbf{Z}_1}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed mb-2">
+              With mixed positive and negative values in{" "}
+              <InlineMath math={"\\mathbf{Z}_1"} />, the gradient is:
+            </p>
+            <div className="text-center mb-8">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1} = \\begin{bmatrix} \\phantom{-}0.1479\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.1226\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0876\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.1685\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\odot \\begin{bmatrix} \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\\\[0.5em] \\phantom{.}0.5\\phantom{.0} & \\phantom{.}1\\phantom{.} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0739\\phantom{0} & \\phantom{-}0.0831\\phantom{0} \\\\[0.5em] -0.0613\\phantom{0} & -0.0689\\phantom{0} \\\\[0.5em] -0.0438\\phantom{0} & -0.0492\\phantom{0} \\\\[0.5em] \\phantom{-}0.0843\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+          </div>
+          <p>
+            Once we have all of these individual derivatives, we can multiply
+            them together to find any derivative with respect of the loss (i.e.{" "}
+            <InlineMath
               math={
-                    "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5657\\phantom{0} & \\phantom{-}0.2290\\phantom{0} \\end{bmatrix}"
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}_2} \\cdot \\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2} \\cdot \\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{W}_2}"
+              }
+            />{" "}
+            gives us{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2}"}
+            />
+            ).
+          </p>
+
+          <p>
+            After that, we have to compute the activation derivative{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"}
+            />
+            , for which the formula is{" "}
+            <InlineMath
+              math={
+                "\\frac{\\partial \\text{LeakyReLU}_{\\alpha}(\\mathbf{Z}_2)}{\\partial \\mathbf{Z}_2} = \\begin{cases} 1 & \\text{if } \\mathbf{Z}_2 > 0 \\\\[0.3em] \\alpha & \\text{if } \\mathbf{Z}_2 \\leq 0 \\end{cases}"
               }
             />
-          </div>
-        </div>
-            <p>
-              No waiting around — everything flows like water through our
-              pipeline.
+            . This is also an element-wise computation, meaning we can structure
+            it exactly like the loss module (and bias and activation modules),
+            but it will perform a different calculation. One important note
+            about this module, however, is that it requires the activations we
+            computed during forward pass.
+          </p>
+
+          <p>
+            Now you might be wondering — how do we actually compute derivatives
+            in hardware? Let&apos;s look at Leaky ReLU as an example, since
+            it&apos;s beautifully simple but demonstrates the key principles.
+            Remember that Leaky ReLU applies different operations based on
+            whether the input is positive or negative. The derivative follows
+            the same pattern: it outputs 1 for positive inputs and a small
+            constant (we used 0.01) for negative inputs.
+          </p>
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              The Leaky ReLU gradient:
             </p>
-            <p>
-              You might be wondering: &quot;We&apos;ve used our matrix
-              multiplication identities for the long chain and weight gradients
-              — how do we calculate bias gradients?&quot; Well, we&apos;ve
-              actually already done most of the work! Since we&apos;re
-              processing batches of data, we can simply sum (the technical term
-              is &quot;reduce&quot;) the{" "}
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\text{LeakyReLU}_\\alpha(z)}{\\partial z} = \\begin{cases} 1 & \\text{if } z > 0 \\\\[0.3em] \\alpha & \\text{if } z \\leq 0 \\end{cases}"
+                }
+              />
+            </div>
+          </div>
+          <pre
+            className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
+          >
+            {leaky_relu_derivative_verilogSnippet}
+          </pre>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-85">
+              <Image
+                src="/leaky-relu-derivative.svg"
+                alt="Leaky ReLU derivative"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Leaky ReLU derivative implementation in hardware showing the
+              conditional logic
+            </figcaption>
+          </figure>
+          <p>
+            What&apos;s beautiful about this is that it&apos;s just a simple
+            comparison – no complex arithmetic needed. The hardware can compute
+            this derivative in a single clock cycle, keeping our pipeline
+            flowing smoothly. This same principle applies to other activation
+            functions: their derivatives often simplify to basic operations that
+            hardware can execute very efficiently. This insight led us to
+            compute the long chain first — getting all our
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+            />{" "}
+            gradients just like we computed activations in forward pass. We
+            could cache these gradients and reuse them, following the same
+            efficient pattern we&apos;d already mastered.
+          </p>
+          <p>
+            You&apos;ll notice a really cool pattern emerging: all these modules
+            that sit underneath the systolic array process column vectors that
+            stream out one by one. This gave us the idea to unify them into
+            something we called a <b>vector processing unit (VPU)</b> – because
+            that&apos;s exactly what they&apos;re doing, processing vectors
+            element-wise! Not only is this more elegant to work with, it&apos;s
+            also useful when we scale our TPU beyond a 2x2 systolic array, as
+            we&apos;ll have N number of these modules (N being the size of the
+            systolic array), each of which we would have to interface with
+            individually. Unifying these modules under a parent module makes our
+            design more scalable and elegant!
+          </p>
+          <br />
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-150">
+              <Image
+                src="/vpu.svg"
+                alt="Vector processing unit"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Vector Processing Unit (VPU) architecture showing unified
+              element-wise operations
+            </figcaption>
+          </figure>
+          <br />
+          <p>
+            The next few derivatives are interesting because we can actually use
+            matrix multiplication (and systolic array!) to compute the
+            derivatives with the help of these three identities:
+          </p>
+          <ol className="list-decimal list-inside mt-2 space-y-2">
+            <li>
+              If we have{" "}
+              <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
+              take its derivative with respect to the weights, we get{" "}
+              <InlineMath
+                math={
+                  "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
+                }
+              />
+            </li>
+            <li>
+              If we have{" "}
+              <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
+              take its derivative with respect to the inputs{" "}
+              <InlineMath math={"\\mathbf{X}"} />, we get{" "}
+              <InlineMath
+                math={
+                  "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
+                }
+              />{" "}
+              (just the weight matrix transposed)
+            </li>
+            <li>For the bias term, the derivative is simply 1.</li>
+          </ol>
+          <p>
+            This means that we can multiply the previous{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{Z}}"}
+            />{" "}
+            with <InlineMath math={"\\mathbf{X}"} />,{" "}
+            <InlineMath math={"\\mathbf{W}^T"} />, and 1 to get{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
+            />
+            ,{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"}
+            />
+            , and{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"}
+            />
+            , respectively. And because all of the gradients are actually
+            gradient matrices, we can use the systolic array!
+          </p>
+          <p>
+            Now something to note about the activation derivative{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"}
+            />{" "}
+            and the weight derivative{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
+            />{" "}
+            is that they both require the post-activations (H) we calculate
+            during forward pass to be computed. This means the outputs of every
+            layer in some form of memory to be able to perform training.
+            Here&apos;s where we created a new scratchpad memory module which we
+            called the unified buffer (UB). This lets us store our H values
+            immediately after we compute them during forward pass.
+          </p>
+          <p>
+            We realized that we can also get rid of the input and weight
+            accumulators, as well as manually loading the bias and leak factors
+            into their respective modules, by using the UB to store them. This
+            is also better practice, rather than loading in new data every clock
+            cycle with the instruction set. Since we want to access two values
+            (2 inputs or 2 weights for each row/col of the systolic array) at
+            the same time, we added TWO read and write ports. We did this for
+            each data primitive (inputs, weights, bias, leak factor, post
+            activations) to minimize data contention since we have many
+            different types of data.
+          </p>
+          <p>
+            To read values, we supply a starting address and the number of
+            values, we supply a starting address and the number of locations we
+            want the UB to read and it will read 2 values every clock cycle.
+            Writing is a similar mechanism, where we specify which values we
+            want to write to each of the two input ports. The beauty in the read
+            mechanism is that it runs in the background once we supply a
+            starting address until the number of locations given are read,
+            meaning we only need to provide an instruction for this every few
+            clock cycles.
+          </p>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-102">
+              <Image
+                src="/ub-diagram.svg"
+                alt="Unified Buffer diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Unified Buffer (UB) architecture showing dual-port read mechanism
+            </figcaption>
+          </figure>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-82">
+              <Image
+                src="/ub-waveform.svg"
+                alt="Unified Buffer waveform"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Unified Buffer timing waveform showing read operation
+            </figcaption>
+          </figure>
+          <p>
+            At the end of the day, not having these mechanisms wouldn&apos;t
+            break having these mechanisms wouldn&apos;t break the TPU — but they
+            allow us to always keep the systolic array fed, which is a core
+            design principle we couldn&apos;t compromise.
+          </p>
+          <p>
+            While we were working on this, we realized we could make one last
+            small optimization for the activation derivative module — since we
+            only use the <InlineMath math={"\\mathbf{H}_2"} /> values once (for
+            computing{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathbf{H}_2}{\\partial \\mathbf{Z}_2}"}
+            />
+            ), we created a tiny cache within the VPU instead of storing them in
+            the UB. The rest of the <InlineMath math={"\\mathbf{H}"} /> values
+            will be stored in the UB because they&apos;re needed to compute
+            multiple derivatives.
+          </p>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-100">
+              <Image
+                src="/h-cache.svg"
+                alt="H-cache diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              H-cache optimization for storing temporary activation values
+            </figcaption>
+          </figure>
+          <p>
+            This is what the new TPU architecture, modified to perform training,
+            looks like:
+          </p>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-130">
+              <Image
+                src="/tpu.svg"
+                alt="Complete TPU architecture"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Complete TPU architecture showing all components for both
+              inference and training
+            </figcaption>
+          </figure>
+          <p>Now we can do backpropagation!</p>
+          <p>
+            Going back to the computational graph, we discovered something
+            remarkable: the longest chain in backpropagation closely resembles
+            forward pass! In forward pass, we multiply activation matrices with
+            transposed weight matrices. In backward pass, we multiply gradient
+            matrices with weight matrices (untransposed). It&apos;s like looking
+            in a mirror!
+          </p>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-50">
+              <Image
+                src="/forward-pass.svg"
+                alt="Forward pass diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Forward pass computation flow showing matrix operations
+            </figcaption>
+          </figure>
+          <p>
+            This insight led us to compute the long chain of the computational
+            graph first (highlighted in yellow) – getting all our{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+            />{" "}
+            gradients just like we computed activations in forward pass. We
+            could cache these gradients and reuse them, following the same
+            efficient pattern we&apos;d already mastered.
+          </p>
+          <p>We create a loop where we:</p>
+          <ol className="list-decimal list-inside mt-2 space-y-2">
+            <li>
+              Fetch a bridge node ({" "}
               <InlineMath
                 math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-              />{" "}
-              gradients across the batch dimension. The beauty is that we can do
-              this reduction right when we&apos;re computing the long chain — no
-              extra work required!
-            </p>
-            <p>
-              With all these new changes and control flags, our instruction is
-              significantly longer — 156 bits in fact! But we can confirm that
-              every single one of these bits is needed and we ensured that we
-              couldn&apos;t make the instruction set any smaller without
-              compromising the speed and efficiency of the TPU.
-            </p>
-            <figure className="mt-12">
-              <div className="relative w-full h-66 md:h-40">
-                <Image
-                  src="/isa.svg"
-                  alt="Instruction Set Architecture diagram"
-                  fill
-                  className="object-contain"
+              />
+              ) from our unified buffer
+            </li>
+            <li>
+              Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} />{" "}
+              matrix, also from unified buffer
+            </li>
+            <li>
+              Stream these through our systolic array to compute the weight
+              gradients
+            </li>
+          </ol>
+
+          {/* Slideshow 4 */}
+          <div className="mb-8">
+            <Slideshow
+              slides={[
+                "/slideshow_4/1.png",
+                "/slideshow_4/2.png",
+                "/slideshow_4/3.png",
+                "/slideshow_4/4.png",
+                "/slideshow_4/5.png",
+              ]}
+              title="Backward pass through second hidden layer"
+              aspectRatio="aspect-[4/3]"
             />
           </div>
-              <figcaption className="text-sm text-center text-gray-600 mt-2">
-                156-bit Instruction Set Architecture (ISA) layout showing
-                control flags and data fields
-              </figcaption>
-            </figure>
-            <h3>Putting it all together</h3>
-            <p>
-              By continuing this same process iteratively – forward pass,
-              backward pass, weight updates – we can train our network until it
-              performs exactly how we want. The same systolic array that powered
-              our inference now powers our training, with just a few additional
-              modules to handle the gradient computations.
+
+          <p>
+            And here&apos;s where something really magical happens: we can
+            stream these weight gradients directly into a gradient descent
+            module while we&apos;re still computing them! This module takes the
+            current weights stored in memory and updates them using the
+            gradients.
+          </p>
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              The gradient descent update rule:
             </p>
-            <p>
-              What started as a simple idea about matrix multiplication has
-              grown into a complete training system. Every component works
-              together in harmony: data flows through pipelines, modules operate
-              in parallel, and our systolic array stays fed with useful work.
-            </p>
-            <p>
-              This is the essence of what makes TPUs so powerful – they take the
-              fundamental operations that neural networks need and implement
-              them in the most efficient way possible, keeping all the hardware
-              busy and the data flowing smoothly from start to finish.
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\bm{\\theta}_{\\text{new}} = \\bm{\\theta}_{\\text{old}} - \\alpha \\nabla_{\\bm{\\theta}} \\mathcal{L}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              where <InlineMath math={"\\alpha"} /> is the learning rate and{" "}
+              <InlineMath math={"\\bm{\\theta}"} /> represents any parameter
+              (weights or biases)
             </p>
           </div>
-          <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
+          <div className="my-6">
+            <p className="text-sm text-gray-700 mb-2">
+              Computing weight gradients for our XOR network:
+            </p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
+                }
+              />
+            </div>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "= \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">Similarly for Layer 1:</p>
+            <div className="text-center mb-4">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} & \\phantom{-}0.0920\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} & -0.0404\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">
+              Bias gradients (sum over samples):
+            </p>
+            <div className="text-center mb-6">
+              <BlockMath
+                math={
+                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2017, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+            <p className="text-sm text-gray-700 mb-2">
+              Applying gradient descent with learning rate{" "}
+              <InlineMath math={"\\alpha = 0.75"} />:
+            </p>
+            <div className="text-center mb-6">
+              <BlockMath
+                math={
+                  "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5657\\phantom{0} & \\phantom{-}0.2290\\phantom{0} \\end{bmatrix}"
+                }
+              />
+            </div>
+          </div>
+          <p>
+            No waiting around — everything flows like water through our
+            pipeline.
+          </p>
+          <p>
+            You might be wondering: &quot;We&apos;ve used our matrix
+            multiplication identities for the long chain and weight gradients —
+            how do we calculate bias gradients?&quot; Well, we&apos;ve actually
+            already done most of the work! Since we&apos;re processing batches
+            of data, we can simply sum (the technical term is
+            &quot;reduce&quot;) the{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+            />{" "}
+            gradients across the batch dimension. The beauty is that we can do
+            this reduction right when we&apos;re computing the long chain — no
+            extra work required!
+          </p>
+          <p>
+            With all these new changes and control flags, our instruction is
+            significantly longer — 156 bits in fact! But we can confirm that
+            every single one of these bits is needed and we ensured that we
+            couldn&apos;t make the instruction set any smaller without
+            compromising the speed and efficiency of the TPU.
+          </p>
+          <figure className="mt-12">
+            <div className="relative w-full h-66 md:h-40">
+              <Image
+                src="/isa.svg"
+                alt="Instruction Set Architecture diagram"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              156-bit Instruction Set Architecture (ISA) layout showing control
+              flags and data fields
+            </figcaption>
+          </figure>
+          <h3>Putting it all together</h3>
+          <p>
+            By continuing this same process iteratively – forward pass, backward
+            pass, weight updates – we can train our network until it performs
+            exactly how we want. The same systolic array that powered our
+            inference now powers our training, with just a few additional
+            modules to handle the gradient computations.
+          </p>
+          <p>
+            What started as a simple idea about matrix multiplication has grown
+            into a complete training system. Every component works together in
+            harmony: data flows through pipelines, modules operate in parallel,
+            and our systolic array stays fed with useful work.
+          </p>
+          <p>
+            This is the essence of what makes TPUs so powerful – they take the
+            fundamental operations that neural networks need and implement them
+            in the most efficient way possible, keeping all the hardware busy
+            and the data flowing smoothly from start to finish.
+          </p>
+        </div>
+
+        <hr className="mt-10 md:mt-16 mb-4 border-neutral-200" />
         <h2 className="text-xs uppercase tracking-wide text-neutral-500">
           Footnotes
         </h2>
