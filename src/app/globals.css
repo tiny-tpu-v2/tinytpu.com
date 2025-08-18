@@ -17,3 +17,17 @@ body {
   font-family: var(--font-serif), Georgia, Cambria, "Palatino Linotype",
     Palatino, Baskerville, Garamond, serif;
 }
+
+/* Global 90% zoom to mimic one browser zoom-out step */
+html {
+  zoom: 0.9;
+}
+
+/* Fallback for browsers that don't support CSS zoom (e.g., Firefox) */
+@supports not (zoom: 1) {
+  html {
+    transform: scale(0.9);
+    transform-origin: top left;
+    width: calc(100% / 0.9);
+  }
+}
