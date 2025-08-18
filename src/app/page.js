@@ -1612,7 +1612,7 @@ export default function Home() {
           </p>
           <p>
             With all these new changes and control flags, our instruction is
-            significantly longer — 156 bits in fact! But we can confirm that
+            significantly longer — 94 bits in fact! But we can confirm that
             every single one of these bits is needed and we ensured that we
             couldn&apos;t make the instruction set any smaller without
             compromising the speed and efficiency of the TPU.
@@ -1627,7 +1627,7 @@ export default function Home() {
               />
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
-              156-bit Instruction Set Architecture (ISA) layout showing control
+              94-bit Instruction Set Architecture (ISA) layout showing control
               flags and data fields
             </figcaption>
           </figure>
