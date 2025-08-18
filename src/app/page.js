@@ -882,9 +882,19 @@ export default function Home() {
             systolic array. These two control flags worked in tandem to make our
             double buffering mechanism work.
           </p>
-          <p className="italic">
-            [INSERT SVG OF PREV DIAGRAM WITH DOUBLE BUFFERING]
-          </p>
+          {/* Switch Accept Slideshow */}
+          <div className="mt-12 pt-8 border-t border-neutral-200">
+            <Slideshow
+              slides={[
+                "/slideshow_switch_accept/1.svg",
+                "/slideshow_switch_accept/2.svg",
+                "/slideshow_switch_accept/3.svg",
+                "/slideshow_switch_accept/4.svg",
+                "/slideshow_switch_accept/5.svg",
+              ]}
+              aspectRatio="aspect-[2228/1944]"
+            />
+          </div>
           <p>
             If you haven&apos;t already noticed, this allows the systolic array
             to do something powerful…continuous inference!!! We can continuously
