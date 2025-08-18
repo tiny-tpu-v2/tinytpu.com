@@ -124,7 +124,7 @@ export default function Home() {
           </p>
           <div className="mt-6 mb-6 sm:mb-8 flex flex-wrap items-center gap-2">
             <a
-              href="https://github.com/eevaain"
+              href="https://github.com/tiny-tpu-v2/tiny-tpu/tree/main"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-2 py-1 rounded md:rounded-md text-xs font-medium bg-neutral-200 border border-neutral-400 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_1px_0_rgba(0,0,0,0.25)] hover:bg-neutral-300"
@@ -141,7 +141,7 @@ export default function Home() {
               Github
             </a>
             <a
-              href="https://x.com/"
+              href="https://x.com/evanliin/status/1957496148874392012"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-2 py-1 rounded md:rounded-md text-xs font-medium bg-neutral-200 border border-neutral-400 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_1px_0_rgba(0,0,0,0.25)] hover:bg-neutral-300"
@@ -191,6 +191,7 @@ export default function Home() {
             title=""
             description="This slideshow depicts the forward pass and backward pass on our toy accelerator."
             aspectRatio="aspect-[1816/1938]"
+            intervalMs={60}
           />
         </div>
 
@@ -1298,17 +1299,17 @@ export default function Home() {
           </figure>
           <br />
           <p>
-            Additionally, by incorporating 
-            control signals for each module, which we call the VPU pathway bits,
-            we can selectively enable or skip specific operations. This makes the 
-            VPU flexible enough to support both inference and training. For instance, 
-            during the forward pass, we want to apply biases and activations but 
-            skip computing loss or activation derivatives. When transitioning to 
-            the backward pass, all modules are engaged, but within the backward 
-            chain we only need to compute the activation derivative. Due to 
-            pipelining, all values that flow through the VPU pass through each 
-            of the four modules, and any unused modules simply act as registers, 
-            forwarding their inputs to outputs without performing computation.          
+            Additionally, by incorporating control signals for each module,
+            which we call the VPU pathway bits, we can selectively enable or
+            skip specific operations. This makes the VPU flexible enough to
+            support both inference and training. For instance, during the
+            forward pass, we want to apply biases and activations but skip
+            computing loss or activation derivatives. When transitioning to the
+            backward pass, all modules are engaged, but within the backward
+            chain we only need to compute the activation derivative. Due to
+            pipelining, all values that flow through the VPU pass through each
+            of the four modules, and any unused modules simply act as registers,
+            forwarding their inputs to outputs without performing computation.
           </p>
           <p>
             The next few derivatives are interesting because we can actually use
@@ -1683,7 +1684,8 @@ export default function Home() {
               />
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
-              Final waveform simulation in GTKWave showing the weight and bias updates in memory after one epoch!
+              Final waveform simulation in GTKWave showing the weight and bias
+              updates in memory after one epoch!
             </figcaption>
           </figure>
         </div>

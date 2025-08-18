@@ -8,6 +8,7 @@ export default function Slideshow({
   title,
   aspectRatio = "aspect-square",
   description,
+  intervalMs = 100,
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -38,7 +39,7 @@ export default function Slideshow({
       setIsPlaying(true);
       intervalRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
-      }, 250);
+      }, 100);
     }
   };
 
