@@ -1619,14 +1619,17 @@ export default function Home() {
             couldn&apos;t make the instruction set any smaller without
             compromising the speed and efficiency of the TPU.
           </p>
-          <figure className="mt-12">
-            <div className="relative w-full h-66 md:h-40">
-              <Image
-                src="/isa.svg"
-                alt="Instruction Set Architecture diagram"
-                fill
-                className="object-contain"
-              />
+          <figure className="">
+            <div className="w-full overflow-x-auto">
+              <div className="relative  md:h-[24rem] min-w-[1400px] md:min-w-[2000px]">
+                <Image
+                  src="/isa.svg"
+                  alt="Instruction Set Architecture diagram"
+                  fill
+                  className="object-contain"
+                  priority={false}
+                />
+              </div>
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
               94-bit Instruction Set Architecture (ISA) layout showing control
