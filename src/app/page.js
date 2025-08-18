@@ -667,11 +667,11 @@ export default function Home() {
           <div className="mt-12 pt-8 border-t border-neutral-200">
             <Slideshow
               slides={[
-                "/slideshow_1/1.png",
-                "/slideshow_1/2.png",
-                "/slideshow_1/3.png",
-                "/slideshow_1/4.png",
-                "/slideshow_1/5.png",
+                "/slideshow_1/1.svg",
+                "/slideshow_1/2.svg",
+                "/slideshow_1/3.svg",
+                "/slideshow_1/4.svg",
+                "/slideshow_1/5.svg",
               ]}
               title="Systolic array matrix multiplication"
               aspectRatio="aspect-[2228/1944]"
@@ -779,9 +779,9 @@ export default function Home() {
           <div className="mt-8 pt-8 border-t border-neutral-200">
             <Slideshow
               slides={[
-                "/slideshow_2/1.png",
-                "/slideshow_2/2.png",
-                "/slideshow_2/3.png",
+                "/slideshow_2/1.svg",
+                "/slideshow_2/2.svg",
+                "/slideshow_2/3.svg",
               ]}
               title="Systolic array with bias and leaky ReLU"
               aspectRatio="aspect-[2228/2739]"
@@ -929,15 +929,15 @@ export default function Home() {
             <div className="mt-8 pt-8 border-t border-neutral-200">
               <Slideshow
                 slides={[
-                  "/slideshow_3/1.png",
-                  "/slideshow_3/2.png",
-                  "/slideshow_3/3.png",
-                  "/slideshow_3/4.png",
-                  "/slideshow_3/5.png",
-                  "/slideshow_3/6.png",
-                  "/slideshow_3/7.png",
-                  "/slideshow_3/8.png",
-                  "/slideshow_3/9.png",
+                  "/slideshow_3/1.svg",
+                  "/slideshow_3/2.svg",
+                  "/slideshow_3/3.svg",
+                  "/slideshow_3/4.svg",
+                  "/slideshow_3/5.svg",
+                  "/slideshow_3/6.svg",
+                  "/slideshow_3/7.svg",
+                  "/slideshow_3/8.svg",
+                  "/slideshow_3/9.svg",
                 ]}
                 title="Forward pass walkthrough"
                 aspectRatio="aspect-[2228/2739]"
@@ -1511,11 +1511,11 @@ export default function Home() {
           <div className="mb-8">
             <Slideshow
               slides={[
-                "/slideshow_4/1.png",
-                "/slideshow_4/2.png",
-                "/slideshow_4/3.png",
-                "/slideshow_4/4.png",
-                "/slideshow_4/5.png",
+                "/slideshow_4/1.svg",
+                "/slideshow_4/2.svg",
+                "/slideshow_4/3.svg",
+                "/slideshow_4/4.svg",
+                "/slideshow_4/5.svg",
               ]}
               title="Backward pass through second hidden layer"
               aspectRatio="aspect-[4/3]"
@@ -1619,14 +1619,17 @@ export default function Home() {
             couldn&apos;t make the instruction set any smaller without
             compromising the speed and efficiency of the TPU.
           </p>
-          <figure className="mt-12">
-            <div className="relative w-full h-66 md:h-40">
-              <Image
-                src="/isa.svg"
-                alt="Instruction Set Architecture diagram"
-                fill
-                className="object-contain"
-              />
+          <figure className="">
+            <div className="w-full overflow-x-auto">
+              <div className="relative  md:h-[24rem] min-w-[1400px] md:min-w-[2000px]">
+                <Image
+                  src="/isa.svg"
+                  alt="Instruction Set Architecture diagram"
+                  fill
+                  className="object-contain"
+                  priority={false}
+                />
+              </div>
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
               94-bit Instruction Set Architecture (ISA) layout showing control
