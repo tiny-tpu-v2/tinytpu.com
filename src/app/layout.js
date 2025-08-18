@@ -1,4 +1,5 @@
 import { Lora } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import 'katex/dist/katex.min.css';
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           tinytpu.com
         </div>
         {children}
+        <Analytics />
       </body>
     </html>
   );
