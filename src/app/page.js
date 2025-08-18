@@ -178,75 +178,15 @@ export default function Home() {
           wanted to make this because we wanted to take a shot and try to guess
           how it works–from the perspective of complete novices!
         </p>
-        <br />
-        <figure className="w-full">
-          <div className="w-full aspect-square rounded-lg flex items-center justify-center p-4">
-            <div className="relative w-full h-full">
-              <Image
-                src="/longslideshow.svg"
-                alt="Long slideshow diagram"
-                fill
-                className="object-contain p-4"
-                priority
-              />
-            </div>
-          </div>
-          <figcaption className="text-sm text-center text-gray-600 mt-2">
-            Overview of the TPU architecture and its key components
-          </figcaption>
-        </figure>
-
-        <div className="flex justify-start items-center gap-4 mt-4 mb-6">
-          <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 text-neutral-600"
-              fill="currentColor"
-            >
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg>
-          </button>
-
-          <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 text-neutral-600"
-              fill="currentColor"
-            >
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
-
-          <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 text-neutral-600"
-              fill="currentColor"
-            >
-              <path d="M6 6h12v12H6z" />
-            </svg>
-          </button>
-
-          <button className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 text-neutral-600"
-              fill="currentColor"
-            >
-              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-            </svg>
-          </button>
-
-          <button
-            className="px-3 py-2 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center text-xs font-medium text-neutral-600"
-            title="Return back to where I last clicked from"
-          >
-            Return Back
-          </button>
+        <div className="mt-0">
+          <Slideshow
+            slides={Array.from(
+              { length: 45 },
+              (_, i) => `/mainslideshow/clk${i + 1}.svg`
+            )}
+            title=""
+            aspectRatio="aspect-[1816/1938]"
+          />
         </div>
 
         <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1 mt-12">

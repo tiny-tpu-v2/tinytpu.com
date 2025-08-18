@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import Image from 'next/image';
+import { useState, useRef } from "react";
+import Image from "next/image";
 
-export default function Slideshow({ slides, title, aspectRatio = 'aspect-square' }) {
+export default function Slideshow({
+  slides,
+  title,
+  aspectRatio = "aspect-square",
+}) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [lastViewedSlide, setLastViewedSlide] = useState(null);
   const intervalRef = useRef(null);
 
   const totalSlides = slides.length;
 
   const goToPrevious = () => {
-    setLastViewedSlide(currentSlide);
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
   const goToNext = () => {
-    setLastViewedSlide(currentSlide);
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
@@ -28,10 +29,7 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
     } else {
       setIsPlaying(true);
       intervalRef.current = setInterval(() => {
-        setCurrentSlide((prev) => {
-          setLastViewedSlide(prev);
-          return (prev + 1) % totalSlides;
-        });
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
       }, 2000);
     }
   };
@@ -41,30 +39,23 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
       clearInterval(intervalRef.current);
     }
     setIsPlaying(false);
-    setLastViewedSlide(currentSlide);
     setCurrentSlide(0);
   };
 
-  const returnBack = () => {
-    if (lastViewedSlide !== null) {
-      const temp = currentSlide;
-      setCurrentSlide(lastViewedSlide);
-      setLastViewedSlide(temp);
-    }
-  };
-
   return (
-    <div className="my-8">
+    <div className="mt-2 mb-8">
       {title && <h3 className="text-lg font-semibold mb-4">{title}</h3>}
-      
-      <div className={`w-full ${aspectRatio} bg-white border border-neutral-300 rounded-2xl overflow-hidden`}>
+
+      <div
+        className={`w-full ${aspectRatio} rounded-2xl overflow-hidden pb-[80px]`}
+      >
         <div className="relative w-full h-full">
-          <div className="absolute inset-0 -bottom-[80px]">
+          <div className="absolute inset-0">
             <Image
               src={slides[currentSlide]}
-              alt={`Slide ${currentSlide + 1}`}
+              alt={`clk ${currentSlide}`}
               fill
-              className="object-contain scale-[1.011]"
+              className="object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
               quality={100}
               priority
@@ -74,8 +65,11 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
         </div>
       </div>
 
-      <div className="flex justify-start items-center gap-4 mt-4 mb-6">
-        <button 
+      <div className="flex justify-center items-center gap-4 mt-4 mb-6">
+        <span className="text-base md:text-lg text-neutral-600">
+          clk {currentSlide}
+        </span>
+        <button
           onClick={goToPrevious}
           className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center"
         >
@@ -89,7 +83,7 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
           </svg>
         </button>
 
-        <button 
+        <button
           onClick={togglePlay}
           className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center"
         >
@@ -114,7 +108,7 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
           )}
         </button>
 
-        <button 
+        <button
           onClick={stop}
           className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center"
         >
@@ -128,7 +122,7 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
           </svg>
         </button>
 
-        <button 
+        <button
           onClick={goToNext}
           className="w-12 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center"
         >
@@ -141,21 +135,6 @@ export default function Slideshow({ slides, title, aspectRatio = 'aspect-square'
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
           </svg>
         </button>
-
-        <button
-          onClick={returnBack}
-          disabled={lastViewedSlide === null}
-          className="px-3 py-2 h-12 rounded-lg border border-neutral-300 bg-white shadow-sm hover:bg-neutral-50 flex items-center justify-center text-xs font-medium text-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Return back to where I last clicked from"
-        >
-          Return Back
-        </button>
-      </div>
-
-      <div className="flex items-center justify-center gap-2">
-        <span className="text-sm text-neutral-600">
-          Slide {currentSlide + 1} of {totalSlides}
-        </span>
       </div>
     </div>
   );
