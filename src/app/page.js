@@ -687,7 +687,7 @@ export default function Home() {
             systolic array. We can see that as the sums move out of the last row
             within the systolic array, we can immediately stream them into our
             bias modules to compute our pre-activations.
-            <b>We will denote these values with the variable Z.</b>
+            <b> We will denote these values with the variable Z.</b>
           </p>
 
           <div className="my-6">

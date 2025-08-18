@@ -55,7 +55,7 @@ export default function Slideshow({
       {title && <h3 className="text-lg font-semibold mb-4">{title}</h3>}
 
       <div
-        className={`w-full ${aspectRatio} rounded-2xl overflow-hidden pb-[80px]`}
+        className={`w-full ${aspectRatio} rounded-2xl overflow-hidden`}
       >
         <div className="relative w-full h-full">
           <div className="absolute inset-0">
