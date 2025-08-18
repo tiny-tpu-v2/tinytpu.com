@@ -78,7 +78,7 @@ function highlightVerilog(code) {
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-full overflow-x-hidden flex justify-center items-start px-4 sm:px-6 lg:px-8 pt-10 md:pt-28 pb-10 md:pb-14">
+    <main className="min-h-screen w-full overflow-x-hidden flex justify-center items-start px-4 sm:px-6 lg:px-8 pt-10 md:pt-28 pb-10 ">
       <div className="w-full max-w-3xl text-base md:text-lg leading-7 md:leading-8 text-left break-words">
         <h1 className="text-3xl sm:text-4xl md:text-5xl leading-tight mb-3">
           Tiny-TPU: the why and how
