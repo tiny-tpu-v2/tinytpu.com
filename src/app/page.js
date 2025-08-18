@@ -195,9 +195,8 @@ export default function Home() {
         </div>
 
         <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mb-1 mt-12">
-          Background
+          Why did we start this project?
         </h2>
-        <p>Why did we start this project?</p>
         <br />
         <p>
           We wanted to do something very challenging to prove to ourselves that
@@ -263,6 +262,7 @@ export default function Home() {
           What is a TPU?
         </h2>
         <div className="space-y-4 md:space-y-6">
+          <br />
           <p>
             A TPU is an application specific chip (ASIC) designed by Google to
             make inferencing (using) and training ML models faster and more
@@ -308,7 +308,7 @@ export default function Home() {
               describe the behaviour of a given hardware module (similar to
               functions in software), but instead of executing as a program, it
               synthesizes into boolean logic gates (AND, OR, NOT, etc.) that can
-              be combined to build the ditial logic for any chip we want.
+              be combined to build the digital logic for any chip we want.
               Here&apos;s a simple example of an addition in Verilog:
             </p>
             <br />
@@ -331,12 +331,6 @@ export default function Home() {
             </p>
           </div>
           <p>
-            We can use numbers to prove the TPU&apos;s efficiency: BERT-Large
-            (an open-source language model) was trained on a GPU cluster and a
-            TPUv3 pod. The TPU pod was 1.8x faster and had a 2.4x better power
-            efficiency.
-          </p>
-          <p>
             Specifically, the TPU is very efficient at performing matrix
             multiplications, which make up 80-90% of the compute operations in
             transformers (up to 95% in very large models) and 70-80% in CNNs.
@@ -347,9 +341,10 @@ export default function Home() {
         </div>
         <br />
         <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mb-1">
-          How did we develop the TPU?
+          How did we develop our &quot;toy&quot; TPU?
         </h2>
         <div className="space-y-4 md:space-y-6">
+          <br />
           <p>
             When we started this project, all we knew was that the equation y =
             mx + b is the foundational building block for neural networks.
@@ -358,7 +353,21 @@ export default function Home() {
             writing any code, each of us worked out the math of a simple 2 -&gt;
             2 -&gt; 1 multi-layer perceptron (MLP).
           </p>
-
+          <figure className="my-6">
+            <div className="flex justify-center">
+              <Image
+                src="/xor-mlp.svg"
+                alt="XOR MLP Neural Network Architecture showing 2 input nodes, 2 hidden layer nodes, and 1 output node with weight connections"
+                width={679}
+                height={269}
+                className="max-w-full h-auto"
+              />
+            </div>
+            <figcaption className="text-sm text-center text-gray-600 mt-2">
+              Architecture of our 2→2→1 multi-layer perceptron for solving the
+              XOR problem
+            </figcaption>
+          </figure>
           <br></br>
 
           <h3 className="text-base md:text-lg font-semibold text-neutral-800">
@@ -378,16 +387,15 @@ export default function Home() {
           <figure className="my-6">
             <div className="flex justify-center">
               <Image
-                src="/xor-mlp.svg"
-                alt="XOR MLP Neural Network Architecture showing 2 input nodes, 2 hidden layer nodes, and 1 output node with weight connections"
+                src="/or-xor.svg"
+                alt="OR and XOR decision boundaries"
                 width={679}
                 height={269}
                 className="max-w-full h-auto"
               />
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
-              Architecture of our 2→2→1 multi-layer perceptron for solving the
-              XOR problem
+              OR and XOR decision boundaries
             </figcaption>
           </figure>
           <h3 className="text-base md:text-lg font-semibold text-neutral-800">
@@ -470,12 +478,29 @@ export default function Home() {
             Systolic array and PEs
           </h3>
           <p>
-            The heart of a TPU is a unit called the systolic array. It consists
-            of individual building blocks called Processing Elements (PE) which
-            are connected together in a grid-like structure. Each PE performs a
-            multiply-accumulate operation, meaning it multiplies an incoming
-            input X with a stationary weight W and adds it to an incoming
-            accumulated sum, all in the same clock cycle.
+            The heart of a TPU is a unit called the systolic array.
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn2"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [2]
+              </a>
+            </sup>{" "}
+            It consists of individual building blocks called Processing Elements
+            (PE) which are connected together in a grid-like structure. Each PE
+            performs a multiply-accumulate operation, meaning it multiplies an
+            incoming input X with a stationary weight W
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn3"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [3]
+              </a>
+            </sup>{" "}
+            and adds it to an incoming accumulated sum, all in the same clock
+            cycle.
           </p>
           <figure className="mt-6 overflow-x-auto">
             <div className="relative mx-auto w-full max-w-xl h-72 md:h-96">
@@ -509,11 +534,12 @@ export default function Home() {
             When these PEs are connected together, they can be used to perform
             matrix multiplication systolically, meaning multiple elements of the
             output matrix can be calculated every clock cycle. The inputs enter
-            the systolic array from the left and move to the neighbouring left
-            PE every clock cycle. The accumulated sums start with the
-            multiplication from the first row of PEs and move downwards and get
-            added to the products of each successive PE, until they up at the
-            last row of PEs where they become an element of the output matrix.
+            the systolic array from the left and move to the neighbouring PE to
+            the right, every clock cycle. The accumulated sums start with the
+            multiplication output from the first row of PEs, move downwards, and
+            get added to the products of each successive PE, until they up at
+            the last row of PEs where they become an element of the output
+            matrix.
           </p>
           <figure className="mt-12">
             <div className="relative w-full h-[32rem] md:h-[40rem]">
@@ -585,7 +611,17 @@ export default function Home() {
               </figcaption>
             </figure>
             <br />
-            <li>STAGGER the inputs (delay each row by 1 clock cycle)</li>
+            <li>
+              STAGGER the inputs (delay each row by 1 clock cycle)
+              <sup className="ml-1 text-[12px]">
+                <a
+                  href="#fn4"
+                  className="no-underline text-purple-700 hover:text-purple-900"
+                >
+                  [4]
+                </a>
+              </sup>
+            </li>
             <figure className="mt-12">
               <div className="relative w-full h-48 md:h-42">
                 <Image
@@ -634,11 +670,12 @@ export default function Home() {
             </figure>
           </ul>
           <p className="mt-2">
-            Note that the transpose is just for mathematical bookkeeping –
-            it&apos;s required to make the matrix math work because of how we
-            set up our weight pointers within the neural network drawing. It is
-            simply required to make the matrix multiplication mathematically
-            legal.
+            Note that the rotating and staggering don&apos;t have any
+            mathematical significance — they are simply required to make the
+            systolic array work. The transpoing too is just for mathematical
+            bookkeeping – it&apos;s required to make the matrix math work
+            because of how we set up our weight pointers within the neural
+            network drawing.
           </p>
           <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Staggering and FIFOs
@@ -715,6 +752,14 @@ export default function Home() {
           </p>
           <p>
             Next we have to apply the activation, for which we chose Leaky ReLU.
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn5"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [5]
+              </a>
+            </sup>{" "}
             This is also an element-wise operation, similar to the bias, meaning
             we need an activation module under every bias module (and by proxy
             under every column of the systolic array) and we can stream the
@@ -829,7 +874,7 @@ export default function Home() {
           <p>
             Another mechanism we used to run our chip as efficiently as
             possible, was a propagating &quot;start&quot; signal, which we
-            called a travelling chip enable (denoted by the red dot). Because
+            called a travelling chip enable (denoted by the purple dot). Because
             everything in our design was staggered, we realized that we could
             very elegantly assert a start signal for a single clock cycle at the
             first accumulator and have it propagate to neighbouring modules
@@ -870,21 +915,22 @@ export default function Home() {
             To make this work, we also needed to add some signals to move the
             data. First, we needed a signal to indicate when to switch the
             weights in the shadow buffer and the active buffer. We called this
-            signal the &quot;switch&quot; signal and it copied the values in the
-            shadow buffer to the active buffer. It propagated from the top left
-            of the systolic array to the bottom right (the same path as the
-            travelling chip enable, but only within the systolic array). We then
-            needed one more signal to indicate when we wanted to move the
-            weights down by one row and we called this the &quot;accept&quot;
-            flag (because each row is ACCEPTING a new set of weights). This
-            would move the new weights into the top row of the systolic array,
-            as well as each row of weights down into the next row of the
-            systolic array. These two control flags worked in tandem to make our
-            double buffering mechanism work.
+            signal the &quot;switch&quot; signal (denoted by the blue dot) and
+            it copied the values in the shadow buffer to the active buffer. It
+            propagated from the top left of the systolic array to the bottom
+            right (the same path as the travelling chip enable, but only within
+            the systolic array). We then needed one more signal to indicate when
+            we wanted to move the weights down by one row and we called this the
+            &quot;accept&quot; flag (denoted by the green dot) because each row
+            is ACCEPTING a new set of weights. This would move the new weights
+            into the top row of the systolic array, as well as each row of
+            weights down into the next row of the systolic array. These two
+            control flags worked in tandem to make our double buffering
+            mechanism work.
           </p>
-          <p className="italic">
+          {/* <p className="italic">
             [INSERT SVG OF PREV DIAGRAM WITH DOUBLE BUFFERING]
-          </p>
+          </p> */}
           <p>
             If you haven&apos;t already noticed, this allows the systolic array
             to do something powerful…continuous inference!!! We can continuously
@@ -932,8 +978,8 @@ export default function Home() {
             <div className="mt-8 pt-8 border-t border-neutral-200">
               <Slideshow
                 slides={[
-                  "/slideshow_3/1.svg",
-                  "/slideshow_3/2.svg",
+                  // "/slideshow_3/1.svg",
+                  // "/slideshow_3/2.svg",
                   "/slideshow_3/3.svg",
                   "/slideshow_3/4.svg",
                   "/slideshow_3/5.svg",
@@ -942,7 +988,7 @@ export default function Home() {
                   "/slideshow_3/8.svg",
                   "/slideshow_3/9.svg",
                 ]}
-                title="Forward pass walkthrough"
+                title="Forward pass walkthrough (with double buffering)"
                 aspectRatio="aspect-[2228/2739]"
               />
             </div>
@@ -952,9 +998,9 @@ export default function Home() {
           </h3>
           <p>
             Our final step for inference was making a control unit to use a
-            custom instruction set to assert all of our control flags and load
-            data through a data bus. Including the data bus, our ISA was 24 bits
-            long and it made our testbench more elegant as we could pass a
+            custom instruction set (ISA) to assert all of our control flags and
+            load data through a data bus. Including the data bus, our ISA was 24
+            bits long and it made our testbench more elegant as we could pass a
             single string of bits every clock cycle, rather than individually
             setting multiple flags.
           </p>
@@ -1275,12 +1321,23 @@ export default function Home() {
             stream out one by one. This gave us the idea to unify them into
             something we called a <b>vector processing unit (VPU)</b> – because
             that&apos;s exactly what they&apos;re doing, processing vectors
-            element-wise! Not only is this more elegant to work with, it&apos;s
-            also useful when we scale our TPU beyond a 2x2 systolic array, as
-            we&apos;ll have N number of these modules (N being the size of the
-            systolic array), each of which we would have to interface with
-            individually. Unifying these modules under a parent module makes our
-            design more scalable and elegant!
+            element-wise!
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn6"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [6]
+              </a>
+            </sup>
+            <br />
+            <br />
+            Not only is this more elegant to work with, it&apos;s also useful
+            when we scale our TPU beyond a 2x2 systolic array, as we&apos;ll
+            have N number of these modules (N being the size of the systolic
+            array), each of which we would have to interface with individually.
+            Unifying these modules under a parent module makes our design more
+            scalable and elegant!
           </p>
           <figure className="mt-6">
             <div className="relative w-full h-66 md:h-150">
@@ -1298,17 +1355,17 @@ export default function Home() {
           </figure>
           <br />
           <p>
-            Additionally, by incorporating 
-            control signals for each module, which we call the VPU pathway bits,
-            we can selectively enable or skip specific operations. This makes the 
-            VPU flexible enough to support both inference and training. For instance, 
-            during the forward pass, we want to apply biases and activations but 
-            skip computing loss or activation derivatives. When transitioning to 
-            the backward pass, all modules are engaged, but within the backward 
-            chain we only need to compute the activation derivative. Due to 
-            pipelining, all values that flow through the VPU pass through each 
-            of the four modules, and any unused modules simply act as registers, 
-            forwarding their inputs to outputs without performing computation.          
+            Additionally, by incorporating control signals for each module,
+            which we call the VPU pathway bits, we can selectively enable or
+            skip specific operations. This makes the VPU flexible enough to
+            support both inference and training. For instance, during the
+            forward pass, we want to apply biases and activations but skip
+            computing loss or activation derivatives. When transitioning to the
+            backward pass, all modules are engaged, but within the backward
+            chain we only need to compute the activation derivative. Due to
+            pipelining, all values that flow through the VPU pass through each
+            of the four modules, and any unused modules simply act as registers,
+            forwarding their inputs to outputs without performing computation.
           </p>
           <p>
             The next few derivatives are interesting because we can actually use
@@ -1348,17 +1405,22 @@ export default function Home() {
             with <InlineMath math={"\\mathbf{X}"} />,{" "}
             <InlineMath math={"\\mathbf{W}^T"} />, and 1 to get{" "}
             <InlineMath
-              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
+              math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{W}}"}
             />
             ,{" "}
             <InlineMath
-              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}}"}
+              math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{X}}"}
             />
             , and{" "}
             <InlineMath
-              math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}}"}
+              math={"\\frac{\\partial \\mathbf{H}}{\\partial \\mathbf{b}}"}
             />
-            , respectively. And because all of the gradients are actually
+            , respectively, and we can multiply all of these by{" "}
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{H}}"}
+            />{" "}
+            to get the gradients of the loss with respect to all of our second
+            layer parameters. And because all of the gradients are actually
             gradient matrices, we can use the systolic array!
           </p>
           <p>
@@ -1371,11 +1433,28 @@ export default function Home() {
               math={"\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}}"}
             />{" "}
             is that they both require the post-activations (H) we calculate
-            during forward pass to be computed. This means the outputs of every
-            layer in some form of memory to be able to perform training.
-            Here&apos;s where we created a new scratchpad memory module which we
-            called the unified buffer (UB). This lets us store our H values
-            immediately after we compute them during forward pass.
+            during forward pass. This means we need to store the outputs of
+            every layer in some form of memory to be able to perform training.
+            Here&apos;s where we created a new scratchpad memory module
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn7"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [7]
+              </a>
+            </sup>{" "}
+            which we called the unified buffer (UB).
+            <sup className="ml-1 text-[12px]">
+              <a
+                href="#fn8"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                [8]
+              </a>
+            </sup>{" "}
+            This lets us store our H values immediately after we compute them
+            during forward pass.
           </p>
           <p>
             We realized that we can also get rid of the input and weight
@@ -1428,9 +1507,8 @@ export default function Home() {
           </figure>
           <p>
             At the end of the day, not having these mechanisms wouldn&apos;t
-            break having these mechanisms wouldn&apos;t break the TPU — but they
-            allow us to always keep the systolic array fed, which is a core
-            design principle we couldn&apos;t compromise.
+            break the TPU — but they allow us to always keep the systolic array
+            fed, which is a core design principle we couldn&apos;t compromise.
           </p>
           <p>
             While we were working on this, we realized we could make one last
@@ -1683,7 +1761,8 @@ export default function Home() {
               />
             </div>
             <figcaption className="text-sm text-center text-gray-600 mt-2">
-              Final waveform simulation in GTKWave showing the weight and bias updates in memory after one epoch!
+              Final waveform simulation in GTKWave showing the weight and bias
+              updates in memory after one epoch!
             </figcaption>
           </figure>
         </div>
@@ -1696,7 +1775,45 @@ export default function Home() {
           [1] We firmly believe in &quot;how you do anything is how you do
           everything&quot;
         </p>
-
+        <p id="fn2" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [2] Fun fact: the name of the systolic array is actually inspired by
+          the human heart — just as systolic blood pressure is created by
+          coordinated heart contractions that push blood through the
+          cardiovascular system in waves, a systolic array processes data
+          through coordinated computational &quot;beats&quot; that push
+          information through the processing elements in waves.
+        </p>
+        <p id="fn2" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [3] This is a weight-stationary systolic array, which means the
+          weights for each layer are stationary within their respective PEs and
+          don&apos;t move around. However, there is a non-weight-stationary
+          systolic array where the weights move along with the inputs, which has
+          its own advantages and disadvantages.
+        </p>
+        <p id="fn4" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [4] Many illustrations online that depict staggering are actually flat
+          out wrong because they pad consecutive rows with zeros, insetad of
+          delaying them by a clock cycle. While this still gets the correct
+          output, it wastes memory because we would have to store additional
+          zeros that we don&apos;t use.
+        </p>
+        <p id="fn5" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [5] We chose Leaky ReLU over ReLU because we found that since we have
+          a very small network, the model wasn&apos;t training properly when we
+          used ReLU — it needed more non-linearity.
+        </p>
+        <p id="fn6" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [6] Also because that&apos;s what Google calls it in their TPU paper.
+        </p>
+        <p id="fn7" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [7] A scratchpad memory is a large bank of registers (each of which
+          can store individual values) that lets us access any register we want.
+          A FIFO for example is NOT a scratchpad memory since you can only
+          access the first element in the queue.
+        </p>
+        <p id="fn8" className="text-xs md:text-sm text-neutral-700 mt-2">
+          [8] Once again took the name from Google&apos;s TPU paper.
+        </p>
         <footer className="mt-10">
           <ul className="space-y-2">
             <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
