@@ -63,15 +63,18 @@ function highlightVerilog(code) {
     .replace(/>/g, "&gt;");
   return escaped
     .replace(
-      /\b(always_ff|posedge|negedge|begin|end|if|else)\b/g,
+      /\b(always_ff|always|posedge|negedge|begin|end|if|else)\b/g,
       '<span class="text-purple-700">$1</span>'
     )
     .replace(
-      /\b(clk|rst|input_out|psum_out|weight_reg|load_weight|weight|start|input_in|psum_in)\b/g,
+      /\b(clk|rst|input_out|psum_out|weight_reg|load_weight|weight|start|input_in|psum_in|input|output)\b/g,
       '<span class="text-blue-700">$1</span>'
     )
     .replace(/\b(0|1)\b/g, '<span class="text-rose-700">$1</span>')
-    .replace(/(&lt;=|==|\+|\*|\(|\))/g, '<span class="text-gray-700">$1</span>')
+    .replace(
+      /(&lt;=|==|&gt;|\?|:|\+|\*|\(|\))/g,
+      '<span class="text-gray-700">$1</span>'
+    )
     .replace(/\/\/.*$/gm, '<span class="text-gray-400">$&</span>')
     .replace(/\/\*[\s\S]*?\*\//g, '<span class="text-gray-400">$&</span>');
 }
@@ -121,7 +124,7 @@ export default function Home() {
           </p>
           <div className="mt-6 mb-6 sm:mb-8 flex flex-wrap items-center gap-2">
             <a
-              href="https://github.com/"
+              href="https://github.com/eevaain"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-2 py-1 rounded md:rounded-md text-xs font-medium bg-neutral-200 border border-neutral-400 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_1px_0_rgba(0,0,0,0.25)] hover:bg-neutral-300"
@@ -1231,7 +1234,11 @@ export default function Home() {
           <pre
             className={`${robotoMono.className} border border-black rounded-md bg-white p-4 text-xs sm:text-sm md:text-base overflow-x-auto whitespace-pre md:whitespace-pre-wrap`}
           >
-            {leaky_relu_derivative_verilogSnippet}
+            <code
+              dangerouslySetInnerHTML={{
+                __html: highlightVerilog(leaky_relu_derivative_verilogSnippet),
+              }}
+            />
           </pre>
           <figure className="mt-12">
             <div className="relative w-full h-66 md:h-85">
@@ -1726,7 +1733,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://github.com/XanderChin"
+                  href="https://github.com/xanderchinxyz"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Xander on GitHub"
@@ -1778,7 +1785,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://github.com/suryasure05"
+                  href="https://github.com/SurjaHead"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Surya on GitHub"
@@ -1830,7 +1837,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://github.com/evanliin"
+                  href="https://github.com/eevaain"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Evan on GitHub"
@@ -1882,7 +1889,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://github.com/kennykgguo"
+                  href="https://github.com/kennykguo"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Kenny on GitHub"
