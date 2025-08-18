@@ -155,7 +155,7 @@ export default function Home() {
               Twitter
             </a>
             <a
-              href="https://drive.google.com/"
+              href="https://drive.google.com/drive/folders/1GEwb51rbd2tFBnfbNjrGut33tqbpGEdl?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-2 py-1 rounded md:rounded-md text-xs font-medium bg-neutral-200 border border-neutral-400 text-neutral-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_1px_0_rgba(0,0,0,0.25)] hover:bg-neutral-300"
@@ -191,7 +191,7 @@ export default function Home() {
           />
         </div>
 
-        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1 mt-12">
+        <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mb-1 mt-12">
           Background
         </h2>
         <p>Why did we start this project?</p>
@@ -256,7 +256,7 @@ export default function Home() {
           </p>
         </div>
         <br />
-        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1">
+        <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mb-1">
           What is a TPU?
         </h2>
         <div className="space-y-4 md:space-y-6">
@@ -343,7 +343,7 @@ export default function Home() {
           </p>
         </div>
         <br />
-        <h2 className="text-base md:text-lg font-semibold text-neutral-800 mb-1">
+        <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mb-1">
           How did we develop the TPU?
         </h2>
         <div className="space-y-4 md:space-y-6">
@@ -358,7 +358,7 @@ export default function Home() {
 
           <br></br>
 
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Why XOR?
           </h3>
           <p>
@@ -387,7 +387,7 @@ export default function Home() {
               XOR problem
             </figcaption>
           </figure>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Batching and dimensions
           </h3>
           <p>
@@ -463,7 +463,7 @@ export default function Home() {
             use a unit called the systolic array!
           </p>
 
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Systolic array and PEs
           </h3>
           <p>
@@ -499,7 +499,7 @@ export default function Home() {
               />
             </pre>
           </div>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Systolic matrix multiplication
           </h3>
           <p>
@@ -532,7 +532,7 @@ export default function Home() {
             can very easily inference and train any model.
           </p>
 
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Worked example
           </h3>
           <p>Now let&apos;s walk through the example of our XOR problem:</p>
@@ -560,7 +560,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Input and weight scheduling
           </h3>
           <p>To input our input batch within the systolic array, we need to:</p>
@@ -637,7 +637,7 @@ export default function Home() {
             simply required to make the matrix multiplication mathematically
             legal.
           </p>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Staggering and FIFOs
           </h3>
           <p>
@@ -678,7 +678,7 @@ export default function Home() {
             />
           </div>
 
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Bias and activation
           </h3>
           <p>
@@ -787,7 +787,7 @@ export default function Home() {
               aspectRatio="aspect-[2228/2739]"
             />
           </div>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Pipelining
           </h3>
           <p>
@@ -840,7 +840,7 @@ export default function Home() {
             computations when it was required to and wasn&apos;t wasting power
             in the background.
           </p>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Double buffering
           </h3>
           <p>
@@ -944,7 +944,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
             Control unit and ISA
           </h3>
           <p>
@@ -962,7 +962,7 @@ export default function Home() {
           </p>
           <TweetEmbed tweetId="1929249936400380055" />
 
-          <h2 className="text-base md:text-lg font-semibold text-neutral-800 mt-10">
+          <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mt-10">
             Backpropagation and Training
           </h2>
           <div className="space-y-4 md:space-y-6">
@@ -1137,6 +1137,9 @@ export default function Home() {
             multiply gradient matrices with weight matrices (untransposed).
             It&apos;s like looking in a mirror!
           </p>
+          <div className="mt-10 mb-10">
+            <TweetEmbed tweetId="1932163510727041044" />
+          </div>
 
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
@@ -1631,7 +1634,9 @@ export default function Home() {
               flags and data fields
             </figcaption>
           </figure>
-          <h3>Putting it all together</h3>
+          <h3 className="text-base md:text-lg font-semibold text-neutral-800">
+            Putting it all together
+          </h3>
           <p>
             By continuing this same process iteratively – forward pass, backward
             pass, weight updates – we can train our network until it performs
