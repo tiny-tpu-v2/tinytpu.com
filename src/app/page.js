@@ -1275,8 +1275,7 @@ export default function Home() {
             individually. Unifying these modules under a parent module makes our
             design more scalable and elegant!
           </p>
-          <br />
-          <figure className="mt-12">
+          <figure className="mt-6">
             <div className="relative w-full h-66 md:h-150">
               <Image
                 src="/vpu.svg"
