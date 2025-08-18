@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 export default function Slideshow({
@@ -11,9 +11,23 @@ export default function Slideshow({
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [prefetchedImages, setPrefetchedImages] = useState(new Set());
   const intervalRef = useRef(null);
 
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    slides.forEach((src) => {
+      if (!prefetchedImages.has(src)) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+        setPrefetchedImages(prev => new Set([...prev, src]));
+      }
+    });
+  }, [slides, prefetchedImages]);
 
   let descriptionText = null;
   if (Array.isArray(description)) {
