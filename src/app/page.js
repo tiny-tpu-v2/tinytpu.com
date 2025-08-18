@@ -833,7 +833,7 @@ export default function Home() {
                 "/slideshow_2/3.svg",
               ]}
               title="Systolic array with bias and leaky ReLU"
-              aspectRatio="aspect-[2228/2739]"
+              aspectRatio="aspect-[1114/1370]"
             />
           </div>
           <h3 className="text-base md:text-lg font-semibold text-neutral-800">
@@ -1624,7 +1624,6 @@ export default function Home() {
                 "/slideshow_4/2.svg",
                 "/slideshow_4/3.svg",
                 "/slideshow_4/4.svg",
-                "/slideshow_4/5.svg",
               ]}
               title="Backward pass through second hidden layer"
               aspectRatio="aspect-[4/3]"
