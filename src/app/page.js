@@ -1022,7 +1022,7 @@ export default function Home() {
           <TweetEmbed tweetId="1929249936400380055" />
 
           <h2 className="text-xl md:text-2xl font-semibold text-neutral-800 mt-10">
-            Backpropagation and Training
+            Backpropagation and training
           </h2>
           <div className="space-y-4 md:space-y-6">
             <p>
