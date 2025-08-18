@@ -780,8 +780,8 @@ export default function Home() {
             <Slideshow
               slides={[
                 "/slideshow_2/1.svg",
-                "/slideshow_2/2.png",
-                "/slideshow_2/3.png",
+                "/slideshow_2/2.svg",
+                "/slideshow_2/3.svg",
               ]}
               title="Systolic array with bias and leaky ReLU"
               aspectRatio="aspect-[2228/2739]"
