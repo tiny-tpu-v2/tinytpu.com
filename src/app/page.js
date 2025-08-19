@@ -1858,8 +1858,8 @@ export default function Home() {
             Credits
           </h2>
           <p className="text-xs md:text-sm text-neutral-700 mt-2">
-            Special thanks to Harrison for helping with website
-            optimization and small bug fixes within the article.
+            Special thanks to Harrison for helping with website optimization and
+            small bug fixes within the article.
           </p>
         </section>
         <hr className="mt-6 md:mt-8 mb-4 border-neutral-200" />
