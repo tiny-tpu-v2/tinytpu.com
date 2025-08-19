@@ -1824,6 +1824,45 @@ export default function Home() {
         <p id="fn8" className="text-xs md:text-sm text-neutral-700 mt-2">
           [8] Once again took the name from Google&apos;s TPU paper.
         </p>
+        <section className="mt-10">
+          <h2 className="text-xs uppercase tracking-wide text-neutral-500">
+            Contribute
+          </h2>
+          <p className="text-xs md:text-sm text-neutral-700 mt-2">
+            We&apos;re actively looking for contributors to make this project
+            better. We encourage pull requests for bug fixes, code or doc
+            improvements, and suggestions. If anything is unclear, please open
+            an issue or leave a comment in our{" "}
+            <a
+              href="https://github.com/tiny-tpu-v2/tiny-tpu/tree/main"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline text-purple-700 hover:text-purple-900"
+            >
+              hardware repo
+            </a>{" "}
+            or the article repo{" "}
+            <a
+              href="https://github.com/tiny-tpu-v2/tinytpu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline text-purple-700 hover:text-purple-900"
+            >
+              tinytpu.com
+            </a>
+            .
+          </p>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-xs uppercase tracking-wide text-neutral-500">
+            Credits
+          </h2>
+          <p className="text-xs md:text-sm text-neutral-700 mt-2">
+            Special thanks to Harrison for helping with website
+            optimization and small bug fixes within the article.
+          </p>
+        </section>
+        <hr className="mt-6 md:mt-8 mb-4 border-neutral-200" />
         <footer className="mt-10">
           <ul className="space-y-2">
             <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
