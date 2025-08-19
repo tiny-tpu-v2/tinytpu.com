@@ -37,4 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Credits
 
-Special thanks to Harrison Kessel for helping with website optimization and small bug fixes within the article.
+Special thanks to Harrison Kessel for helping with website optimization and small bug fixes within this article.

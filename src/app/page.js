@@ -234,6 +234,7 @@ export default function Home() {
           <sup className="ml-1 text-[12px]">
             <a
               href="#fn1"
+              id="fn1-ref"
               className="no-underline text-purple-700 hover:text-purple-900"
             >
               [1]
@@ -383,7 +384,17 @@ export default function Home() {
             one linear line (one neuron) to separate which inputs correspond to
             a 0 and which ones correspond to a 1. But to classify all XOR, an
             MLP is needed, since it requires curved decision boundaries, which
-            can&apos;t be achieved with ONLY linear equations.
+            can&apos;t be achieved with ONLY linear equations. For a geometric
+            and first-principles treatment, the free book{" "}
+            <a
+              href="https://udlbook.github.io/udlbook/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Understanding Deep Learning
+            </a>{" "}
+            is excellent.
           </p>
           <figure className="my-6">
             <div className="flex justify-center">
@@ -483,6 +494,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn2"
+                id="fn2-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [2]
@@ -495,6 +507,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn3"
+                id="fn3-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [3]
@@ -617,6 +630,7 @@ export default function Home() {
               <sup className="ml-1 text-[12px]">
                 <a
                   href="#fn4"
+                  id="fn4-ref"
                   className="no-underline text-purple-700 hover:text-purple-900"
                 >
                   [4]
@@ -756,6 +770,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn5"
+                id="fn5-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [5]
@@ -1336,6 +1351,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn6"
+                id="fn6-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [6]
@@ -1450,6 +1466,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn7"
+                id="fn7-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [7]
@@ -1459,6 +1476,7 @@ export default function Home() {
             <sup className="ml-1 text-[12px]">
               <a
                 href="#fn8"
+                id="fn8-ref"
                 className="no-underline text-purple-700 hover:text-purple-900"
               >
                 [8]
@@ -1783,7 +1801,13 @@ export default function Home() {
         </h2>
         <p id="fn1" className="text-xs md:text-sm text-neutral-700 mt-2">
           [1] We firmly believe in &quot;how you do anything is how you do
-          everything&quot;
+          everything&quot;{" "}
+          <a
+            href="#fn1-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn2" className="text-xs md:text-sm text-neutral-700 mt-2">
           [2] Fun fact: the name of the systolic array is actually inspired by
@@ -1791,38 +1815,80 @@ export default function Home() {
           coordinated heart contractions that push blood through the
           cardiovascular system in waves, a systolic array processes data
           through coordinated computational &quot;beats&quot; that push
-          information through the processing elements in waves.
+          information through the processing elements in waves.{" "}
+          <a
+            href="#fn2-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
-        <p id="fn2" className="text-xs md:text-sm text-neutral-700 mt-2">
+        <p id="fn3" className="text-xs md:text-sm text-neutral-700 mt-2">
           [3] This is a weight-stationary systolic array, which means the
           weights for each layer are stationary within their respective PEs and
           don&apos;t move around. However, there is a non-weight-stationary
           systolic array where the weights move along with the inputs, which has
-          its own advantages and disadvantages.
+          its own advantages and disadvantages.{" "}
+          <a
+            href="#fn3-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn4" className="text-xs md:text-sm text-neutral-700 mt-2">
           [4] Many illustrations online that depict staggering are actually flat
           out wrong because they pad consecutive rows with zeros, insetad of
           delaying them by a clock cycle. While this still gets the correct
           output, it wastes memory because we would have to store additional
-          zeros that we don&apos;t use.
+          zeros that we don&apos;t use.{" "}
+          <a
+            href="#fn4-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn5" className="text-xs md:text-sm text-neutral-700 mt-2">
           [5] We chose Leaky ReLU over ReLU because we found that since we have
           a very small network, the model wasn&apos;t training properly when we
-          used ReLU — it needed more non-linearity.
+          used ReLU — it needed more non-linearity.{" "}
+          <a
+            href="#fn5-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn6" className="text-xs md:text-sm text-neutral-700 mt-2">
-          [6] Also because that&apos;s what Google calls it in their TPU paper.
+          [6] Also because that&apos;s what Google calls it in their TPU paper.{" "}
+          <a
+            href="#fn6-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn7" className="text-xs md:text-sm text-neutral-700 mt-2">
           [7] A scratchpad memory is a large bank of registers (each of which
           can store individual values) that lets us access any register we want.
           A FIFO for example is NOT a scratchpad memory since you can only
-          access the first element in the queue.
+          access the first element in the queue.{" "}
+          <a
+            href="#fn7-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <p id="fn8" className="text-xs md:text-sm text-neutral-700 mt-2">
-          [8] Once again took the name from Google&apos;s TPU paper.
+          [8] Once again took the name from Google&apos;s TPU paper.{" "}
+          <a
+            href="#fn8-ref"
+            className="no-underline text-purple-700 hover:text-purple-900"
+          >
+            ↩ back
+          </a>
         </p>
         <section className="mt-10">
           <h2 className="text-xs uppercase tracking-wide text-neutral-500">
@@ -1855,15 +1921,88 @@ export default function Home() {
         </section>
         <section className="mt-10">
           <h2 className="text-xs uppercase tracking-wide text-neutral-500">
+            References
+          </h2>
+          <ul className="list-disc pl-5 text-xs md:text-sm text-neutral-700 mt-2 space-y-1">
+            <li>
+              <a
+                href="https://udlbook.github.io/udlbook/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                Understanding Deep Learning
+              </a>{" "}
+              — a free, first-principles, geometry-forward book that really
+              helped us feel like we could invent neural networks from high
+              school math.
+            </li>
+            <li>
+              <a
+                href="https://henryhmko.github.io/about/about.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                Henry Ko — About & Technical Blog
+              </a>{" "}
+              — thoughtful deep dives and a motivating story arc that nudged us
+              toward performant ML systems.
+            </li>
+            <li>
+              <a
+                href="https://jax-ml.github.io/scaling-book/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                How to Scale Your Model (A Systems View of LLMs on TPUs)
+              </a>{" "}
+              — clear, practical guidance on rooflines, parallelism, and TPU/JAX
+              that shaped how we think about scaling.
+            </li>
+            <li>
+              <a
+                href="https://siboehm.com/articles/22/CUDA-MMM"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                How to Optimize a CUDA Matmul Kernel
+              </a>{" "}
+              — an iterative worklog that demystified low-level performance and
+              inspired our appreciation for kernel-level optimizations. also
+              inspired us to use excalidraw for our diagrams.
+            </li>
+            <li>
+              <a
+                href="https://www.telesens.co/2018/07/30/systolic-architectures/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                Understanding Matrix Multiplication on a Weight-Stationary
+                Systolic Architecture
+              </a>{" "}
+              — a clear walkthrough of systolic arrays that inspired us to make
+              the animated slideshows in this article.
+            </li>
+          </ul>
+        </section>
+        <section className="mt-10">
+          <h2 className="text-xs uppercase tracking-wide text-neutral-500">
             Credits
           </h2>
           <p className="text-xs md:text-sm text-neutral-700 mt-2">
             Special thanks to Harrison for helping with website optimization and
-            small bug fixes within the article.
+            small bug fixes within this article.
           </p>
         </section>
         <hr className="mt-6 md:mt-8 mb-4 border-neutral-200" />
         <footer className="mt-10">
+          <h2 className="text-sm md:text-base uppercase tracking-wide text-neutral-500 mb-4 md:mb-6">
+            Contact us
+          </h2>
           <ul className="space-y-2">
             <li className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="text-neutral-800">Xander Chin</span>
