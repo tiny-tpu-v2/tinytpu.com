@@ -790,7 +790,7 @@ export default function Home() {
             This is also an element-wise operation, similar to the bias, meaning
             we need an activation module under every bias module (and by proxy
             under every column of the systolic array) and we can stream the
-            outputs of our bias modules into the activation modules immediately.
+            outputs of our bias modules into the activation modules immediately.{" "}
             <b>We will denote these post-activation values with H</b>.
           </p>
 
@@ -976,8 +976,8 @@ export default function Home() {
             to do something powerful…continuous inference!!! We can continuously
             stream in new weights and inputs and compute forward pass for as
             many layers as we want. This touches into a core design philosophy
-            of the systolic array: we want to maximize PE usage. We always want
-            to keep the systolic array fed!
+            of the systolic array: we want to maximize PE usage.{" "}
+            <b>We always want to keep the systolic array fed!</b>
           </p>
 
           <div className="my-6">
@@ -1217,21 +1217,6 @@ export default function Home() {
             </ol>
           </div>
 
-          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
-            The beautiful symmetry of forward and backward pass
-          </h3>
-          <p>
-            After drawing out the entire computational graph, we discovered
-            something remarkable: the longest chain in backpropagation closely
-            resembles forward pass! In forward pass, we multiply activation
-            matrices with transposed weight matrices. In backward pass, we
-            multiply gradient matrices with weight matrices (untransposed).
-            It&apos;s like looking in a mirror!
-          </p>
-          <div className="mt-10 mb-10">
-            <TweetEmbed tweetId="1932163510727041044" />
-          </div>
-
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
               Propagating gradients to the hidden layer:
@@ -1348,14 +1333,7 @@ export default function Home() {
             this derivative in a single clock cycle, keeping our pipeline
             flowing smoothly. This same principle applies to other activation
             functions: their derivatives often simplify to basic operations that
-            hardware can execute very efficiently. This insight led us to
-            compute the long chain first — getting all our
-            <InlineMath
-              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-            />{" "}
-            gradients just like we computed activations in forward pass. We
-            could cache these gradients and reuse them, following the same
-            efficient pattern we&apos;d already mastered.
+            hardware can execute very efficiently.
           </p>
           <p>
             You&apos;ll notice a really cool pattern emerging: all these modules
@@ -1534,14 +1512,13 @@ export default function Home() {
           </p>
           <p>
             To read values, we supply a starting address and the number of
-            values, we supply a starting address and the number of locations we
-            want the UB to read and it will read 2 values every clock cycle.
-            Writing is a similar mechanism, where we specify which values we
-            want to write to each of the two input ports. The beauty in the read
-            mechanism is that it runs in the background once we supply a
-            starting address until the number of locations given are read,
-            meaning we only need to provide an instruction for this every few
-            clock cycles.
+            locations we want the UB to read and it will read 2 values every
+            clock cycle. Writing is a similar mechanism, where we specify which
+            values we want to write to each of the two input ports. The beauty
+            in the read mechanism is that it runs in the background once we
+            supply a starting address until the number of locations given are
+            read, meaning we only need to provide an instruction for this every
+            few clock cycles.
           </p>
           <figure className="mt-12">
             <div className="relative w-full h-66 md:h-102">
@@ -1619,6 +1596,9 @@ export default function Home() {
             </figcaption>
           </figure>
           <p>Now we can do backpropagation!</p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            The beautiful symmetry of forward and backward pass
+          </h3>
           <p>
             Going back to the computational graph, we discovered something
             remarkable: the longest chain in backpropagation closely resembles
@@ -1628,7 +1608,7 @@ export default function Home() {
             in a mirror!
           </p>
           <figure className="mt-12">
-            <div className="relative w-full h-66 md:h-50">
+            <div className="relative w-full h-66 md:h-20">
               <Image
                 src="/forward-pass.svg"
                 alt="Forward pass diagram"
@@ -1640,6 +1620,10 @@ export default function Home() {
               Forward pass computation flow showing matrix operations
             </figcaption>
           </figure>
+          {/* <br /> */}
+          <div className="mt-10 mb-10">
+            <TweetEmbed tweetId="1932163510727041044" />
+          </div>
           <p>
             This insight led us to compute the long chain of the computational
             graph first (highlighted in yellow) – getting all our{" "}
