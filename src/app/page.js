@@ -230,7 +230,18 @@ export default function Home() {
           recently has been to reach for these AI tools whenever we faced a
           slight struggle. We wanted to cultivate a certain{" "}
           <b>style of thinking</b> that we could take forward with us and use in
-          any future endeavours to think through difficult problems.
+          any future endeavours to think through difficult problems. Inspired by
+          Sholto Douglas’s message in his{" "}
+          <a
+            href="https://www.youtube.com/results?search_query=sholto+douglas"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            YouTube short
+          </a>{" "}
+          — that you don’t need permission to make great things — we kept
+          shipping and learning in public.
           <sup className="ml-1 text-[12px]">
             <a
               href="#fn1"
@@ -1189,16 +1200,18 @@ export default function Home() {
                   }
                 />
               </li>
+              <br />
+              <li>
+                Compute{" "}
+                <InlineMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{b}_2}"
+                  }
+                />
+              </li>
+              <br />
+              <li>Rinse and repeat for the n-1 layer.</li>
             </ol>
-          </div>
-          <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            Since all elements of <InlineMath math={"\\mathbf{z}_2"} /> are
-            positive, the LeakyReLU gradient is 1:
-          </p>
-          <div className="text-center mb-6">
-            <BlockMath
-              math={"\\frac{\\partial \\mathbf{Z}_2}{\\partial \\mathbf{b}_2}"}
-            />
           </div>
 
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
@@ -1403,26 +1416,41 @@ export default function Home() {
             <li>
               If we have{" "}
               <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
-              take its derivative with respect to the weights, we get{" "}
-              <InlineMath
-                math={
-                  "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
-                }
-              />
+              take its derivative with respect to the weights, we get:
+              <div className="text-left mt-2">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{W}} = \\mathbf{X}"
+                  }
+                />
+              </div>
             </li>
             <li>
               If we have{" "}
               <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
               take its derivative with respect to the inputs{" "}
-              <InlineMath math={"\\mathbf{X}"} />, we get{" "}
-              <InlineMath
-                math={
-                  "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
-                }
-              />{" "}
-              (just the weight matrix transposed)
+              <InlineMath math={"\\mathbf{X}"} />, we get:
+              <div className="text-left mt-2">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{X}} = \\mathbf{W}^T"
+                  }
+                />
+              </div>
+              <div className="text-sm text-gray-700 text-center mt-1">
+                (just the weight matrix transposed)
+              </div>
             </li>
-            <li>For the bias term, the derivative is simply 1.</li>
+            <li>
+              For the bias term, the derivative is simply 1.
+              <div className="text-left mt-2">
+                <BlockMath
+                  math={
+                    "\\frac{\\partial \\mathbf{Z}}{\\partial \\mathbf{b}} = 1"
+                  }
+                />
+              </div>
+            </li>
           </ol>
           <p>
             This means that we can multiply the previous{" "}
@@ -1986,6 +2014,16 @@ export default function Home() {
               </a>{" "}
               — a clear walkthrough of systolic arrays that inspired us to make
               the animated slideshows in this article.
+            </li>
+            <li>
+              <a
+                href="https://youtube.com/shorts/cCvtxVBeiEA?si=GV2JCXGdvkqriOPd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-purple-700 hover:text-purple-900"
+              >
+                Sholto Douglas - Getting scouted by DeepMind (YouTube Short)
+              </a>
             </li>
           </ul>
         </section>
