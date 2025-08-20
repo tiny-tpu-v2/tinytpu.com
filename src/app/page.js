@@ -957,6 +957,9 @@ export default function Home() {
           </p>
           {/* Switch Accept Slideshow */}
           <div className="mt-12 pt-8 border-t border-neutral-200">
+            <h3 className="text-base md:text-lg font-semibold text-neutral-800 mb-3">
+              Double buffering in the systolic array
+            </h3>
             <Slideshow
               slides={[
                 "/slideshow_switch_accept/1.svg",
@@ -1162,7 +1165,7 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-            <p>Let&apos;s trace through what happens step by step.</p>
+            <p>Let&apos;s naively trace through what happens step by step.</p>
             <ol className="list-decimal list-inside">
               <li>
                 Calculate{" "}
@@ -1415,8 +1418,10 @@ export default function Home() {
           <ol className="list-decimal list-inside mt-2 space-y-2">
             <li>
               If we have{" "}
-              <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
-              take its derivative with respect to the weights, we get:
+              <InlineMath
+                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{B}"}
+              />{" "}
+              and take its derivative with respect to the weights, we get:
               <div className="text-left mt-2">
                 <BlockMath
                   math={
@@ -1427,8 +1432,10 @@ export default function Home() {
             </li>
             <li>
               If we have{" "}
-              <InlineMath math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T"} /> and
-              take its derivative with respect to the inputs{" "}
+              <InlineMath
+                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{B}"}
+              />{" "}
+              and take its derivative with respect to the inputs{" "}
               <InlineMath math={"\\mathbf{X}"} />, we get:
               <div className="text-left mt-2">
                 <BlockMath
