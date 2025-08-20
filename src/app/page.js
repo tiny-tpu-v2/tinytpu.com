@@ -657,7 +657,7 @@ export default function Home() {
           <ul className="list-disc list-inside mt-2">
             <li>Stagger the weight matrix (similar to the inputs)</li>
             <figure className="mt-12">
-              <div className="relative w-full h-48 md:h-64">
+              <div className="relative w-full h-62 md:h-84">
                 <Image
                   src="/stagger-w.svg"
                   alt="Stagger weight matrix"
@@ -790,13 +790,13 @@ export default function Home() {
             <div className="text-center mb-4">
               <BlockMath
                 math={
-                  "\\text{LeakyReLU}_\\alpha(z) = \\begin{cases} z & \\text{if } z > 0 \\\\[0.3em] \\alpha \\cdot z & \\text{if } z \\leq 0 \\end{cases}"
+                  "\\text{LeakyReLU}_\\beta(z) = \\begin{cases} z & \\text{if } z > 0 \\\\[0.3em] \\beta \\cdot z & \\text{if } z \\leq 0 \\end{cases}"
                 }
               />
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              where <InlineMath math={"\\alpha = 0.5"} /> is our leak factor.
-              For matrices, this applies to each element independently.
+              where <InlineMath math={"\\beta = 0.5"} /> is our leak factor. For
+              matrices, this applies to each element independently.
             </p>
           </div>
 
@@ -1272,7 +1272,7 @@ export default function Home() {
             , for which the formula is{" "}
             <InlineMath
               math={
-                "\\frac{\\partial \\text{LeakyReLU}_{\\alpha}(\\mathbf{Z}_2)}{\\partial \\mathbf{Z}_2} = \\begin{cases} 1 & \\text{if } \\mathbf{Z}_2 > 0 \\\\[0.3em] \\alpha & \\text{if } \\mathbf{Z}_2 \\leq 0 \\end{cases}"
+                "\\frac{\\partial \\text{LeakyReLU}_{\\beta}(\\mathbf{Z}_2)}{\\partial \\mathbf{Z}_2} = \\begin{cases} 1 & \\text{if } \\mathbf{Z}_2 > 0 \\\\[0.3em] \\beta & \\text{if } \\mathbf{Z}_2 \\leq 0 \\end{cases}"
               }
             />
             . This is also an element-wise computation, meaning we can structure
@@ -1298,7 +1298,7 @@ export default function Home() {
             <div className="text-center mb-4">
               <BlockMath
                 math={
-                  "\\frac{\\partial \\text{LeakyReLU}_\\alpha(z)}{\\partial z} = \\begin{cases} 1 & \\text{if } z > 0 \\\\[0.3em] \\alpha & \\text{if } z \\leq 0 \\end{cases}"
+                  "\\frac{\\partial \\text{LeakyReLU}_\\beta  (z)}{\\partial z} = \\begin{cases} 1 & \\text{if } z > 0 \\\\[0.3em] \\beta & \\text{if } z \\leq 0 \\end{cases}"
                 }
               />
             </div>
