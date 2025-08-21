@@ -2069,7 +2069,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="mailto:"
+                  href="mailto:xander.chin@gmail.com"
                   aria-label="Email Xander"
                   className="text-neutral-500 hover:text-neutral-800"
                 >
@@ -2121,7 +2121,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="mailto:"
+                  href="mailto:suryasure734@gmail.com"
                   aria-label="Email Surya"
                   className="text-neutral-500 hover:text-neutral-800"
                 >
@@ -2173,7 +2173,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="mailto:"
+                  href="mailto:evanlin416@gmail.com"
                   aria-label="Email Evan"
                   className="text-neutral-500 hover:text-neutral-800"
                 >
@@ -2225,7 +2225,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="mailto:"
+                  href="mailto:kennykguo@gmail.com"
                   aria-label="Email Kenny"
                   className="text-neutral-500 hover:text-neutral-800"
                 >
