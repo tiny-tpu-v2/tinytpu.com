@@ -277,14 +277,14 @@ export default function Home() {
         <div className="space-y-4 md:space-y-6">
           <br />
           <p>
-            A TPU is an application specific chip (ASIC) designed by Google to
-            make inferencing (using) and training ML models faster and more
-            efficient. Whereas a GPU can be used to render frames AND run ML
-            workloads, a TPU can only perform math operations, allowing it to be
-            better at what it&apos;s designed for. Naturally, trying to master a
-            single task is much easier and will yield better results than trying
-            to master multiple tasks and the TPU strongly employs this
-            philosophy.
+            A TPU is an application specific integrated circuit (ASIC) -
+            basically a custom chip - designed by Google to make inferencing
+            (using) and training ML models faster and more efficient. Whereas a
+            GPU can be used to render frames AND run ML workloads, a TPU can
+            only perform math operations, allowing it to be better at what
+            it&apos;s designed for. Naturally, trying to master a single task is
+            much easier and will yield better results than trying to master
+            multiple tasks and the TPU strongly employs this philosophy.
           </p>
 
           <div className="pl-4 ml-4 border-l-4 border-neutral-300">
