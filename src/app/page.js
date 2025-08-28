@@ -968,7 +968,7 @@ export default function Home() {
                 "/slideshow_switch_accept/4.svg",
                 "/slideshow_switch_accept/5.svg",
               ]}
-              aspectRatio="aspect-[2228/1944]"
+              aspectRatio="aspect-[2228/1400]"
             />
           </div>
           <p>
@@ -1397,7 +1397,7 @@ export default function Home() {
             <li>
               If we have{" "}
               <InlineMath
-                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{B}"}
+                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{b}"}
               />{" "}
               and take its derivative with respect to the weights, we get:
               <div className="text-left mt-2">
@@ -1411,7 +1411,7 @@ export default function Home() {
             <li>
               If we have{" "}
               <InlineMath
-                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{B}"}
+                math={"\\mathbf{Z} = \\mathbf{X}\\mathbf{W}^T + \\mathbf{b}"}
               />{" "}
               and take its derivative with respect to the inputs{" "}
               <InlineMath math={"\\mathbf{X}"} />, we get:
@@ -1603,9 +1603,9 @@ export default function Home() {
             Going back to the computational graph, we discovered something
             remarkable: the longest chain in backpropagation closely resembles
             forward pass! In forward pass, we multiply activation matrices with
-            transposed weight matrices. In backward pass, we multiply gradient
-            matrices with weight matrices (untransposed). It&apos;s like looking
-            in a mirror!
+            transposed weight matrices while in backward pass, we multiply
+            gradient matrices with untransposed weight matrices. It&apos;s like
+            looking in a mirror!
           </p>
           <figure className="mt-12">
             <div className="relative w-full h-66 md:h-20">
@@ -1634,24 +1634,6 @@ export default function Home() {
             could cache these gradients and reuse them, following the same
             efficient pattern we&apos;d already mastered.
           </p>
-          <p>We create a loop where we:</p>
-          <ol className="list-decimal list-inside mt-2 space-y-2">
-            <li>
-              Fetch a bridge node ({" "}
-              <InlineMath
-                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-              />
-              ) from our unified buffer
-            </li>
-            <li>
-              Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} />{" "}
-              matrix, also from unified buffer
-            </li>
-            <li>
-              Stream these through our systolic array to compute the weight
-              gradients
-            </li>
-          </ol>
 
           {/* Slideshow 4 */}
           <div className="mb-8">
@@ -1662,18 +1644,137 @@ export default function Home() {
                 "/slideshow_4/3.svg",
                 "/slideshow_4/4.svg",
               ]}
-              title="Backward pass through second hidden layer"
+              title="Backward pass through the second hidden layer (long chain)"
               aspectRatio="aspect-[4/3]"
             />
           </div>
-
+          
+          <p>To then calculate the leaf nodes (weight gradients) we create a loop where we:</p>
+          <ol className="list-decimal list-inside mt-2 space-y-2">
+            <li>
+              Fetch a bridge node ({" "}
+              <InlineMath
+                math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+              />
+              ) from our unified buffer and transpose it
+            </li>
+            <li>
+              Fetch the corresponding <InlineMath math={"\\mathbf{H}_n"} />{" "}
+              matrix, also from unified buffer
+            </li>
+            <li>
+              Stream these through our systolic array to compute the weight
+              gradients
+            </li>
+          </ol>
           <p>
-            And here&apos;s where something really magical happens: we can
-            stream these weight gradients directly into a gradient descent
-            module while we&apos;re still computing them! This module takes the
-            current weights stored in memory and updates them using the
-            gradients.
+            However, there is a problem which you may have noticed already. With a batch size larger than 2,
+            our transposed <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
+            /> matrices don't fit into the systolic array! To solve this,
+            we introduced tiling.
           </p>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            How tiling works
+          </h3>
+          <p>
+            Tiling allows us to split up our transposed pre-activation gradient matrices into manageable 
+            chunks to fit into our 2 by 2 systolic array. When our batch size exceeds the array capacity, 
+            we divide the computation into smaller tiles that can be processed sequentially. For example, 
+            to calculate the gradient matrix for our first layer of weights, our 4 by 2 
+            <InlineMath
+              math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}"}
+            /> gradient matrix 
+            is split into two 2 by 2 tiles, with each tile transposed. The corresponding input matrix <InlineMath math={"\\mathbf{X}"} />{" "} 
+            is similarly partitioned into matching 2 by 2 tiles. Each tile pair then undergoes separate 
+            matrix multiplication in the systolic array, meaning we perform two distinct matrix 
+            multiplications to compute the complete gradient matrix for our first layer weights. The same procedure
+            is repeated for the second layer of weights.
+          </p>
+          <p className="text-sm text-gray-700 mb-2">
+            Computing layer 1 weight gradients for our XOR network without tiling:
+          </p>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X}"
+              }
+            />
+            <BlockMath
+              math={
+                "\\begin{bmatrix} \\phantom{-}0.0405 & \\phantom{-}0.0230\\phantom{0} \\\\[0.5em] \\phantom{-}0.0454 & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0739 & -0.0613 & -0.0438 & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831 & -0.0689 & -0.0492 & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\begin{bmatrix} 0 & 0 \\\\[0.5em] 0 & 1 \\\\[0.5em] 1 & 0 \\\\[0.5em] 1 & 1 \\end{bmatrix}"              
+              }
+            />
+          </div>
+          <p className="text-sm text-gray-700 mb-2">
+            Computing layer 1 weight gradients for our XOR network with tiling:
+          </p>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\begin{align*} \\begin{bmatrix} \\phantom{-}0.0739\\phantom{0} & -0.0613\\phantom{0} \\\\[0.5em] \\phantom{-}0.0831\\phantom{0} & -0.0689\\phantom{0} \\end{bmatrix} \\begin{bmatrix} 0 & 0 \\\\[0.5em] 0 & 1 \\end{bmatrix} &= \\begin{bmatrix} \\phantom{-}0\\phantom{.0000} & -0.0613\\phantom{0} \\\\[0.5em] \\phantom{-}0\\phantom{.0000} & -0.0689\\phantom{0} \\end{bmatrix} \\\\[1em] \\begin{bmatrix} -0.0438\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] -0.0492\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\begin{bmatrix} 1 & 0 \\\\[0.5em] 1 & 1 \\end{bmatrix} &= \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0454\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} \\end{align*}"
+              }              
+            />
+          </div>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\begin{bmatrix} \\phantom{-}0\\phantom{.0000} & -0.0613\\phantom{0} \\\\[0.5em] \\phantom{-}0\\phantom{.0000} & -0.0689\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0843\\phantom{0} \\\\[0.5em] \\phantom{-}0.0454\\phantom{0} & \\phantom{-}0.0947\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.0405\\phantom{0} & \\phantom{-}0.0230\\phantom{0} \\\\[0.5em] \\phantom{-}0.0454\\phantom{0} & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix}"
+              }
+            />
+          </div>
+          <p className="text-sm text-gray-700 mb-2">Similarly for layer 2 weight gradients without tiling:</p>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
+              }
+            />
+            <BlockMath
+              math={
+                "\\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix}"
+              }
+            />
+          </div>
+          <p className="text-sm text-gray-700 mb-2">Similarly for layer 2 weight gradients with tiling:</p>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\begin{align*} \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\end{bmatrix} &= \\begin{bmatrix} \\phantom{-}0.0556\\phantom{0} & -0.0895\\phantom{0} \\end{bmatrix} \\\\[1em] \\begin{bmatrix} -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} &= \\begin{bmatrix} -0.1077\\phantom{0} & \\phantom{-}0.1786\\phantom{0} \\end{bmatrix} \\end{align*}"
+              }              
+            />
+          </div>
+          <div className="text-center mb-4">
+            <BlockMath
+              math={
+                "\\begin{bmatrix} \\phantom{-}0.0556\\phantom{0} & -0.0895\\phantom{0} \\end{bmatrix} + \\begin{bmatrix} -0.1077\\phantom{0} & \\phantom{-}0.1786\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix}"
+              }
+            />
+          </div>
+          <h3 className="text-sm md:text-base font-semibold text-neutral-800">
+            Gradient descent
+          </h3>
+          <p>
+            As the tiled weight gradients stream out of the systolic array row by row, they flow directly 
+            into our gradient descent module. This module retrieves the current weights from memory and 
+            applies updates using the incoming gradients. Since weight gradients are inherently additive 
+            across batch samples, we can process them sequentially where each tile&apos;s contribution 
+            accumulates naturally into the final weight update, similar to how the number 2 can be 
+            split into 1 + 1.
+          </p>
+          <Slideshow
+            slides={[
+              "/slideshow_weight_grad/1.svg",
+              "/slideshow_weight_grad/2.svg",
+              "/slideshow_weight_grad/3.svg",
+              "/slideshow_weight_grad/4.svg",
+              "/slideshow_weight_grad/5.svg",
+              "/slideshow_weight_grad/6.svg",
+              "/slideshow_weight_grad/7.svg",
+            ]}
+            title="Gradient descent for the first layer of weights"
+            aspectRatio="aspect-[2228/1200]"
+          />
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
               The gradient descent update rule:
@@ -1693,56 +1794,17 @@ export default function Home() {
           </div>
           <div className="my-6">
             <p className="text-sm text-gray-700 mb-2">
-              Computing weight gradients for our XOR network:
-            </p>
-            <div className="text-center mb-4">
-              <BlockMath
-                math={
-                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_2} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{z}_2}\\right)^T \\mathbf{H}_1"
-                }
-              />
-            </div>
-            <div className="text-center mb-4">
-              <BlockMath
-                math={
-                  "= \\begin{bmatrix} \\phantom{-}0.2808\\phantom{0} & -0.2328\\phantom{0} & -0.1664\\phantom{0} & \\phantom{-}0.3200\\phantom{0} \\end{bmatrix} \\begin{bmatrix} -0.2470\\phantom{0} & \\phantom{-}0.1890\\phantom{0} \\\\[0.5em] -0.5366\\phantom{0} & \\phantom{-}0.6124\\phantom{0} \\\\[0.5em] -0.0977\\phantom{0} & \\phantom{-}0.2803\\phantom{0} \\\\[0.5em] -0.3873\\phantom{0} & \\phantom{-}0.7037\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix}"
-                }
-              />
-            </div>
-            <p className="text-sm text-gray-700 mb-2">Similarly for Layer 1:</p>
-            <div className="text-center mb-4">
-              <BlockMath
-                math={
-                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}_1} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_1}\\right)^T \\mathbf{X} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} & \\phantom{-}0.0920\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} & -0.0404\\phantom{0} \\end{bmatrix}"
-                }
-              />
-            </div>
-            <p className="text-sm text-gray-700 mb-2">
-              Bias gradients (sum over samples):
-            </p>
-            <div className="text-center mb-6">
-              <BlockMath
-                math={
-                  "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2017, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0138\\phantom{0} \\end{bmatrix}"
-                }
-              />
-            </div>
-            <p className="text-sm text-gray-700 mb-2">
               Applying gradient descent with learning rate{" "}
               <InlineMath math={"\\alpha = 0.75"} />:
             </p>
             <div className="text-center mb-6">
               <BlockMath
                 math={
-                  "\\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5657\\phantom{0} & \\phantom{-}0.2290\\phantom{0} \\end{bmatrix}"
+                  "\\mathbf{W}_1^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.2985 & -0.5792 \\\\[0.5em] \\phantom{-}0.0913 & \\phantom{-}0.4234 \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} \\phantom{-}0.0405 & \\phantom{-}0.0230\\phantom{0} \\\\[0.5em] \\phantom{-}0.0454 & \\phantom{-}0.0258\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.2682 & -0.5964 \\\\[0.5em] \\phantom{-}0.0572 & \\phantom{-}0.4041 \\end{bmatrix} \\\\[2em] \\mathbf{W}_2^{\\text{new}} = \\begin{bmatrix} \\phantom{-}0.5266\\phantom{0} & \\phantom{-}0.2958\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} -0.0521\\phantom{0} & \\phantom{-}0.0891\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} \\phantom{-}0.5657\\phantom{0} & \\phantom{-}0.2290\\phantom{0} \\end{bmatrix}"
                 }
               />
             </div>
           </div>
-          <p>
-            No waiting around — everything flows like water through our
-            pipeline.
-          </p>
           <p>
             You might be wondering: &quot;We&apos;ve used our matrix
             multiplication identities for the long chain and weight gradients —
@@ -1754,9 +1816,44 @@ export default function Home() {
               math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
             />{" "}
             gradients across the batch dimension. The beauty is that we can do
-            this reduction right when we&apos;re computing the long chain — no
-            extra work required!
+            this reduction right when we&apos;re computing the long chain by simply
+            passing the pre-activation gradients through the gradient descent modules
+            and flipping a control bit to pass the output of the gradient descent module
+            as the next old bias value input on the next clock cycle.
           </p>
+          <Slideshow
+            slides={[
+              "/slideshow_bias_grad/1.svg",
+              "/slideshow_bias_grad/2.svg",
+              "/slideshow_bias_grad/3.svg",
+              "/slideshow_bias_grad/4.svg",
+              "/slideshow_bias_grad/5.svg",
+              "/slideshow_bias_grad/6.svg",
+            ]}
+            title="Gradient descent for the first layer of biases"
+            aspectRatio="aspect-[2228/1200]"
+          />
+          <p className="text-sm text-gray-700 mb-2">
+            Bias gradients (sum over samples):
+          </p>
+          <div className="text-center mb-6">
+            <BlockMath
+              math={
+                "\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_1} = \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0597\\phantom{0} \\end{bmatrix}, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}_2} = 0.2017, "
+              }
+            />
+          </div>
+          <p className="text-sm text-gray-700 mb-2">
+            Applying gradient descent with learning rate{" "}
+            <InlineMath math={"\\alpha = 0.75"} />:
+          </p>
+          <div className="text-center mb-6">
+            <BlockMath
+              math={
+                "\\mathbf{b}_1^{\\text{new}} = \\begin{bmatrix} -0.4939 \\\\[0.5em] \\phantom{-}0.1890\\phantom{0} \\end{bmatrix} - 0.75 \\cdot \\begin{bmatrix} \\phantom{-}0.0531\\phantom{0} \\\\[0.5em] \\phantom{-}0.0597\\phantom{0} \\end{bmatrix} = \\begin{bmatrix} -0.5337 \\\\[0.5em] \\phantom{-}0.1443\\phantom{0} \\end{bmatrix} \\\\[2em] \\mathbf{b}_2^{\\text{new}} = 0.6358 - 0.75 \\cdot 0.2017 = 0.4846"
+              }
+            />
+          </div>
           <p>
             With all these new changes and control flags, our instruction is
             significantly longer — 94 bits in fact! But we can confirm that
@@ -1797,7 +1894,6 @@ export default function Home() {
             harmony: data flows through pipelines, modules operate in parallel,
             and our systolic array stays fed with useful work.
           </p>
-
           <figure className="mt-8">
             <div className="relative w-full h-90 md:h-100">
               <Image
