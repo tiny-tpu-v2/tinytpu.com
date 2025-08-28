@@ -1671,7 +1671,7 @@ export default function Home() {
             However, there is a problem which you may have noticed already. With a batch size larger than 2,
             our transposed <InlineMath
               math={"\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{Z}_n}"}
-            /> matrices don't fit into the systolic array! To solve this,
+            /> matrices don&apos;t fit into the systolic array! To solve this,
             we introduced tiling.
           </p>
           <h3 className="text-sm md:text-base font-semibold text-neutral-800">
