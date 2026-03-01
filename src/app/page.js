@@ -295,12 +295,12 @@ export default function Home() {
               In hardware, the unit of time we&apos;re dealing with is called a
               clock cycle. This is an arbitrary period of time that we can set,
               as developers, to meet our requirements. Generally, a single clock
-              cycle can range from 1 picosecond (ps) to 1 nanosecond (ns) and
+              cycle can range from a few hundred picoseconds (ps) to 1 nanosecond (ns) and
               any operations we run will be executed BETWEEN clock cycles.
             </p>
 
             <figure className="my-6">
-              <div className="flex justify-center">
+              <div className="flex justify-center">``
                 <Image
                   src="/clock-cycle.svg"
                   alt="Clock cycle diagram"
